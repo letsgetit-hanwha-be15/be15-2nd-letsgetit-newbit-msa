@@ -1,0 +1,34 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://newbit-user-service
+          predicates:
+            - Path=/api/v1/user/**
+          filters:
+            - RewritePath=/api/v1/user/(?<segment>.*), /$\{segment}
+
+
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.instance.instance-id:${random.value}}
+
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+
+
+jwt:
+  secret: piNJLqqZn11WtZLtIb3QLKBD+8YQIezuCuPngGLC/+E3dftI61jPHllDWO+T0h3esx/m9R+buOyTu5e6jiJOtA==
+  expiration: 1800000
+  refresh-expiration: 604800000
