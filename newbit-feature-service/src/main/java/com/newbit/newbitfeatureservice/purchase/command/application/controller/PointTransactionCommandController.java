@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/purchase")
+@RequestMapping("/purchase")
 @Tag(name = "구매관련 API", description = "포인트 지급 API")
 public class PointTransactionCommandController {
 

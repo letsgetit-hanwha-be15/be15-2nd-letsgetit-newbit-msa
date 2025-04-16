@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/users/likes")
+@RequestMapping("/users/likes")
 @RequiredArgsConstructor
 @Tag(name = "좋아요 조회 API", description = "사용자가 좋아요한 게시물과 칼럼 조회 API")
 public class UserLikesController {

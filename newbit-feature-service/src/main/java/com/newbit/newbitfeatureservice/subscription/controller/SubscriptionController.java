@@ -31,7 +31,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @RestController
-@RequestMapping("/api/v1/subscriptions")
+@RequestMapping("/subscriptions")
 @RequiredArgsConstructor
 @Tag(name = "시리즈 구독 API", description = "시리즈 구독 관련 API")
 public class SubscriptionController {
