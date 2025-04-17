@@ -18,13 +18,7 @@ spring:
             - Path=/api/v1/feature
           filters:
             - RewritePath=/api/v1/feature/(?<segment>.*), /$\{segment}
-
-
-
 eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.instance.instance-id:${random.value}}
-
   client:
     fetch-registry: true
     register-with-eureka: true
@@ -32,9 +26,5 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 
-
-
 jwt:
   secret: piNJLqqZn11WtZLtIb3QLKBD+8YQIezuCuPngGLC/+E3dftI61jPHllDWO+T0h3esx/m9R+buOyTu5e6jiJOtA==
-  expiration: 1800000
-  refresh-expiration: 604800000
