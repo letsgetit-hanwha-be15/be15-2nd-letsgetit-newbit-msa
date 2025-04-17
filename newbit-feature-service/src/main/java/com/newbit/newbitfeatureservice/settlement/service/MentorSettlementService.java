@@ -1,6 +1,8 @@
 package com.newbit.newbitfeatureservice.settlement.service;
 
+import com.newbit.newbitfeatureservice.client.user.MailFeignClient;
 import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
 import com.newbit.newbitfeatureservice.common.dto.Pagination;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
@@ -11,9 +13,6 @@ import com.newbit.newbitfeatureservice.settlement.dto.response.MentorSettlementL
 import com.newbit.newbitfeatureservice.settlement.dto.response.MentorSettlementSummaryDto;
 import com.newbit.newbitfeatureservice.settlement.entity.MonthlySettlementHistory;
 import com.newbit.newbitfeatureservice.settlement.repository.MonthlySettlementHistoryRepository;
-import com.newbit.user.service.MentorService;
-import com.newbit.user.service.UserQueryService;
-import com.newbit.user.support.MailServiceSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,8 +37,8 @@ public class MentorSettlementService {
     private final SaleHistoryRepository saleHistoryRepository;
     private final MonthlySettlementHistoryRepository monthlySettlementHistoryRepository;
     private final MentorFeignClient mentorFeignClient;
-    private final MailServiceSupport mailServiceSupport;
-    private final UserQueryService userQueryService;
+    private final MailFeignClient mailFeignClient;
+    private final UserFeignClient userFeignClient;
 
     @Transactional
     public void generateMonthlySettlements(int year, int month) {
@@ -111,8 +110,8 @@ public class MentorSettlementService {
         }
 
         Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
-        String email = userQueryService.getEmailByUserId(userId);
-        String nickname = userQueryService.getNicknameByUserId(userId);
+        String email = userFeignClient.getEmailByUserId(userId).getData();
+        String nickname = userFeignClient.getNicknameByUserId(userId).getData();
 
         String subject = "[Newbit] 월별 정산 내역 안내";
         String content = String.format("""
@@ -131,7 +130,7 @@ public class MentorSettlementService {
                 history.getSettledAt().toString()
         );
 
-        mailServiceSupport.sendMailSupport(email, subject, content);
+        mailFeignClient.sendMail(email, subject, content);
 
     }
 
