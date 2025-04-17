@@ -1,5 +1,6 @@
 package com.newbit.newbitfeatureservice.like.controller;
 
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.like.dto.response.LikedColumnListResponse;
 import com.newbit.newbitfeatureservice.like.dto.response.LikedPostListResponse;
 import com.newbit.newbitfeatureservice.like.service.ColumnLikeService;
