@@ -1,10 +1,11 @@
 package com.newbit.newbitfeatureservice.notification.command.application.controller;
 
-import com.newbit.auth.model.CustomUser;
+
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
 import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
 import com.newbit.newbitfeatureservice.notification.command.infrastructure.SseEmitterRepository;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

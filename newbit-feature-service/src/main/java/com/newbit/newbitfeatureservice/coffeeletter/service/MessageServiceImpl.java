@@ -11,6 +11,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
 import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.ChatMessage;
 import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
 import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.MessageType;
@@ -20,7 +21,6 @@ import com.newbit.newbitfeatureservice.coffeeletter.repository.CoffeeLetterRoomR
 import com.newbit.newbitfeatureservice.coffeeletter.util.RoomUtils;
 import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
 import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
-import com.newbit.user.service.MentorService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,20 +33,21 @@ public class MessageServiceImpl implements MessageService {
     private final SimpMessagingTemplate messagingTemplate;
     private final ModelMapper modelMapper;
     private final NotificationCommandService notificationCommandService;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorFeignClient;
 
     public MessageServiceImpl(
             ChatMessageRepository messageRepository,
             CoffeeLetterRoomRepository roomRepository,
             SimpMessagingTemplate messagingTemplate,
             ModelMapper modelMapper,
-            NotificationCommandService notificationCommandService, MentorService mentorService) {
+            NotificationCommandService notificationCommandService, 
+            MentorFeignClient mentorFeignClient) {
         this.messageRepository = messageRepository;
         this.roomRepository = roomRepository;
         this.messagingTemplate = messagingTemplate;
         this.modelMapper = modelMapper;
         this.notificationCommandService = notificationCommandService;
-        this.mentorService = mentorService;
+        this.mentorFeignClient = mentorFeignClient;
     }
 
     @Override
@@ -85,7 +86,7 @@ public class MessageServiceImpl implements MessageService {
 
         Long receiverId = message.getSenderId().equals(room.getMentorId())
                 ? room.getMenteeId()
-                : mentorService.getUserIdByMentorId(room.getMentorId());
+                : mentorFeignClient.getUserIdByMentorId(room.getMentorId()).getData();
 
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(

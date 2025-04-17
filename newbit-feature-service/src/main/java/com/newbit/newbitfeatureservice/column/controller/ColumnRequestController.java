@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.column.controller;
 
-import com.newbit.auth.model.CustomUser;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.column.dto.request.CreateColumnRequestDto;
 import com.newbit.newbitfeatureservice.column.dto.request.DeleteColumnRequestDto;
 import com.newbit.newbitfeatureservice.column.dto.request.UpdateColumnRequestDto;

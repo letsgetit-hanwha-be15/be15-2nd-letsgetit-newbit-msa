@@ -1,9 +1,8 @@
 package com.newbit.newbitfeatureservice.column.controller;
 
-import com.newbit.auth.model.CustomUser;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.column.dto.request.CreateSeriesRequestDto;
 import com.newbit.newbitfeatureservice.column.dto.request.UpdateSeriesRequestDto;
-import com.newbit.column.dto.response.*;
 import com.newbit.newbitfeatureservice.column.dto.response.*;
 import com.newbit.newbitfeatureservice.column.service.SeriesService;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
