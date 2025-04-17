@@ -1,9 +1,9 @@
 package com.newbit.newbitfeatureservice.coffeeletter.util;
 
-import com.newbit.coffeeletter.domain.chat.CoffeeLetterRoom;
-import com.newbit.coffeeletter.repository.CoffeeLetterRoomRepository;
-import com.newbit.common.exception.BusinessException;
-import com.newbit.common.exception.ErrorCode;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
+import com.newbit.newbitfeatureservice.coffeeletter.repository.CoffeeLetterRoomRepository;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 
 public class RoomUtils {
     

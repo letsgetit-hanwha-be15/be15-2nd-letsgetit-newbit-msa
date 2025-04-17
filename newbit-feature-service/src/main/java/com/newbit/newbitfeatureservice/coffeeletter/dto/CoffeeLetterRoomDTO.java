@@ -1,7 +1,7 @@
 package com.newbit.newbitfeatureservice.coffeeletter.dto;
 
-import com.newbit.coffeeletter.domain.chat.CoffeeLetterRoom;
-import com.newbit.coffeeletter.domain.chat.MessageType;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.MessageType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

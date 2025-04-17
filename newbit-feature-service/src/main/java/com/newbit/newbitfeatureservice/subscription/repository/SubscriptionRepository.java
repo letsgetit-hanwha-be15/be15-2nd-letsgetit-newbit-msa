@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.newbit.subscription.entity.Subscription;
-import com.newbit.subscription.entity.SubscriptionId;
+import com.newbit.newbitfeatureservice.subscription.entity.Subscription;
+import com.newbit.newbitfeatureservice.subscription.entity.SubscriptionId;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription, SubscriptionId> {
     

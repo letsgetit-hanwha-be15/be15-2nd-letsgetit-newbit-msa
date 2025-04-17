@@ -1,7 +1,7 @@
 package com.newbit.newbitfeatureservice.column.mapper;
 
-import com.newbit.column.domain.ColumnRequest;
-import com.newbit.column.dto.response.AdminColumnResponseDto;
+import com.newbit.newbitfeatureservice.column.domain.ColumnRequest;
+import com.newbit.newbitfeatureservice.column.dto.response.AdminColumnResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component

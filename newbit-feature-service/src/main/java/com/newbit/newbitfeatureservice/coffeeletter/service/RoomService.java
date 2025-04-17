@@ -2,8 +2,8 @@ package com.newbit.newbitfeatureservice.coffeeletter.service;
 
 import java.util.List;
 
-import com.newbit.coffeeletter.domain.chat.CoffeeLetterRoom;
-import com.newbit.coffeeletter.dto.CoffeeLetterRoomDTO;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
+import com.newbit.newbitfeatureservice.coffeeletter.dto.CoffeeLetterRoomDTO;
 
 public interface RoomService {
 

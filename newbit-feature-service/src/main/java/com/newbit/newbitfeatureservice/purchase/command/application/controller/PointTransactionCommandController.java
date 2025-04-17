@@ -1,34 +1,25 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.controller;
 
-
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
-import com.newbit.newbitfeatureservice.security.model.CustomUser;
-import com.newbit.newbitfeatureservice.purchase.command.application.dto.ColumnPurchaseRequest;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import com.newbit.newbitfeatureservice.purchase.command.application.service.PointTransactionCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/purchase")
-@Tag(name = "구매관련 API", description = "포인트 지급 API")
+@RequestMapping("/api/v1/point")
 public class PointTransactionCommandController {
 
-    @PostMapping("/column")
-    public ResponseEntity<ApiResponse<Void>> purchaseColumn(
-            @AuthenticationPrincipal CustomUser customUser,
-            @Valid @RequestBody ColumnPurchaseRequest request
+    private final PointTransactionCommandService pointTransactionCommandService;
+
+    @PostMapping("/type")
+    public ResponseEntity<ApiResponse<Void>> givePointByType(
+            @RequestParam Long userId,
+            @RequestParam String pointTypeName,
+            @RequestParam(required = false) Long serviceId
     ) {
-        purchaseCommandService.purchaseColumn(customUser.getUserId(), request);
+        pointTransactionCommandService.givePointByType(userId, pointTypeName, serviceId);
         return ResponseEntity.ok(ApiResponse.success(null));
     }
-
-    @PostMapping("/column")
-    public ResponseEntity<ApiResponse<Void>> purchaseColumn()
 }

@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.settlement.dto.response;
 
-import com.newbit.settlement.entity.MonthlySettlementHistory;
+import com.newbit.newbitfeatureservice.settlement.entity.MonthlySettlementHistory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

@@ -4,8 +4,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.newbit.like.dto.response.ColumnLikeResponse;
-import com.newbit.like.dto.response.LikedColumnListResponse;
+import com.newbit.newbitfeatureservice.like.dto.response.ColumnLikeResponse;
+import com.newbit.newbitfeatureservice.like.dto.response.LikedColumnListResponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.notification.command.infrastructure;
 
-import com.newbit.notification.command.application.dto.response.NotificationSendResponse;
+import com.newbit.newbitfeatureservice.notification.command.application.dto.response.NotificationSendResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;

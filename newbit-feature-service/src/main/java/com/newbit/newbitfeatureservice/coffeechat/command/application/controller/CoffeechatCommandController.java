@@ -1,25 +1,23 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.controller;
 
-
+import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCancelRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCreateRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.response.CoffeechatCommandResponse;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.service.CoffeechatCommandService;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
-import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/coffeechats")
+@RequestMapping("/api/v1/coffeechats")
 @Tag(name = "커피챗 API", description = "커피챗 등록, 수정, 삭제 API")
 public class CoffeechatCommandController {
 

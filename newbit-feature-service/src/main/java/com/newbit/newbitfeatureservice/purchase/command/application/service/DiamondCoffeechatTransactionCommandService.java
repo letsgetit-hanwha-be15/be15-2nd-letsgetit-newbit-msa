@@ -1,9 +1,9 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.service;
 
-import com.newbit.purchase.command.domain.aggregate.DiamondHistory;
-import com.newbit.purchase.command.domain.aggregate.SaleHistory;
-import com.newbit.purchase.command.domain.repository.DiamondHistoryRepository;
-import com.newbit.purchase.command.domain.repository.SaleHistoryRepository;
+import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.DiamondHistory;
+import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.SaleHistory;
+import com.newbit.newbitfeatureservice.purchase.command.domain.repository.DiamondHistoryRepository;
+import com.newbit.newbitfeatureservice.purchase.command.domain.repository.SaleHistoryRepository;
 import com.newbit.user.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

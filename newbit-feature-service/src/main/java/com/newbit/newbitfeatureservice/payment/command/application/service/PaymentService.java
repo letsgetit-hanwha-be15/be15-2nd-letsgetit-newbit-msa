@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.payment.command.application.service;
 
-import com.newbit.payment.command.application.dto.PaymentDto;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.PaymentDto;
 
 public interface PaymentService<T extends PaymentDto> {
     

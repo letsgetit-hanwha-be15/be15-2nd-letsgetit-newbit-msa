@@ -1,8 +1,8 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.service;
 
-import com.newbit.purchase.command.domain.aggregate.DiamondHistory;
-import com.newbit.purchase.command.domain.aggregate.DiamondTransactionType;
-import com.newbit.purchase.command.domain.repository.DiamondHistoryRepository;
+import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.DiamondHistory;
+import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.DiamondTransactionType;
+import com.newbit.newbitfeatureservice.purchase.command.domain.repository.DiamondHistoryRepository;
 import com.newbit.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

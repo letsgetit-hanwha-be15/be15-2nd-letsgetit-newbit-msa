@@ -1,8 +1,7 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.controller;
 
-
+import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
-import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.purchase.command.application.dto.CoffeeChatPurchaseRequest;
 import com.newbit.newbitfeatureservice.purchase.command.application.dto.ColumnPurchaseRequest;
 import com.newbit.newbitfeatureservice.purchase.command.application.dto.MentorAuthorityPurchaseRequest;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/purchase")
+@RequestMapping("/api/v1/purchase")
 @Tag(name = "구매관련 API", description = "칼럼 구매 API")
 public class PurchaseCommandController {
     private final PurchaseCommandService purchaseCommandService;

@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.newbit.report.command.domain.aggregate.ReportType;
-import com.newbit.report.command.domain.repository.ReportTypeRepository;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.ReportType;
+import com.newbit.newbitfeatureservice.report.command.domain.repository.ReportTypeRepository;
 
 import lombok.RequiredArgsConstructor;
 

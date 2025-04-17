@@ -1,7 +1,7 @@
 package com.newbit.newbitfeatureservice.security;
 
-import com.newbit.newbituserservice.common.exception.BusinessException;
-import com.newbit.newbituserservice.common.exception.ErrorCode;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

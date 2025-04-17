@@ -1,7 +1,7 @@
 package com.newbit.newbitfeatureservice.coffeechat.query.mapper;
 
-import com.newbit.coffeechat.query.dto.request.ReviewSearchServiceRequest;
-import com.newbit.coffeechat.query.dto.response.ReviewListDto;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.request.ReviewSearchServiceRequest;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.ReviewListDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

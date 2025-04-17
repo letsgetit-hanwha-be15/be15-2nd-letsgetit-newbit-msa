@@ -5,17 +5,17 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.newbit.post.entity.Comment;
-import com.newbit.post.entity.Post;
-import com.newbit.post.repository.CommentRepository;
-import com.newbit.post.repository.PostRepository;
-import com.newbit.report.command.application.dto.request.ReportCreateRequest;
-import com.newbit.report.command.application.dto.response.ReportCommandResponse;
-import com.newbit.report.command.domain.aggregate.Report;
-import com.newbit.report.command.domain.aggregate.ReportStatus;
-import com.newbit.report.command.domain.aggregate.ReportType;
-import com.newbit.report.command.domain.repository.ReportRepository;
-import com.newbit.report.command.domain.repository.ReportTypeRepository;
+import com.newbit.newbitfeatureservice.post.entity.Comment;
+import com.newbit.newbitfeatureservice.post.entity.Post;
+import com.newbit.newbitfeatureservice.post.repository.CommentRepository;
+import com.newbit.newbitfeatureservice.post.repository.PostRepository;
+import com.newbit.newbitfeatureservice.report.command.application.dto.request.ReportCreateRequest;
+import com.newbit.newbitfeatureservice.report.command.application.dto.response.ReportCommandResponse;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.Report;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.ReportStatus;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.ReportType;
+import com.newbit.newbitfeatureservice.report.command.domain.repository.ReportRepository;
+import com.newbit.newbitfeatureservice.report.command.domain.repository.ReportTypeRepository;
 
 import lombok.RequiredArgsConstructor;
 

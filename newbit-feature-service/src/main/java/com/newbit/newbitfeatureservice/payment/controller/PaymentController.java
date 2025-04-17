@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.newbit.common.dto.ApiResponse;
-import com.newbit.payment.command.application.dto.request.PaymentApproveRequest;
-import com.newbit.payment.command.application.dto.request.PaymentPrepareRequest;
-import com.newbit.payment.command.application.dto.response.PaymentApproveResponse;
-import com.newbit.payment.command.application.dto.response.PaymentPrepareResponse;
-import com.newbit.payment.command.application.service.PaymentCommandService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.request.PaymentApproveRequest;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.request.PaymentPrepareRequest;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.response.PaymentApproveResponse;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.response.PaymentPrepareResponse;
+import com.newbit.newbitfeatureservice.payment.command.application.service.PaymentCommandService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/payments")
+@RequestMapping("/api/v1/payments")
 @RequiredArgsConstructor
 @Tag(name = "결제 API", description = "결제 관련 API")
 public class PaymentController extends AbstractApiController {

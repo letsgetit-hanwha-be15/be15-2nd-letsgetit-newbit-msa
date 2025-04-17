@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.purchase.command.domain.repository;
 
-import com.newbit.purchase.command.domain.aggregate.SaleHistory;
+import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.SaleHistory;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.report.command.application.dto.request;
 
-import com.newbit.report.command.domain.aggregate.ReportStatus;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.ReportStatus;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

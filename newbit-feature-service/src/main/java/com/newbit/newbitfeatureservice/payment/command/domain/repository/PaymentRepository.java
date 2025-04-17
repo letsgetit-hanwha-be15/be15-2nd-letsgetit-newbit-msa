@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.payment.command.domain.repository;
 
-import com.newbit.payment.command.domain.aggregate.Payment;
+import com.newbit.newbitfeatureservice.payment.command.domain.aggregate.Payment;
 
 import java.util.Optional;
 import java.util.List;

@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.newbit.common.dto.ApiResponse;
-import com.newbit.report.command.application.dto.request.ReportCreateRequest;
-import com.newbit.report.command.application.dto.response.ReportCommandResponse;
-import com.newbit.report.command.application.service.ReportCommandService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.report.command.application.dto.request.ReportCreateRequest;
+import com.newbit.newbitfeatureservice.report.command.application.dto.response.ReportCommandResponse;
+import com.newbit.newbitfeatureservice.report.command.application.service.ReportCommandService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/reports")
+@RequestMapping("/api/v1/reports")
 @RequiredArgsConstructor
 @Tag(name = "신고 API", description = "신고 작성 관련 API")
 public class ReportCommandController {

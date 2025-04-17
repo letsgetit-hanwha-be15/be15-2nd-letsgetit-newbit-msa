@@ -1,10 +1,10 @@
 package com.newbit.newbitfeatureservice.coffeechat.query.controller;
 
 import com.newbit.auth.model.CustomUser;
-import com.newbit.coffeechat.query.dto.request.ReviewSearchServiceRequest;
-import com.newbit.coffeechat.query.dto.response.ReviewListResponse;
-import com.newbit.coffeechat.query.service.ReviewQueryService;
-import com.newbit.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.request.ReviewSearchServiceRequest;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.ReviewListResponse;
+import com.newbit.newbitfeatureservice.coffeechat.query.service.ReviewQueryService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import com.newbit.user.service.MentorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -76,7 +76,7 @@ public class ReviewQueryController {
 
         // 유저 아이디로 멘토 아이디를 찾아오기
         Long userId = customUser.getUserId();
-        Long mentorId = mentorService.getMentorEntityByUserId(userId).getMentorId();
+        Long mentorId = mentorService.getMentorIdByUserId(userId);
 
         ReviewSearchServiceRequest reviewSearchServiceRequest = new ReviewSearchServiceRequest();
         reviewSearchServiceRequest.setMentorId(mentorId);

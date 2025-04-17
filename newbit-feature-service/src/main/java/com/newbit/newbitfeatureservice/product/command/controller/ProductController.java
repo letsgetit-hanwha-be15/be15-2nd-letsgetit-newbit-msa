@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.newbit.common.dto.ApiResponse;
-import com.newbit.product.command.application.dto.request.ProductCreateRequest;
-import com.newbit.product.command.application.dto.request.ProductStatusRequest;
-import com.newbit.product.command.application.dto.request.ProductUpdateRequest;
-import com.newbit.product.command.application.dto.response.ProductResponse;
-import com.newbit.product.command.application.service.ProductService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.product.command.application.dto.request.ProductCreateRequest;
+import com.newbit.newbitfeatureservice.product.command.application.dto.request.ProductStatusRequest;
+import com.newbit.newbitfeatureservice.product.command.application.dto.request.ProductUpdateRequest;
+import com.newbit.newbitfeatureservice.product.command.application.dto.response.ProductResponse;
+import com.newbit.newbitfeatureservice.product.command.application.service.ProductService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 @Tag(name = "상품 관리 API", description = "상품 관리 API(조회,등록,수정,활성화,비활성화)")
 public class ProductController {

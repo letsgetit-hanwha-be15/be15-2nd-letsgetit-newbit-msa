@@ -1,6 +1,5 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.service;
 
-
 import com.newbit.newbitfeatureservice.coffeechat.query.mapper.CoffeechatMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

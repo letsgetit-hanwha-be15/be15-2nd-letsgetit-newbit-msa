@@ -1,9 +1,8 @@
 package com.newbit.newbitfeatureservice.post.service;
 
-
+import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
-import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
 import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
 import com.newbit.newbitfeatureservice.post.dto.request.CommentCreateRequest;
@@ -13,6 +12,7 @@ import com.newbit.newbitfeatureservice.post.entity.Post;
 import com.newbit.newbitfeatureservice.post.repository.CommentRepository;
 import com.newbit.newbitfeatureservice.post.repository.PostRepository;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.PointTransactionCommandService;
+import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,7 @@ public class CommentService {
                 .build();
 
         commentRepository.save(comment);
-        pointTransactionCommandService.givePointByType(user.getUserId(), "댓글 적립", comment.getId());
+        pointTransactionCommandService.givePointByType(user.getUserId(), PointTypeConstants.COMMENTS, comment.getId());
 
         String notificationContent = String.format("'%s' 게시글에 댓글이 달렸습니다. ('%s')",
                 post.getTitle(), comment.getContent());
@@ -81,6 +81,20 @@ public class CommentService {
         }
 
         comment.softDelete();
+    }
+
+    @Transactional
+    public void increaseReportCount(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));
+        comment.increaseReportCount(); 
+    }
+
+    @Transactional(readOnly = true)
+    public int getReportCount(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));
+        return comment.getReportCount();
     }
 
 }

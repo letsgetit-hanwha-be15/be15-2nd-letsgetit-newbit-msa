@@ -1,15 +1,15 @@
 package com.newbit.newbitfeatureservice.column.controller;
 
 import com.newbit.auth.model.CustomUser;
-import com.newbit.column.dto.request.CreateColumnRequestDto;
-import com.newbit.column.dto.request.DeleteColumnRequestDto;
-import com.newbit.column.dto.request.UpdateColumnRequestDto;
-import com.newbit.column.dto.response.CreateColumnResponseDto;
-import com.newbit.column.dto.response.DeleteColumnResponseDto;
-import com.newbit.column.dto.response.GetMyColumnRequestResponseDto;
-import com.newbit.column.dto.response.UpdateColumnResponseDto;
-import com.newbit.column.service.ColumnRequestService;
-import com.newbit.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.column.dto.request.CreateColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.request.DeleteColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.request.UpdateColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.response.CreateColumnResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.DeleteColumnResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.GetMyColumnRequestResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.UpdateColumnResponseDto;
+import com.newbit.newbitfeatureservice.column.service.ColumnRequestService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/columns/requests")
+@RequestMapping("/api/v1/columns/requests")
 @RequiredArgsConstructor
 @Tag(name = "칼럼 요청 API", description = "멘토 칼럼 요청 관련 API")
 public class ColumnRequestController {

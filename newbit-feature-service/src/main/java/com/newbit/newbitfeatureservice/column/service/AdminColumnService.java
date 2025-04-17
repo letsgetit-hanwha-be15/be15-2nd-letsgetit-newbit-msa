@@ -1,18 +1,19 @@
 package com.newbit.newbitfeatureservice.column.service;
 
-import com.newbit.column.domain.Column;
-import com.newbit.column.domain.ColumnRequest;
-import com.newbit.column.dto.request.ApproveColumnRequestDto;
-import com.newbit.column.dto.request.RejectColumnRequestDto;
-import com.newbit.column.dto.response.AdminColumnResponseDto;
-import com.newbit.column.enums.RequestType;
-import com.newbit.column.mapper.AdminColumnMapper;
-import com.newbit.column.repository.ColumnRequestRepository;
-import com.newbit.common.exception.BusinessException;
-import com.newbit.common.exception.ErrorCode;
-import com.newbit.notification.command.application.dto.request.NotificationSendRequest;
-import com.newbit.notification.command.application.service.NotificationCommandService;
-import com.newbit.subscription.service.SubscriptionService;
+import com.newbit.newbitfeatureservice.column.domain.Column;
+import com.newbit.newbitfeatureservice.column.domain.ColumnRequest;
+import com.newbit.newbitfeatureservice.column.dto.request.ApproveColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.request.RejectColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.response.AdminColumnResponseDto;
+import com.newbit.newbitfeatureservice.column.enums.RequestType;
+import com.newbit.newbitfeatureservice.column.mapper.AdminColumnMapper;
+import com.newbit.newbitfeatureservice.column.repository.ColumnRequestRepository;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
+import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
+import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
+import com.newbit.newbitfeatureservice.subscription.service.SubscriptionService;
+import com.newbit.user.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ public class AdminColumnService {
     private final AdminColumnMapper adminColumnMapper;
     private final NotificationCommandService notificationCommandService;
     private final SubscriptionService subscriptionService;
+    private final MentorService mentorService;
 
     @Transactional
     public AdminColumnResponseDto approveCreateColumnRequest(ApproveColumnRequestDto dto, Long adminUserId) {
@@ -42,16 +44,15 @@ public class AdminColumnService {
         String notificationContent = String.format("'%s' 칼럼 등록이 승인되었습니다.",
                 request.getColumn().getTitle());
 
+        Long mentorId = request.getColumn().getMentorId();
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        request.getColumn().getMentor().getUser().getUserId()
+                        mentorService.getMentorIdByUserId(mentorId)
                         , 11L
                         , request.getColumnRequestId(),
                         notificationContent
                 )
         );
-
-
 
         List<Long> subscriberIds = subscriptionService.getSeriesSubscribers(request.getColumn().getSeries().getSeriesId());
 
@@ -85,9 +86,10 @@ public class AdminColumnService {
         String notificationContent = String.format("'%s' 칼럼 등록이 거절되었습니다.",
                 request.getColumn().getTitle());
 
+        Long mentorId = request.getColumn().getMentorId();
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        request.getColumn().getMentor().getUser().getUserId()
+                        mentorService.getMentorIdByUserId(mentorId)
                         , 12L
                         , request.getColumnRequestId(),
                         notificationContent
@@ -118,9 +120,10 @@ public class AdminColumnService {
                 request.getUpdatedTitle());
 
 
+        Long mentorId = request.getColumn().getMentorId();
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        request.getColumn().getMentor().getUser().getUserId()
+                        mentorService.getMentorIdByUserId(mentorId)
                         , 11L
                         , request.getColumnRequestId(),
                         notificationContent
@@ -145,10 +148,10 @@ public class AdminColumnService {
         String notificationContent = String.format("'%s' 칼럼 수정이 거절되었습니다.",
                 request.getColumn().getTitle());
 
-
+        Long mentorId = request.getColumn().getMentorId();
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        request.getColumn().getMentor().getUser().getUserId()
+                        mentorService.getMentorIdByUserId(mentorId)
                         , 12L
                         , request.getColumnRequestId(),
                         notificationContent
@@ -177,10 +180,10 @@ public class AdminColumnService {
         String notificationContent = String.format("'%s' 칼럼 삭제가 승인되었습니다.",
                 request.getColumn().getTitle());
 
-
+        Long mentorId = request.getColumn().getMentorId();
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        request.getColumn().getMentor().getUser().getUserId()
+                        mentorService.getMentorIdByUserId(mentorId)
                         , 11L
                         , request.getColumnRequestId(),
                         notificationContent
@@ -204,10 +207,10 @@ public class AdminColumnService {
         String notificationContent = String.format("'%s' 칼럼 삭제가 거절되었습니다.",
                 request.getColumn().getTitle());
 
-
+        Long mentorId = request.getColumn().getMentorId();
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        request.getColumn().getMentor().getUser().getUserId()
+                        mentorService.getUserIdByMentorId(mentorId)
                         , 12L
                         , request.getColumnRequestId(),
                         notificationContent

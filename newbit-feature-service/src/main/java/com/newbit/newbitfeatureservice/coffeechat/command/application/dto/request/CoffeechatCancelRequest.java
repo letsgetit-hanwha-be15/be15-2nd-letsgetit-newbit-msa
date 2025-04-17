@@ -2,6 +2,7 @@ package com.newbit.newbitfeatureservice.coffeechat.command.application.dto.reque
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

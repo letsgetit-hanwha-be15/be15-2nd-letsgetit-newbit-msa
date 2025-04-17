@@ -1,18 +1,19 @@
 package com.newbit.newbitfeatureservice.post.service;
 
-
+import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
-import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.post.dto.request.PostCreateRequest;
 import com.newbit.newbitfeatureservice.post.dto.request.PostUpdateRequest;
 import com.newbit.newbitfeatureservice.post.dto.response.CommentResponse;
 import com.newbit.newbitfeatureservice.post.dto.response.PostDetailResponse;
 import com.newbit.newbitfeatureservice.post.dto.response.PostResponse;
+import com.newbit.newbitfeatureservice.post.entity.Comment;
 import com.newbit.newbitfeatureservice.post.entity.Post;
 import com.newbit.newbitfeatureservice.post.repository.CommentRepository;
 import com.newbit.newbitfeatureservice.post.repository.PostRepository;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.PointTransactionCommandService;
+import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,19 +29,6 @@ public class PostService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final PointTransactionCommandService pointTransactionCommandService;
-
-    @Transactional
-    public PostResponse updatePost(Long postId, PostUpdateRequest request, CustomUser user) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
-
-        if (!post.getUserId().equals(user.getUserId())) {
-            throw new BusinessException(ErrorCode.UNAUTHORIZED_TO_UPDATE_POST);
-        }
-
-        post.update(request.getTitle(), request.getContent());
-        return new PostResponse(post);
-    }
 
     @Transactional
     public PostResponse createPost(PostCreateRequest request, CustomUser user) {
@@ -66,7 +54,7 @@ public class PostService {
                 .build();
 
         postRepository.save(post);
-        pointTransactionCommandService.givePointByType(user.getUserId(), "게시글 적립", post.getId());
+        pointTransactionCommandService.givePointByType(user.getUserId(), PointTypeConstants.POSTS, post.getId());
         return new PostResponse(post);
     }
 
@@ -74,6 +62,19 @@ public class PostService {
     public List<PostResponse> searchPosts(String keyword) {
         List<Post> posts = postRepository.searchByKeyword(keyword);
         return posts.stream().map(PostResponse::new).toList();
+    }
+
+    @Transactional
+    public PostResponse updatePost(Long postId, PostUpdateRequest request, CustomUser user) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
+
+        if (!post.getUserId().equals(user.getUserId())) {
+            throw new BusinessException(ErrorCode.UNAUTHORIZED_TO_UPDATE_POST);
+        }
+
+        post.update(request.getTitle(), request.getContent());
+        return new PostResponse(post);
     }
 
     @Transactional
@@ -186,6 +187,52 @@ public class PostService {
         }
 
         post.softDelete();
+    }
+
+    @Transactional
+    public void increaseLikeCount(Long postId) {
+        Post post = postRepository.findByIdAndDeletedAtIsNull(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
+        post.increaseLikeCount();
+    }
+
+    @Transactional
+    public void decreaseLikeCount(Long postId) {
+        Post post = postRepository.findByIdAndDeletedAtIsNull(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
+        post.decreaseLikeCount();
+    }
+
+    @Transactional
+    public void increaseReportCount(Long postId) {
+        Post post = postRepository.findByIdAndDeletedAtIsNull(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
+        post.increaseReportCount();
+    }
+
+    @Transactional(readOnly = true)
+    public int getReportCountByPostId(Long postId) {
+        Post post = postRepository.findByIdAndDeletedAtIsNull(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
+        return post.getReportCount();
+    }
+
+    @Transactional(readOnly = true)
+    public Long getWriterIdByPostId(Long postId) {
+        return postRepository.findUserIdByPostId(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
+    public Post getPost(Long postId) {
+        return postRepository.findByIdAndDeletedAtIsNull(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
+    }
+    
+    @Transactional(readOnly = true)
+    public String getPostTitle(Long postId) {
+        Post post = getPost(postId);
+        return post.getTitle();
     }
 
 }

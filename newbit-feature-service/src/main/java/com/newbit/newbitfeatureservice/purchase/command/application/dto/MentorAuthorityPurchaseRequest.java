@@ -1,7 +1,7 @@
 // MentorAuthorityPurchaseRequest.java
 package com.newbit.newbitfeatureservice.purchase.command.application.dto;
 
-import com.newbit.purchase.command.domain.aggregate.PurchaseAssetType;
+import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.PurchaseAssetType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

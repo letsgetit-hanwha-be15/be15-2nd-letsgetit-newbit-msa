@@ -1,20 +1,15 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.service;
 
-
-import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
-import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
-import com.newbit.newbitfeatureservice.client.user.dto.MentorDTO;
-import com.newbit.newbitfeatureservice.client.user.dto.UserDTO;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCancelRequest;
-import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCreateRequest;
-import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.Coffeechat;
-import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.ProgressStatus;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.RequestTime;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.repository.CoffeechatRepository;
+import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCreateRequest;
+import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.Coffeechat;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.repository.RequestTimeRepository;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.request.CoffeechatSearchServiceRequest;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.CoffeechatListResponse;
 import com.newbit.newbitfeatureservice.coffeechat.query.service.CoffeechatQueryService;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.ProgressStatus;
 import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
 import com.newbit.newbitfeatureservice.coffeeletter.dto.CoffeeLetterRoomDTO;
 import com.newbit.newbitfeatureservice.coffeeletter.service.RoomService;
@@ -23,6 +18,10 @@ import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
 import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.DiamondCoffeechatTransactionCommandService;
+import com.newbit.user.dto.response.MentorDTO;
+import com.newbit.user.dto.response.UserDTO;
+import com.newbit.user.service.MentorService;
+import com.newbit.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,10 +36,11 @@ public class CoffeechatCommandService {
     private final CoffeechatRepository coffeechatRepository;
     private final CoffeechatQueryService coffeechatQueryService;
     private final RequestTimeRepository requestTimeRepository;
+    private final MentorService mentorService;
     private final DiamondCoffeechatTransactionCommandService transactionCommandService;
     private final NotificationCommandService notificationCommandService;
     private final RoomService roomService;
-    private final UserFeignClient userServiceClient;
+    private final UserService userService;
 
     /**
      * 한두 번만 사용하는 간단한 조회여서 과도한 추상화를 피하기 위해
@@ -66,16 +66,14 @@ public class CoffeechatCommandService {
         // 3. 커피챗 요청 등록(서비스 함수 생성)
         createRequestTime(coffeechat.getCoffeechatId(), request.getRequestTimes(), request.getPurchaseQuantity());
 
-        Long mentorId = userServiceClient.getUserByUserId(request.getMentorId()).getData().getUserId();
-
         // 4. 커피챗 요청 등록시 멘토에게 실시간 알림 발송
         notificationCommandService.sendNotification(
-                new NotificationSendRequest(
-                        userId
-                        , 3L
-                        , coffeechat.getCoffeechatId()
-                        , "새로운 커피챗 신청이 도착했습니다."
-                )
+               new NotificationSendRequest(
+                       mentorService.getUserIdByMentorId(request.getMentorId())
+                       , 3L
+                       , coffeechat.getCoffeechatId()
+                       , "새로운 커피챗 신청이 도착했습니다."
+               )
         );
 
         return coffeechat.getCoffeechatId();
@@ -216,17 +214,17 @@ public class CoffeechatCommandService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.COFFEECHAT_NOT_FOUND));
 
         // 2. userId가 멘티Id인지 확인하기
-        if (!coffeechat.getMenteeId().equals(userId)) {
+        if(!coffeechat.getMenteeId().equals(userId)) {
             throw new BusinessException(ErrorCode.COFFEECHAT_CANCEL_NOT_ALLOWED);
         }
 
         // 3. 커피챗이 CANCEL 상태이거나, COMPLETE 상태이면 에러
-        switch (coffeechat.getProgressStatus()) {
+        switch (coffeechat.getProgressStatus()){
             case CANCEL, COMPLETE -> throw new BusinessException(ErrorCode.INVALID_COFFEECHAT_STATUS_CANCEL);
         }
 
         // 4. 커피챗이 coffeechat_waiting 상태이면 환불 진행하기
-        if (coffeechat.getProgressStatus().equals(ProgressStatus.COFFEECHAT_WAITING)) {
+        if(coffeechat.getProgressStatus().equals(ProgressStatus.COFFEECHAT_WAITING)) {
             MentorDTO mentorDTO = mentorService.getMentorInfo(coffeechat.getMentorId());
             int totalQuantity = mentorDTO.getPrice() * coffeechat.getPurchaseQuantity();
             transactionCommandService.refundCoffeeChat(coffeechatCancelRequest.getCoffeechatId(), userId, totalQuantity);

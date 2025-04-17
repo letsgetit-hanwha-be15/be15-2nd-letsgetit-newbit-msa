@@ -3,7 +3,7 @@ package com.newbit.newbitfeatureservice.payment.command.application.dto.response
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.newbit.payment.command.application.dto.PaymentDto;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.PaymentDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

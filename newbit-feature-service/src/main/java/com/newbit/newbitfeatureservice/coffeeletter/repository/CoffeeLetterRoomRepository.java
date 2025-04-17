@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.newbit.coffeeletter.domain.chat.CoffeeLetterRoom;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
 
 public interface CoffeeLetterRoomRepository extends MongoRepository<CoffeeLetterRoom, String> {
 

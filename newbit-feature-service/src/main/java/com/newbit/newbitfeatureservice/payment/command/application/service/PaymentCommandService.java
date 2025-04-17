@@ -1,19 +1,18 @@
 package com.newbit.newbitfeatureservice.payment.command.application.service;
 
-import com.newbit.auth.model.CustomUser;
-import com.newbit.common.exception.BusinessException;
-import com.newbit.common.exception.ErrorCode;
-import com.newbit.notification.command.application.dto.request.NotificationSendRequest;
-import com.newbit.notification.command.application.service.NotificationCommandService;
-import com.newbit.payment.command.application.dto.TossPaymentApiDto;
-import com.newbit.payment.command.application.dto.request.PaymentApproveRequest;
-import com.newbit.payment.command.application.dto.request.PaymentPrepareRequest;
-import com.newbit.payment.command.application.dto.response.PaymentApproveResponse;
-import com.newbit.payment.command.application.dto.response.PaymentPrepareResponse;
-import com.newbit.payment.command.domain.aggregate.Payment;
-import com.newbit.payment.command.domain.aggregate.PaymentStatus;
-import com.newbit.payment.command.domain.repository.PaymentRepository;
-import com.newbit.purchase.command.application.service.DiamondTransactionCommandService;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
+import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
+import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.TossPaymentApiDto;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.request.PaymentApproveRequest;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.request.PaymentPrepareRequest;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.response.PaymentApproveResponse;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.response.PaymentPrepareResponse;
+import com.newbit.newbitfeatureservice.payment.command.domain.aggregate.Payment;
+import com.newbit.newbitfeatureservice.payment.command.domain.aggregate.PaymentStatus;
+import com.newbit.newbitfeatureservice.payment.command.domain.repository.PaymentRepository;
+import com.newbit.newbitfeatureservice.purchase.command.application.service.DiamondTransactionCommandService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

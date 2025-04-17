@@ -1,6 +1,5 @@
 package com.newbit.newbitfeatureservice.column.domain;
 
-import com.newbit.user.entity.Mentor;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -54,9 +53,8 @@ public class Column {
     @Builder.Default
     private List<ColumnRequest> requests = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "mentor_id")
-    private Long mentor_id;
+    @jakarta.persistence.Column(name = "mentor_id")
+    private Long mentorId;
 
     @ManyToOne
     @JoinColumn(name = "series_id")

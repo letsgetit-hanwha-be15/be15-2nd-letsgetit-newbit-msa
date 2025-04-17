@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.newbit.payment.command.application.dto.TossPaymentApiDto;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.TossPaymentApiDto;
 
 import lombok.RequiredArgsConstructor;
 

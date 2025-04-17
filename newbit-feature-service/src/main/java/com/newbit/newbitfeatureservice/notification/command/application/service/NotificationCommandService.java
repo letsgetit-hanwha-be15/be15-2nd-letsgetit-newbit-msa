@@ -1,14 +1,13 @@
 package com.newbit.newbitfeatureservice.notification.command.application.service;
 
-
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
-import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
 import com.newbit.newbitfeatureservice.notification.command.application.dto.response.NotificationSendResponse;
 import com.newbit.newbitfeatureservice.notification.command.domain.aggregate.Notification;
 import com.newbit.newbitfeatureservice.notification.command.domain.aggregate.NotificationType;
 import com.newbit.newbitfeatureservice.notification.command.domain.repository.NotificationRepository;
 import com.newbit.newbitfeatureservice.notification.command.domain.repository.NotificationTypeRepository;
+import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
 import com.newbit.newbitfeatureservice.notification.command.infrastructure.SseEmitterRepository;
 import lombok.RequiredArgsConstructor;
 

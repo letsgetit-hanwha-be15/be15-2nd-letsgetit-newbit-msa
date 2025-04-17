@@ -2,7 +2,7 @@ package com.newbit.newbitfeatureservice.report.command.domain.repository;
 
 import java.util.List;
 
-import com.newbit.report.command.domain.aggregate.Report;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.Report;
 
 public interface ReportRepository {
     

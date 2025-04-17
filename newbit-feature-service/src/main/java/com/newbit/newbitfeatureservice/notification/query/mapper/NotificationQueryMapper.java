@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.notification.query.mapper;
 
-import com.newbit.notification.query.dto.NotificationResponse;
+import com.newbit.newbitfeatureservice.notification.query.dto.NotificationResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

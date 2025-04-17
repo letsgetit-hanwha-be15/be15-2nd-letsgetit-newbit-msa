@@ -1,6 +1,5 @@
 package com.newbit.newbitfeatureservice.coffeechat.query.dto.request;
 
-import com.newbit.coffeechat.command.domain.aggregate.ProgressStatus;
 import lombok.Getter;
 import lombok.Setter;
 

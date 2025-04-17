@@ -1,8 +1,6 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.service;
 
-
 import com.newbit.newbitfeatureservice.coffeechat.command.application.service.CoffeechatCommandService;
-import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.Authority;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.CoffeechatDto;
 import com.newbit.newbitfeatureservice.coffeechat.query.service.CoffeechatQueryService;
 import com.newbit.newbitfeatureservice.column.service.ColumnRequestService;
@@ -13,8 +11,16 @@ import com.newbit.newbitfeatureservice.notification.command.application.service.
 import com.newbit.newbitfeatureservice.purchase.command.application.dto.CoffeeChatPurchaseRequest;
 import com.newbit.newbitfeatureservice.purchase.command.application.dto.ColumnPurchaseRequest;
 import com.newbit.newbitfeatureservice.purchase.command.application.dto.MentorAuthorityPurchaseRequest;
+import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
 import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.*;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.*;
+import com.newbit.purchase.command.domain.aggregate.*;
+import com.newbit.purchase.command.domain.repository.*;
+import com.newbit.user.dto.response.MentorDTO;
+import com.newbit.user.dto.response.UserDTO;
+import com.newbit.user.entity.Authority;
+import com.newbit.user.service.MentorService;
+import com.newbit.user.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -115,9 +121,7 @@ public class PurchaseCommandService {
         coffeechatCommandService.markAsPurchased(coffeechatId);
 
         // 2. 멘티 다이아 차감
-        userService.useDiamond(menteeId, totalPrice);
-
-        Integer balance = userService.getDiamondBalance(menteeId);
+        Integer balance = userService.useDiamond(menteeId, totalPrice);
 
         // 3. 다이아 내역 저장
         diamondHistoryRepository.save(DiamondHistory.forCoffeechatPurchase(menteeId, coffeechatId, totalPrice, balance));
@@ -140,9 +144,8 @@ public class PurchaseCommandService {
         // 1. 유저 조회
         UserDTO userDto = userService.getUserByUserId(userId);
 
-        PointType mentorAuthorityType = pointTypeRepository.findById(5L)
+        PointType mentorAuthorityType = pointTypeRepository.findByPointTypeName(PointTypeConstants.MENTOR_AUTHORITY_PURCHASE)
                 .orElseThrow(() -> new BusinessException(ErrorCode.POINT_TYPE_NOT_FOUND));
-
 
         //2. 이미 멘토인지 확인
         if (userDto.getAuthority() == Authority.MENTOR) {

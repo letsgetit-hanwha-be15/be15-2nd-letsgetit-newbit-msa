@@ -1,6 +1,14 @@
 package com.newbit.newbitfeatureservice.column.service;
 
+import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.newbit.newbitfeatureservice.column.domain.Column;
 import com.newbit.newbitfeatureservice.column.dto.response.GetColumnDetailResponseDto;
 import com.newbit.newbitfeatureservice.column.dto.response.GetColumnListResponseDto;
 import com.newbit.newbitfeatureservice.column.dto.response.GetMyColumnListResponseDto;
@@ -9,13 +17,9 @@ import com.newbit.newbitfeatureservice.column.repository.ColumnRepository;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.purchase.query.service.ColumnPurchaseHistoryQueryService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import com.newbit.user.service.MentorService;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -45,19 +49,63 @@ public class ColumnService {
     }
 
     public List<GetMyColumnListResponseDto> getMyColumnList(Long userId) {
-
-
-        Mentor mentor = mentorService.getMentorEntityByUserId(userId);
-
-
-
-
+        Long mentorId = mentorService.getMentorIdByUserId(userId);
 
         List<Column> columns = columnRepository
-                .findAllByMentor_MentorIdAndIsPublicTrueOrderByCreatedAtDesc(mentor.getMentorId());
+                .findAllByMentorIdAndIsPublicTrueOrderByCreatedAtDesc(mentorId);
 
         return columns.stream()
                 .map(columnMapper::toMyColumnListDto)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Column getColumn(Long columnId) {
+        return columnRepository.findById(columnId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.COLUMN_NOT_FOUND));
+    }
+    
+    @Transactional
+    public void increaseLikeCount(Long columnId) {
+        Column column = getColumn(columnId);
+        column.increaseLikeCount();
+        columnRepository.save(column);
+    }
+
+    @Transactional
+    public void decreaseLikeCount(Long columnId) {
+        Column column = getColumn(columnId);
+        column.decreaseLikeCount();
+        columnRepository.save(column);
+    }
+    
+    @Transactional(readOnly = true)
+    public String getColumnTitle(Long columnId) {
+        Column column = getColumn(columnId);
+        return column.getTitle();
+    }
+    
+    @Transactional(readOnly = true)
+    public boolean isColumnAuthor(Long columnId, Long userId) {
+        Column column = getColumn(columnId);
+        return isColumnAuthor(column, userId);
+    }
+    
+    @Transactional(readOnly = true)
+    public boolean isColumnAuthor(Column column, Long userId) {
+        Long mentorId = column.getMentorId();
+        Long authorId = getUserIdByMentorId(mentorId);
+        return userId.equals(authorId);
+    }
+    
+    @Transactional(readOnly = true)
+    public Long getUserIdByMentorId(Long mentorId) {
+        return mentorService.getUserIdByMentorId(mentorId);
+    }
+    
+    @Transactional(readOnly = true)
+    public Long getMentorIdByColumnId(Long columnId) {
+        Column column = getColumn(columnId);
+        return column.getMentorId();
     }
 }

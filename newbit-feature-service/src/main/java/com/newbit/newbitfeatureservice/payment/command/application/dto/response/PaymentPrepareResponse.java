@@ -1,7 +1,7 @@
 package com.newbit.newbitfeatureservice.payment.command.application.dto.response;
 
-import com.newbit.payment.command.domain.aggregate.PaymentMethod;
-import com.newbit.payment.command.domain.aggregate.PaymentStatus;
+import com.newbit.newbitfeatureservice.payment.command.domain.aggregate.PaymentMethod;
+import com.newbit.newbitfeatureservice.payment.command.domain.aggregate.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

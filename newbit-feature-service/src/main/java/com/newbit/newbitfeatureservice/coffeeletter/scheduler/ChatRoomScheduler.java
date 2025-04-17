@@ -8,11 +8,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.newbit.coffeeletter.domain.chat.CoffeeLetterRoom;
-import com.newbit.coffeeletter.domain.chat.CoffeeLetterRoom.RoomStatus;
-import com.newbit.coffeeletter.dto.CoffeeLetterRoomDTO;
-import com.newbit.coffeeletter.repository.CoffeeLetterRoomRepository;
-import com.newbit.coffeeletter.service.ChatService;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom.RoomStatus;
+import com.newbit.newbitfeatureservice.coffeeletter.dto.CoffeeLetterRoomDTO;
+import com.newbit.newbitfeatureservice.coffeeletter.repository.CoffeeLetterRoomRepository;
+import com.newbit.newbitfeatureservice.coffeeletter.service.ChatService;
 
 import lombok.extern.slf4j.Slf4j;
 

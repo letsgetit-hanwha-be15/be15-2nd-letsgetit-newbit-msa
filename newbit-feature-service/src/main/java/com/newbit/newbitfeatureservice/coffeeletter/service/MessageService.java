@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.newbit.coffeeletter.dto.ChatMessageDTO;
+import com.newbit.newbitfeatureservice.coffeeletter.dto.ChatMessageDTO;
 
 public interface MessageService {
 

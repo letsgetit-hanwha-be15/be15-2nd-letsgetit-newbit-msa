@@ -2,7 +2,7 @@ package com.newbit.newbitfeatureservice.report.query.dto.response;
 
 import java.time.LocalDateTime;
 
-import com.newbit.report.command.domain.aggregate.ReportStatus;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.ReportStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

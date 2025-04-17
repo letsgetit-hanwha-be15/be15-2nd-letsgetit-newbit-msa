@@ -1,10 +1,10 @@
 package com.newbit.newbitfeatureservice.column.controller;
 
 import com.newbit.auth.model.CustomUser;
-import com.newbit.column.dto.request.ApproveColumnRequestDto;
-import com.newbit.column.dto.request.RejectColumnRequestDto;
-import com.newbit.column.dto.response.AdminColumnResponseDto;
-import com.newbit.column.service.AdminColumnService;
+import com.newbit.newbitfeatureservice.column.dto.request.ApproveColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.request.RejectColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.response.AdminColumnResponseDto;
+import com.newbit.newbitfeatureservice.column.service.AdminColumnService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "칼럼 승인 API", description = "공개된 컬럼 조회 관련 API")
-@RequestMapping("/admin/columns")
+@RequestMapping("/api/v1/admin/columns")
 public class AdminColumnController {
 
     private final AdminColumnService adminColumnService;

@@ -1,15 +1,16 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.service;
 
-
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.ReviewCreateRequest;
-import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.ProgressStatus;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.Review;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.repository.ReviewRepository;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.CoffeechatDto;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.ProgressStatus;
 import com.newbit.newbitfeatureservice.coffeechat.query.service.CoffeechatQueryService;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.PointTransactionCommandService;
+import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
+import com.newbit.user.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,7 +67,7 @@ public class ReviewCommandService {
         // 5. 코멘트까지 등록 시 멘티에게 50포인트 지급
         if(request.getComment() != null) {
             pointTransactionCommandService.givePointByType(
-                    coffeechatDto.getMenteeId(), "커피챗 리뷰 적립", review.getReviewId()
+                    coffeechatDto.getMenteeId(), PointTypeConstants.REVIEW, review.getReviewId()
             );
         }
 

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.newbit.auth.model.CustomUser;
-import com.newbit.like.dto.response.LikedColumnListResponse;
-import com.newbit.like.dto.response.LikedPostListResponse;
-import com.newbit.like.service.ColumnLikeService;
-import com.newbit.like.service.PostLikeService;
+import com.newbit.newbitfeatureservice.like.dto.response.LikedColumnListResponse;
+import com.newbit.newbitfeatureservice.like.dto.response.LikedPostListResponse;
+import com.newbit.newbitfeatureservice.like.service.ColumnLikeService;
+import com.newbit.newbitfeatureservice.like.service.PostLikeService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/users/likes")
+@RequestMapping("/api/v1/users/likes")
 @RequiredArgsConstructor
 @Tag(name = "좋아요 조회 API", description = "사용자가 좋아요한 게시물과 칼럼 조회 API")
 public class UserLikesController {

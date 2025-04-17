@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.newbit.auth.model.CustomUser;
-import com.newbit.subscription.dto.request.SubscriptionRequest;
-import com.newbit.subscription.dto.response.SubscriptionResponse;
-import com.newbit.subscription.dto.response.SubscriptionStatusResponse;
-import com.newbit.subscription.service.SubscriptionService;
+import com.newbit.newbitfeatureservice.subscription.dto.request.SubscriptionRequest;
+import com.newbit.newbitfeatureservice.subscription.dto.response.SubscriptionResponse;
+import com.newbit.newbitfeatureservice.subscription.dto.response.SubscriptionStatusResponse;
+import com.newbit.newbitfeatureservice.subscription.service.SubscriptionService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,7 +31,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @RestController
-@RequestMapping("/subscriptions")
+@RequestMapping("/api/v1/subscriptions")
 @RequiredArgsConstructor
 @Tag(name = "시리즈 구독 API", description = "시리즈 구독 관련 API")
 public class SubscriptionController {

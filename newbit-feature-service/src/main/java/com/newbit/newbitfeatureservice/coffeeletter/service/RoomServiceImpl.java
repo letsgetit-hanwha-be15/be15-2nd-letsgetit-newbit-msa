@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.newbit.coffeeletter.domain.chat.CoffeeLetterRoom;
-import com.newbit.coffeeletter.dto.CoffeeLetterRoomDTO;
-import com.newbit.coffeeletter.repository.CoffeeLetterRoomRepository;
-import com.newbit.coffeeletter.util.RoomUtils;
-import com.newbit.common.exception.BusinessException;
-import com.newbit.common.exception.ErrorCode;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
+import com.newbit.newbitfeatureservice.coffeeletter.dto.CoffeeLetterRoomDTO;
+import com.newbit.newbitfeatureservice.coffeeletter.repository.CoffeeLetterRoomRepository;
+import com.newbit.newbitfeatureservice.coffeeletter.util.RoomUtils;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 
 import lombok.extern.slf4j.Slf4j;
 

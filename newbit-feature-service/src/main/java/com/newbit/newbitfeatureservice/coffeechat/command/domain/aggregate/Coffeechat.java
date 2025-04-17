@@ -1,5 +1,6 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate;
 
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.ProgressStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

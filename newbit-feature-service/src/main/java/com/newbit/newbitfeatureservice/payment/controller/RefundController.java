@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.newbit.common.dto.ApiResponse;
-import com.newbit.payment.command.application.dto.request.PaymentCancelRequest;
-import com.newbit.payment.command.application.dto.response.PaymentRefundResponse;
-import com.newbit.payment.command.application.service.RefundCommandService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.request.PaymentCancelRequest;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.response.PaymentRefundResponse;
+import com.newbit.newbitfeatureservice.payment.command.application.service.RefundCommandService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/refunds")
+@RequestMapping("/api/v1/refunds")
 @RequiredArgsConstructor
 @Tag(name = "결제 취소/환불 API", description = "결제 취소/환불 관련 API")
 public class RefundController extends AbstractApiController {

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.newbit.coffeeletter.domain.chat.CoffeeLetterRoom;
-import com.newbit.coffeeletter.dto.CoffeeLetterRoomDTO;
-import com.newbit.coffeeletter.service.RoomService;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
+import com.newbit.newbitfeatureservice.coffeeletter.dto.CoffeeLetterRoomDTO;
+import com.newbit.newbitfeatureservice.coffeeletter.service.RoomService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/coffeeletter/rooms")
+@RequestMapping("/api/v1/coffeeletter/rooms")
 @Tag(name = "채팅방 API", description = "커피레터 채팅방 관련 API")
 public class RoomController {
 

@@ -1,10 +1,10 @@
 package com.newbit.newbitfeatureservice.purchase.query.controller;
 
 import com.newbit.auth.model.CustomUser;
-import com.newbit.common.dto.ApiResponse;
-import com.newbit.purchase.query.dto.request.HistoryRequest;
-import com.newbit.purchase.query.dto.response.ColumnPurchaseHistoryListResponse;
-import com.newbit.purchase.query.service.ColumnPurchaseHistoryQueryService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.purchase.query.dto.request.HistoryRequest;
+import com.newbit.newbitfeatureservice.purchase.query.dto.response.ColumnPurchaseHistoryListResponse;
+import com.newbit.newbitfeatureservice.purchase.query.service.ColumnPurchaseHistoryQueryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

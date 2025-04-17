@@ -2,7 +2,7 @@ package com.newbit.newbitfeatureservice.payment.controller;
 
 import org.springframework.http.ResponseEntity;
 
-import com.newbit.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 
 public abstract class AbstractApiController {
 

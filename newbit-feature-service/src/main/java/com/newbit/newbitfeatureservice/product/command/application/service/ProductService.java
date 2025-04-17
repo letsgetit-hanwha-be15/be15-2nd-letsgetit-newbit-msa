@@ -7,13 +7,13 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.newbit.common.exception.BusinessException;
-import com.newbit.common.exception.ErrorCode;
-import com.newbit.product.command.application.dto.request.ProductCreateRequest;
-import com.newbit.product.command.application.dto.request.ProductUpdateRequest;
-import com.newbit.product.command.application.dto.response.ProductResponse;
-import com.newbit.product.command.domain.aggregate.Product;
-import com.newbit.product.command.domain.repository.ProductRepository;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
+import com.newbit.newbitfeatureservice.product.command.application.dto.request.ProductCreateRequest;
+import com.newbit.newbitfeatureservice.product.command.application.dto.request.ProductUpdateRequest;
+import com.newbit.newbitfeatureservice.product.command.application.dto.response.ProductResponse;
+import com.newbit.newbitfeatureservice.product.command.domain.aggregate.Product;
+import com.newbit.newbitfeatureservice.product.command.domain.repository.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
 

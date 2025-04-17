@@ -1,10 +1,10 @@
 package com.newbit.newbitfeatureservice.settlement.controller;
 
 import com.newbit.auth.model.CustomUser;
-import com.newbit.common.dto.ApiResponse;
-import com.newbit.settlement.dto.response.MentorSettlementDetailResponseDto;
-import com.newbit.settlement.dto.response.MentorSettlementListResponseDto;
-import com.newbit.settlement.service.MentorSettlementService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.settlement.dto.response.MentorSettlementDetailResponseDto;
+import com.newbit.newbitfeatureservice.settlement.dto.response.MentorSettlementListResponseDto;
+import com.newbit.newbitfeatureservice.settlement.service.MentorSettlementService;
 import com.newbit.user.service.MentorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/settlements")
+@RequestMapping("/api/v1/settlements")
 @Tag(name = "정산 API", description = "멘토 월별 정산 관련 API")
 public class MentorSettlementController {
 
@@ -43,7 +43,7 @@ public class MentorSettlementController {
             @RequestParam(defaultValue = "10") int size
     ) {
         Long userId = customUser.getUserId();
-        Long mentorId = mentorService.getMentorEntityByUserId(userId).getMentorId();
+        Long mentorId = mentorService.getMentorIdByUserId(userId);
         MentorSettlementListResponseDto response = mentorSettlementService.getMySettlements(mentorId, page, size);
         return ApiResponse.success(response);
     }
@@ -65,7 +65,7 @@ public class MentorSettlementController {
             @PathVariable Long settlementId
     ) {
         Long userId = customUser.getUserId();
-        Long mentorId = mentorService.getMentorEntityByUserId(userId).getMentorId();
+        Long mentorId = mentorService.getMentorIdByUserId(userId);
         mentorSettlementService.sendSettlementEmail(mentorId, settlementId);
         return ApiResponse.success(null);
     }

@@ -1,8 +1,7 @@
 package com.newbit.newbitfeatureservice.column.domain;
 
-import com.newbit.column.enums.RequestType;
+import com.newbit.newbitfeatureservice.column.enums.RequestType;
 import jakarta.persistence.*;
-import jakarta.persistence.Column;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

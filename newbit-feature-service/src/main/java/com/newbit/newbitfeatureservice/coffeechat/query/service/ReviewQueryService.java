@@ -1,11 +1,10 @@
 package com.newbit.newbitfeatureservice.coffeechat.query.service;
 
-import com.newbit.coffeechat.query.dto.request.ReviewSearchServiceRequest;
-import com.newbit.coffeechat.query.dto.response.CoffeechatListResponse;
-import com.newbit.coffeechat.query.dto.response.ReviewListDto;
-import com.newbit.coffeechat.query.dto.response.ReviewListResponse;
-import com.newbit.coffeechat.query.mapper.ReviewMapper;
-import com.newbit.common.dto.Pagination;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.request.ReviewSearchServiceRequest;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.ReviewListDto;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.ReviewListResponse;
+import com.newbit.newbitfeatureservice.coffeechat.query.mapper.ReviewMapper;
+import com.newbit.newbitfeatureservice.common.dto.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

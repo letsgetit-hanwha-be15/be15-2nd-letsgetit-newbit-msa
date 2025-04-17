@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.notification.command.application.dto.response;
 
-import com.newbit.notification.command.domain.aggregate.Notification;
+import com.newbit.newbitfeatureservice.notification.command.domain.aggregate.Notification;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

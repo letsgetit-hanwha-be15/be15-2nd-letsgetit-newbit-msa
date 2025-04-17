@@ -3,7 +3,7 @@ package com.newbit.newbitfeatureservice.product.command.application.dto.response
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.newbit.product.command.domain.aggregate.Product;
+import com.newbit.newbitfeatureservice.product.command.domain.aggregate.Product;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

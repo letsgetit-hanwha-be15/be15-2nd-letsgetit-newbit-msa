@@ -1,17 +1,16 @@
 package com.newbit.newbitfeatureservice.payment.command.application.service;
 
-import com.newbit.common.exception.BusinessException;
-import com.newbit.common.exception.ErrorCode;
-import com.newbit.notification.command.application.dto.request.NotificationSendRequest;
-import com.newbit.notification.command.application.service.NotificationCommandService;
-import com.newbit.payment.command.application.dto.TossPaymentApiDto;
-import com.newbit.payment.command.application.dto.response.PaymentRefundResponse;
-import com.newbit.payment.command.domain.aggregate.Payment;
-import com.newbit.payment.command.domain.aggregate.PaymentStatus;
-import com.newbit.payment.command.domain.aggregate.Refund;
-import com.newbit.payment.command.domain.repository.PaymentRepository;
-import com.newbit.payment.command.domain.repository.RefundRepository;
-import com.newbit.purchase.command.application.service.DiamondTransactionCommandService;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
+import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
+import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.TossPaymentApiDto;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.response.PaymentRefundResponse;
+import com.newbit.newbitfeatureservice.payment.command.domain.aggregate.Payment;
+import com.newbit.newbitfeatureservice.payment.command.domain.aggregate.Refund;
+import com.newbit.newbitfeatureservice.payment.command.domain.repository.PaymentRepository;
+import com.newbit.newbitfeatureservice.payment.command.domain.repository.RefundRepository;
+import com.newbit.newbitfeatureservice.purchase.command.application.service.DiamondTransactionCommandService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

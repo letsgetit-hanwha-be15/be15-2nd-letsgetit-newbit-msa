@@ -1,7 +1,7 @@
 package com.newbit.newbitfeatureservice.notification.query.service;
 
-import com.newbit.notification.query.dto.NotificationResponse;
-import com.newbit.notification.query.mapper.NotificationQueryMapper;
+import com.newbit.newbitfeatureservice.notification.query.dto.NotificationResponse;
+import com.newbit.newbitfeatureservice.notification.query.mapper.NotificationQueryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

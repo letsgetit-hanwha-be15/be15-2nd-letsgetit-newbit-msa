@@ -1,24 +1,22 @@
 package com.newbit.newbitfeatureservice.like.service;
 
+import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.newbit.common.exception.BusinessException;
-import com.newbit.like.repository.LikeRepository;
-import com.newbit.purchase.command.application.service.PointTransactionCommandService;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.like.repository.LikeRepository;
+import com.newbit.newbitfeatureservice.purchase.command.application.service.PointTransactionCommandService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PointRewardService {
     
     private final LikeRepository likeRepository;
     private final PointTransactionCommandService pointTransactionCommandService;
-    private static final String POST_LIKE_POINT_TYPE = "게시글 좋아요";
-    
+
     @Transactional
     public void givePointIfFirstLike(Long postId, Long userId, Long authorId) {
         if (isFirstLike(postId, userId)) {
@@ -32,14 +30,11 @@ public class PointRewardService {
     
     private void givePointToAuthor(Long authorId, Long postId) {
         try {
-            pointTransactionCommandService.givePointByType(authorId, POST_LIKE_POINT_TYPE, postId);
-            log.info("게시글 좋아요 포인트 지급 성공: authorId={}, postId={}", authorId, postId);
+            pointTransactionCommandService.givePointByType(authorId, PointTypeConstants.LIKES, postId);
         } catch (BusinessException e) {
-            log.error("포인트 지급 중 비즈니스 예외 발생: authorId={}, postId={}, errorCode={}, message={}", 
-                    authorId, postId, e.getErrorCode(), e.getMessage());
+            // 비즈니스 예외 처리
         } catch (Exception e) {
-            log.error("포인트 지급 중 예기치 않은 오류 발생: authorId={}, postId={}, error={}", 
-                    authorId, postId, e.getMessage(), e);
+            // 예기치 않은 오류 처리
         }
     }
 } 

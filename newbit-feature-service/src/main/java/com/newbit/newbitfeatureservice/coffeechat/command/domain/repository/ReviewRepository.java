@@ -1,6 +1,5 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.domain.repository;
 
-
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.Review;
 
 import java.util.Optional;

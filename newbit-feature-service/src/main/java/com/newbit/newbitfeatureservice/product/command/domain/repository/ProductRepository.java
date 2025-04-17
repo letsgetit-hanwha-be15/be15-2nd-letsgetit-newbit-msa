@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.product.command.domain.repository;
 
-import com.newbit.product.command.domain.aggregate.Product;
+import com.newbit.newbitfeatureservice.product.command.domain.aggregate.Product;
 
 import java.util.List;
 import java.util.Optional;

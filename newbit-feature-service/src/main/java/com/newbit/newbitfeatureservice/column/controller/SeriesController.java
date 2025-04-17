@@ -1,11 +1,12 @@
 package com.newbit.newbitfeatureservice.column.controller;
 
 import com.newbit.auth.model.CustomUser;
-import com.newbit.column.dto.request.CreateSeriesRequestDto;
-import com.newbit.column.dto.request.UpdateSeriesRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.request.CreateSeriesRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.request.UpdateSeriesRequestDto;
 import com.newbit.column.dto.response.*;
-import com.newbit.column.service.SeriesService;
-import com.newbit.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.column.dto.response.*;
+import com.newbit.newbitfeatureservice.column.service.SeriesService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/series")
+@RequestMapping("/api/v1/series")
 @Tag(name = "시리즈 API", description = "시리즈 관련 API")
 public class SeriesController {
 

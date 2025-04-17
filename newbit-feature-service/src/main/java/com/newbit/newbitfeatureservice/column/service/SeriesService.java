@@ -1,22 +1,27 @@
 package com.newbit.newbitfeatureservice.column.service;
 
-import com.newbit.column.domain.Column;
-import com.newbit.column.dto.request.UpdateSeriesRequestDto;
-import com.newbit.column.dto.response.*;
-import com.newbit.column.repository.ColumnRepository;
-import com.newbit.column.dto.request.CreateSeriesRequestDto;
-import com.newbit.column.domain.Series;
-import com.newbit.column.mapper.SeriesMapper;
-import com.newbit.column.repository.SeriesRepository;
-import com.newbit.user.entity.Mentor;
-import com.newbit.user.service.MentorService;
-import com.newbit.common.exception.BusinessException;
-import com.newbit.common.exception.ErrorCode;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.newbit.newbitfeatureservice.column.domain.Column;
+import com.newbit.newbitfeatureservice.column.domain.Series;
+import com.newbit.newbitfeatureservice.column.dto.request.CreateSeriesRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.request.UpdateSeriesRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.response.CreateSeriesResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.GetMySeriesListResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.GetSeriesColumnsResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.GetSeriesDetailResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.UpdateSeriesResponseDto;
+import com.newbit.newbitfeatureservice.column.mapper.SeriesMapper;
+import com.newbit.newbitfeatureservice.column.repository.ColumnRepository;
+import com.newbit.newbitfeatureservice.column.repository.SeriesRepository;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
+import com.newbit.user.service.MentorService;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +35,7 @@ public class SeriesService {
     @Transactional
     public CreateSeriesResponseDto createSeries(CreateSeriesRequestDto dto, Long userId) {
         // 1. 유저 → 멘토 엔티티 조회
-        Mentor mentor = mentorService.getMentorEntityByUserId(userId);
+        Long mentorId = mentorService.getMentorIdByUserId(userId);
 
         // 2. 빈 칼럼 리스트 방지
         if (dto.getColumnIds() == null || dto.getColumnIds().isEmpty()) {
@@ -46,7 +51,7 @@ public class SeriesService {
 
         // 4. 본인 칼럼인지 확인
         boolean hasInvalidOwner = columns.stream()
-                .anyMatch(column -> !column.getMentor().getMentorId().equals(mentor.getMentorId()));
+                .anyMatch(column -> !column.getMentorId().equals(mentorId));
         if (hasInvalidOwner) {
             throw new BusinessException(ErrorCode.COLUMN_NOT_OWNED);
         }
@@ -71,7 +76,7 @@ public class SeriesService {
     @Transactional
     public UpdateSeriesResponseDto updateSeries(Long seriesId, UpdateSeriesRequestDto dto, Long userId) {
         // 1. 멘토 조회
-        Mentor mentor = mentorService.getMentorEntityByUserId(userId);
+        Long mentorId = mentorService.getMentorIdByUserId(userId);
 
         // 2. 시리즈 조회
         Series series = seriesRepository.findById(seriesId)
@@ -85,7 +90,7 @@ public class SeriesService {
         }
 
         boolean hasInvalidOwner = columns.stream()
-                .anyMatch(column -> !column.getMentor().getMentorId().equals(mentor.getMentorId()));
+                .anyMatch(column -> !column.getMentorId().equals(mentorId));
 
         if (hasInvalidOwner) {
             throw new BusinessException(ErrorCode.COLUMN_NOT_OWNED);
@@ -121,7 +126,7 @@ public class SeriesService {
 
     @Transactional
     public void deleteSeries(Long seriesId, Long userId) {
-        Mentor mentor = mentorService.getMentorEntityByUserId(userId);
+        Long mentorId = mentorService.getMentorIdByUserId(userId);
 
         Series series = seriesRepository.findById(seriesId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.SERIES_NOT_FOUND));
@@ -130,8 +135,8 @@ public class SeriesService {
         List<Column> columns = columnRepository.findAllBySeries_SeriesId(seriesId);
 
         boolean isOwner = columns.stream().allMatch(
-                column -> column.getMentor().getMentorId().equals(mentor.getMentorId())
-        );
+                column -> column.getMentorId().equals(mentorId));
+
         if (!isOwner) {
             throw new BusinessException(ErrorCode.COLUMN_NOT_OWNED);
         }
@@ -145,6 +150,12 @@ public class SeriesService {
     }
 
     @Transactional(readOnly = true)
+    public Series getSeries(Long seriesId) {
+        return seriesRepository.findById(seriesId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.SERIES_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
     public GetSeriesDetailResponseDto getSeriesDetail(Long seriesId) {
         Series series = seriesRepository.findById(seriesId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.SERIES_NOT_FOUND));
@@ -154,8 +165,8 @@ public class SeriesService {
 
     @Transactional(readOnly = true)
     public List<GetMySeriesListResponseDto> getMySeriesList(Long userId) {
-        Mentor mentor = mentorService.getMentorEntityByUserId(userId);
-        List<Series> seriesList = seriesRepository.findAllByMentor_MentorIdOrderByCreatedAtDesc(mentor.getMentorId());
+        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        List<Series> seriesList = seriesRepository.findAllByMentorIdOrderByCreatedAtDesc(mentorId);
         return seriesList.stream()
                 .map(seriesMapper::toMySeriesListDto)
                 .toList();

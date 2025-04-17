@@ -1,10 +1,10 @@
 package com.newbit.newbitfeatureservice.purchase.query.service;
 
-import com.newbit.common.dto.Pagination;
-import com.newbit.purchase.query.dto.request.HistoryRequest;
-import com.newbit.purchase.query.dto.response.SaleHistoryDto;
-import com.newbit.purchase.query.dto.response.SaleHistoryListResponse;
-import com.newbit.purchase.query.repository.SaleHistoryMapper;
+import com.newbit.newbitfeatureservice.common.dto.Pagination;
+import com.newbit.newbitfeatureservice.purchase.query.dto.request.HistoryRequest;
+import com.newbit.newbitfeatureservice.purchase.query.dto.response.SaleHistoryDto;
+import com.newbit.newbitfeatureservice.purchase.query.dto.response.SaleHistoryListResponse;
+import com.newbit.newbitfeatureservice.purchase.query.repository.SaleHistoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

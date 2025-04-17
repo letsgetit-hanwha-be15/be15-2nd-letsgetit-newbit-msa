@@ -1,11 +1,10 @@
 package com.newbit.newbitfeatureservice.notification.command.application.controller;
 
 import com.newbit.auth.model.CustomUser;
-import com.newbit.common.dto.ApiResponse;
-import com.newbit.notification.command.application.dto.request.NotificationSendRequest;
-import com.newbit.notification.command.application.service.NotificationCommandService;
-import com.newbit.notification.command.domain.repository.NotificationRepository;
-import com.newbit.notification.command.infrastructure.SseEmitterRepository;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
+import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
+import com.newbit.newbitfeatureservice.notification.command.infrastructure.SseEmitterRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -22,7 +21,7 @@ import java.util.UUID;
 
 @Tag(name = "알림 API", description = "알림 연결, 발송 API")
 @RestController
-@RequestMapping("/notification")
+@RequestMapping("/api/v1/notification")
 @RequiredArgsConstructor
 public class NotificationCommandController {
 

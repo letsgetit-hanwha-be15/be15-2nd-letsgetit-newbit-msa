@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;
 
-import com.newbit.coffeeletter.domain.chat.ChatMessage;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.ChatMessage;
 
 public interface ChatMessageRepository extends MongoRepository<ChatMessage, String> {
 

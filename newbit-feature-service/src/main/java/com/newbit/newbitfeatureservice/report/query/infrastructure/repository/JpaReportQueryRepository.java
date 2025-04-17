@@ -12,11 +12,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.newbit.report.command.domain.aggregate.Report;
-import com.newbit.report.command.domain.aggregate.ReportStatus;
-import com.newbit.report.query.domain.repository.ReportQueryRepository;
-import com.newbit.report.query.dto.response.ReportDTO;
-import com.newbit.report.query.dto.response.ReportTypeDTO;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.Report;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.ReportStatus;
+import com.newbit.newbitfeatureservice.report.query.domain.repository.ReportQueryRepository;
+import com.newbit.newbitfeatureservice.report.query.dto.response.ReportDTO;
+import com.newbit.newbitfeatureservice.report.query.dto.response.ReportTypeDTO;
 
 @Repository
 public class JpaReportQueryRepository implements ReportQueryRepository {

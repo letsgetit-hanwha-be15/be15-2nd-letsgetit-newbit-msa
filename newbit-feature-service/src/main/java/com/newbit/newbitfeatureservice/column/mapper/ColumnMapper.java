@@ -1,26 +1,25 @@
 package com.newbit.newbitfeatureservice.column.mapper;
 
-import com.newbit.column.domain.Series;
-import com.newbit.column.dto.request.CreateColumnRequestDto;
-import com.newbit.column.domain.Column;
-import com.newbit.column.domain.ColumnRequest;
-import com.newbit.column.dto.response.GetMyColumnListResponseDto;
-import com.newbit.column.dto.response.GetMyColumnRequestResponseDto;
-import com.newbit.column.enums.RequestType;
-import com.newbit.user.entity.Mentor;
+import com.newbit.newbitfeatureservice.column.domain.Series;
+import com.newbit.newbitfeatureservice.column.dto.request.CreateColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.domain.Column;
+import com.newbit.newbitfeatureservice.column.domain.ColumnRequest;
+import com.newbit.newbitfeatureservice.column.dto.response.GetMyColumnListResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.GetMyColumnRequestResponseDto;
+import com.newbit.newbitfeatureservice.column.enums.RequestType;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ColumnMapper {
 
-    public Column toColumn(CreateColumnRequestDto dto, Mentor mentor, Series series) {
+    public Column toColumn(CreateColumnRequestDto dto, Long mentorId, Series series) {
         return Column.builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .price(dto.getPrice())
                 .series(series)
                 .thumbnailUrl(dto.getThumbnailUrl())
-                .mentor(mentor)
+                .mentorId(mentorId)
                 .isPublic(false)
                 .likeCount(0)
                 .build();

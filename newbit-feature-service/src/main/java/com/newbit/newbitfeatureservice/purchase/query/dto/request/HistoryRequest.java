@@ -1,7 +1,7 @@
 package com.newbit.newbitfeatureservice.purchase.query.dto.request;
 
 
-import com.newbit.purchase.query.dto.response.AssetHistoryType;
+import com.newbit.newbitfeatureservice.purchase.query.dto.response.AssetHistoryType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

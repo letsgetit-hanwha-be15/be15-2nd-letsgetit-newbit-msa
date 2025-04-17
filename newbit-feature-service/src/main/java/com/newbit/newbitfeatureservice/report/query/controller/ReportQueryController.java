@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.newbit.report.command.domain.aggregate.ReportStatus;
-import com.newbit.report.query.dto.response.ReportDTO;
-import com.newbit.report.query.service.ReportQueryService;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.ReportStatus;
+import com.newbit.newbitfeatureservice.report.query.dto.response.ReportDTO;
+import com.newbit.newbitfeatureservice.report.query.service.ReportQueryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

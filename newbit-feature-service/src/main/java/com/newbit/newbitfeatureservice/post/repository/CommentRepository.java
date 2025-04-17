@@ -1,6 +1,5 @@
 package com.newbit.newbitfeatureservice.post.repository;
 
-
 import com.newbit.newbitfeatureservice.post.entity.Comment;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;

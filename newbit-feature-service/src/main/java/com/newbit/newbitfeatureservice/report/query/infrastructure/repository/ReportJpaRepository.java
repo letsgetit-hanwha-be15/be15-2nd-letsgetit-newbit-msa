@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.newbit.report.command.domain.aggregate.Report;
-import com.newbit.report.command.domain.aggregate.ReportStatus;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.Report;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.ReportStatus;
 
 public interface ReportJpaRepository extends JpaRepository<Report, Long> {
 

@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.newbit.report.command.domain.aggregate.ReportStatus;
-import com.newbit.report.query.dto.response.ReportDTO;
+import com.newbit.newbitfeatureservice.report.command.domain.aggregate.ReportStatus;
+import com.newbit.newbitfeatureservice.report.query.dto.response.ReportDTO;
 
 public interface ReportQueryRepository {
 

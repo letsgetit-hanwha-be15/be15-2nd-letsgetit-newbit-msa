@@ -1,9 +1,8 @@
 package com.newbit.newbitfeatureservice.coffeechat.query.mapper;
 
-import com.newbit.coffeechat.command.domain.aggregate.Coffeechat;
-import com.newbit.coffeechat.query.dto.request.CoffeechatSearchServiceRequest;
-import com.newbit.coffeechat.query.dto.response.CoffeechatDto;
-import com.newbit.coffeechat.query.dto.response.RequestTimeDto;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.request.CoffeechatSearchServiceRequest;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.CoffeechatDto;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.RequestTimeDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

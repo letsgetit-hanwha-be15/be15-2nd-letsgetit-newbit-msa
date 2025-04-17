@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.purchase.command.domain.repository;
 
-import com.newbit.purchase.command.domain.aggregate.ColumnPurchaseHistory;
+import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.ColumnPurchaseHistory;
 
 public interface ColumnPurchaseHistoryRepository {
     boolean existsByUserIdAndColumnId(Long userId, Long columnId);

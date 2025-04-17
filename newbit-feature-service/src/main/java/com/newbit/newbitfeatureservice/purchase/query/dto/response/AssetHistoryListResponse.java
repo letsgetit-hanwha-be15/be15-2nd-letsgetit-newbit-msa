@@ -1,7 +1,7 @@
 package com.newbit.newbitfeatureservice.purchase.query.dto.response;
 
 
-import com.newbit.common.dto.Pagination;
+import com.newbit.newbitfeatureservice.common.dto.Pagination;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

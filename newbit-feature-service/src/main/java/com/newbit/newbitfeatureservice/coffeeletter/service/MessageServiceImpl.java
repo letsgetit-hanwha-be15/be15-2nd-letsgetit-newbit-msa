@@ -11,15 +11,15 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.newbit.coffeeletter.domain.chat.ChatMessage;
-import com.newbit.coffeeletter.domain.chat.CoffeeLetterRoom;
-import com.newbit.coffeeletter.domain.chat.MessageType;
-import com.newbit.coffeeletter.dto.ChatMessageDTO;
-import com.newbit.coffeeletter.repository.ChatMessageRepository;
-import com.newbit.coffeeletter.repository.CoffeeLetterRoomRepository;
-import com.newbit.coffeeletter.util.RoomUtils;
-import com.newbit.notification.command.application.dto.request.NotificationSendRequest;
-import com.newbit.notification.command.application.service.NotificationCommandService;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.ChatMessage;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.MessageType;
+import com.newbit.newbitfeatureservice.coffeeletter.dto.ChatMessageDTO;
+import com.newbit.newbitfeatureservice.coffeeletter.repository.ChatMessageRepository;
+import com.newbit.newbitfeatureservice.coffeeletter.repository.CoffeeLetterRoomRepository;
+import com.newbit.newbitfeatureservice.coffeeletter.util.RoomUtils;
+import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
+import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
 import com.newbit.user.service.MentorService;
 
 import lombok.extern.slf4j.Slf4j;

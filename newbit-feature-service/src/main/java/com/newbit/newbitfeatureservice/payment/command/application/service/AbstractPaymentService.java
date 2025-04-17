@@ -1,11 +1,11 @@
 package com.newbit.newbitfeatureservice.payment.command.application.service;
 
-import com.newbit.common.exception.BusinessException;
-import com.newbit.common.exception.ErrorCode;
-import com.newbit.payment.command.application.dto.PaymentDto;
-import com.newbit.payment.command.domain.aggregate.Payment;
-import com.newbit.payment.command.domain.aggregate.PaymentStatus;
-import com.newbit.payment.command.domain.repository.PaymentRepository;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
+import com.newbit.newbitfeatureservice.payment.command.application.dto.PaymentDto;
+import com.newbit.newbitfeatureservice.payment.command.domain.aggregate.Payment;
+import com.newbit.newbitfeatureservice.payment.command.domain.aggregate.PaymentStatus;
+import com.newbit.newbitfeatureservice.payment.command.domain.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;

@@ -1,23 +1,22 @@
 package com.newbit.newbitfeatureservice.column.service;
 
-import com.newbit.column.domain.Series;
-import com.newbit.column.dto.request.CreateColumnRequestDto;
-import com.newbit.column.dto.request.DeleteColumnRequestDto;
-import com.newbit.column.dto.request.UpdateColumnRequestDto;
-import com.newbit.column.dto.response.CreateColumnResponseDto;
-import com.newbit.column.dto.response.DeleteColumnResponseDto;
-import com.newbit.column.dto.response.GetMyColumnRequestResponseDto;
-import com.newbit.column.dto.response.UpdateColumnResponseDto;
-import com.newbit.column.domain.Column;
-import com.newbit.column.domain.ColumnRequest;
-import com.newbit.column.enums.RequestType;
-import com.newbit.column.mapper.ColumnMapper;
-import com.newbit.column.repository.ColumnRepository;
-import com.newbit.column.repository.ColumnRequestRepository;
-import com.newbit.column.repository.SeriesRepository;
-import com.newbit.common.exception.BusinessException;
-import com.newbit.common.exception.ErrorCode;
-import com.newbit.user.entity.Mentor;
+import com.newbit.newbitfeatureservice.column.domain.Series;
+import com.newbit.newbitfeatureservice.column.dto.request.CreateColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.request.DeleteColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.request.UpdateColumnRequestDto;
+import com.newbit.newbitfeatureservice.column.dto.response.CreateColumnResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.DeleteColumnResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.GetMyColumnRequestResponseDto;
+import com.newbit.newbitfeatureservice.column.dto.response.UpdateColumnResponseDto;
+import com.newbit.newbitfeatureservice.column.domain.Column;
+import com.newbit.newbitfeatureservice.column.domain.ColumnRequest;
+import com.newbit.newbitfeatureservice.column.enums.RequestType;
+import com.newbit.newbitfeatureservice.column.mapper.ColumnMapper;
+import com.newbit.newbitfeatureservice.column.repository.ColumnRepository;
+import com.newbit.newbitfeatureservice.column.repository.ColumnRequestRepository;
+import com.newbit.newbitfeatureservice.column.repository.SeriesRepository;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.user.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,14 +35,14 @@ public class ColumnRequestService {
 
     public CreateColumnResponseDto createColumnRequest(CreateColumnRequestDto dto, Long userId) {
         // 1. Mentor 조회
-        Mentor mentor = mentorService.getMentorEntityByUserId(userId);
+        Long mentorId = mentorService.getMentorIdByUserId(userId);
 
         // 2. 시리즈 조회
         Series series = seriesRepository.findById(dto.getSeriesId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.SERIES_NOT_FOUND));
 
         // 3. Column 저장
-        Column column = columnMapper.toColumn(dto, mentor, series);
+        Column column = columnMapper.toColumn(dto, mentorId, series);
         Column savedColumn = columnRepository.save(column);
 
         // 4. ColumnRequest 저장
@@ -98,9 +97,9 @@ public class ColumnRequestService {
     }
 
     public List<GetMyColumnRequestResponseDto> getMyColumnRequests(Long userId) {
-        Mentor mentor = mentorService.getMentorEntityByUserId(userId);
+        Long mentorId = mentorService.getMentorIdByUserId(userId);
 
-        List<ColumnRequest> requests = columnRequestRepository.findAllByColumn_Mentor_MentorIdOrderByCreatedAtDesc(mentor.getMentorId());
+        List<ColumnRequest> requests = columnRequestRepository.findAllByColumn_MentorIdOrderByCreatedAtDesc(mentorId);
 
         return requests.stream()
                 .map(columnMapper::toMyColumnRequestResponseDto)
@@ -115,7 +114,7 @@ public class ColumnRequestService {
 
     public Long getMentorId(Long columnId) {
         return columnRepository.findById(columnId)
-                .map(column -> column.getMentor().getMentorId())
+                .map(Column::getMentorId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.COLUMN_NOT_FOUND));
     }
 }

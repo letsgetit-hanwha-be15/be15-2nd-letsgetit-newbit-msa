@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.column.dto.response;
 
-import com.newbit.column.enums.RequestType;
+import com.newbit.newbitfeatureservice.column.enums.RequestType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

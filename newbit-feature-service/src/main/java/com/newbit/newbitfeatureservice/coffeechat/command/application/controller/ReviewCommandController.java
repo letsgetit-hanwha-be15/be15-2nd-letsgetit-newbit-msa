@@ -1,11 +1,10 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.controller;
 
-
+import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.ReviewCreateRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.response.ReviewCommandResponse;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.service.ReviewCommandService;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
-import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/review")
+@RequestMapping("/api/v1/review")
 @Tag(name = "리뷰 API", description = "리뷰 등록, 수정, 삭제 API")
 public class ReviewCommandController {
 

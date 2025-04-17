@@ -2,7 +2,7 @@ package com.newbit.newbitfeatureservice.like.dto.response;
 
 import java.util.List;
 
-import com.newbit.common.dto.Pagination;
+import com.newbit.newbitfeatureservice.common.dto.Pagination;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

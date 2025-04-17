@@ -7,9 +7,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
 
-import com.newbit.coffeeletter.domain.chat.MessageType;
-import com.newbit.coffeeletter.dto.ChatMessageDTO;
-import com.newbit.coffeeletter.service.ChatService;
+import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.MessageType;
+import com.newbit.newbitfeatureservice.coffeeletter.dto.ChatMessageDTO;
+import com.newbit.newbitfeatureservice.coffeeletter.service.ChatService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

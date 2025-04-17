@@ -2,7 +2,7 @@ package com.newbit.newbitfeatureservice.subscription.dto.response;
 
 import java.time.LocalDateTime;
 
-import com.newbit.subscription.entity.Subscription;
+import com.newbit.newbitfeatureservice.subscription.entity.Subscription;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

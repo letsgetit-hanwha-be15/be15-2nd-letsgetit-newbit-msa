@@ -1,6 +1,5 @@
 package com.newbit.newbitfeatureservice.coffeechat.query.dto.response;
 
-import com.newbit.common.dto.Pagination;
 import lombok.Builder;
 import lombok.Getter;
 
