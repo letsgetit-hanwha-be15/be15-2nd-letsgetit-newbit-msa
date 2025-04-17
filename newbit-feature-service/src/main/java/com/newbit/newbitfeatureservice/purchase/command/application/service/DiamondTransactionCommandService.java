@@ -1,9 +1,10 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.service;
 
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserInternalFeignClient;
 import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.DiamondHistory;
 import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.DiamondTransactionType;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.DiamondHistoryRepository;
-import com.newbit.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DiamondTransactionCommandService {
 
     private final DiamondHistoryRepository diamondHistoryRepository;
-    private final UserService userService;
+    private final UserInternalFeignClient userInternalFeignClient;
 
     public void saveDiamondHistory(
             Long userId,
@@ -37,13 +38,13 @@ public class DiamondTransactionCommandService {
 
     @Transactional
     public void applyDiamondPayment(Long userId, Long paymentId, Integer amount) {
-        Integer balance = userService.addDiamond(userId, amount);
+        Integer balance = userInternalFeignClient.addDiamond(userId, amount);
         saveDiamondHistory(userId, DiamondTransactionType.CHARGE, amount, null, paymentId, balance);
     }
 
     @Transactional
     public void applyDiamondRefund(Long userId, Long refundId, Integer amount) {
-        Integer balance = userService.useDiamond(userId, amount);
+        Integer balance = userInternalFeignClient.useDiamond(userId, amount);
         saveDiamondHistory(userId, DiamondTransactionType.REFUND, null, amount, refundId, balance);
     }
 
