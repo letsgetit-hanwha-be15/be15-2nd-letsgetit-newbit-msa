@@ -2,7 +2,6 @@ package com.newbit.newbitfeatureservice.column.mapper;
 
 import com.newbit.newbitfeatureservice.column.domain.Column;
 import com.newbit.newbitfeatureservice.column.dto.request.CreateSeriesRequestDto;
-import com.newbit.column.dto.response.*;
 import com.newbit.newbitfeatureservice.column.domain.Series;
 import com.newbit.newbitfeatureservice.column.dto.response.*;
 import org.springframework.stereotype.Component;
