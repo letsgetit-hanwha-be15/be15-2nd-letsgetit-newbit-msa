@@ -19,4 +19,7 @@ public interface MentorFeignClient {
 
     @GetMapping("/mentor/{mentorId}/user-id")
     ApiResponse<Long> getUserIdByMentorId(@PathVariable("mentorId") Long mentorId);
+
+    @GetMapping("/mentor/user/{userId}/mentor-id")
+    ApiResponse<Long> getMentorIdByUserId(@PathVariable("userId") Long userId);
 }

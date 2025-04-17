@@ -1,5 +1,7 @@
 package com.newbit.newbitfeatureservice.column.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
 import com.newbit.newbitfeatureservice.column.domain.Column;
 import com.newbit.newbitfeatureservice.column.domain.ColumnRequest;
 import com.newbit.newbitfeatureservice.column.dto.request.ApproveColumnRequestDto;
@@ -13,7 +15,6 @@ import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
 import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
 import com.newbit.newbitfeatureservice.subscription.service.SubscriptionService;
-import com.newbit.user.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,8 @@ public class AdminColumnService {
     private final AdminColumnMapper adminColumnMapper;
     private final NotificationCommandService notificationCommandService;
     private final SubscriptionService subscriptionService;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorFeignClient;
+    private final UserFeignClient userFeignClient;
 
     @Transactional
     public AdminColumnResponseDto approveCreateColumnRequest(ApproveColumnRequestDto dto, Long adminUserId) {
@@ -45,12 +47,11 @@ public class AdminColumnService {
                 request.getColumn().getTitle());
 
         Long mentorId = request.getColumn().getMentorId();
+        Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
+
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        mentorService.getMentorIdByUserId(mentorId)
-                        , 11L
-                        , request.getColumnRequestId(),
-                        notificationContent
+                        userId, 11L, request.getColumnRequestId(), notificationContent
                 )
         );
 
@@ -87,9 +88,11 @@ public class AdminColumnService {
                 request.getColumn().getTitle());
 
         Long mentorId = request.getColumn().getMentorId();
+        Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
+
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        mentorService.getMentorIdByUserId(mentorId)
+                        userId
                         , 12L
                         , request.getColumnRequestId(),
                         notificationContent
@@ -121,9 +124,10 @@ public class AdminColumnService {
 
 
         Long mentorId = request.getColumn().getMentorId();
+        Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        mentorService.getMentorIdByUserId(mentorId)
+                        userId
                         , 11L
                         , request.getColumnRequestId(),
                         notificationContent
@@ -149,9 +153,11 @@ public class AdminColumnService {
                 request.getColumn().getTitle());
 
         Long mentorId = request.getColumn().getMentorId();
+        Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
+
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        mentorService.getMentorIdByUserId(mentorId)
+                        userId
                         , 12L
                         , request.getColumnRequestId(),
                         notificationContent
@@ -181,9 +187,11 @@ public class AdminColumnService {
                 request.getColumn().getTitle());
 
         Long mentorId = request.getColumn().getMentorId();
+        Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
+
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        mentorService.getMentorIdByUserId(mentorId)
+                        userId
                         , 11L
                         , request.getColumnRequestId(),
                         notificationContent
@@ -208,9 +216,11 @@ public class AdminColumnService {
                 request.getColumn().getTitle());
 
         Long mentorId = request.getColumn().getMentorId();
+        Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
+
         notificationCommandService.sendNotification(
                 new NotificationSendRequest(
-                        mentorService.getUserIdByMentorId(mentorId)
+                        userId
                         , 12L
                         , request.getColumnRequestId(),
                         notificationContent
