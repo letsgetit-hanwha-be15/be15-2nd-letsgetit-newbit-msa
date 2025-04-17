@@ -1,7 +1,10 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.service;
 
 
-import com.newbit.newbitfeatureservice.client.UserServiceClient;
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
+import com.newbit.newbitfeatureservice.client.user.dto.MentorDTO;
+import com.newbit.newbitfeatureservice.client.user.dto.UserDTO;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCancelRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCreateRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.Coffeechat;
@@ -37,7 +40,7 @@ public class CoffeechatCommandService {
     private final DiamondCoffeechatTransactionCommandService transactionCommandService;
     private final NotificationCommandService notificationCommandService;
     private final RoomService roomService;
-    private final UserServiceClient userServiceClient;
+    private final UserFeignClient userServiceClient;
 
     /**
      * 한두 번만 사용하는 간단한 조회여서 과도한 추상화를 피하기 위해
@@ -63,16 +66,16 @@ public class CoffeechatCommandService {
         // 3. 커피챗 요청 등록(서비스 함수 생성)
         createRequestTime(coffeechat.getCoffeechatId(), request.getRequestTimes(), request.getPurchaseQuantity());
 
-        Long userId = userServiceClient.getUserIdByMentorId(request.getMentorId());
+        Long mentorId = userServiceClient.getUserByUserId(request.getMentorId()).getData().getUserId();
 
         // 4. 커피챗 요청 등록시 멘토에게 실시간 알림 발송
         notificationCommandService.sendNotification(
-               new NotificationSendRequest(
-                       userId
-                       , 3L
-                       , coffeechat.getCoffeechatId()
-                       , "새로운 커피챗 신청이 도착했습니다."
-               )
+                new NotificationSendRequest(
+                        userId
+                        , 3L
+                        , coffeechat.getCoffeechatId()
+                        , "새로운 커피챗 신청이 도착했습니다."
+                )
         );
 
         return coffeechat.getCoffeechatId();
@@ -213,17 +216,17 @@ public class CoffeechatCommandService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.COFFEECHAT_NOT_FOUND));
 
         // 2. userId가 멘티Id인지 확인하기
-        if(!coffeechat.getMenteeId().equals(userId)) {
+        if (!coffeechat.getMenteeId().equals(userId)) {
             throw new BusinessException(ErrorCode.COFFEECHAT_CANCEL_NOT_ALLOWED);
         }
 
         // 3. 커피챗이 CANCEL 상태이거나, COMPLETE 상태이면 에러
-        switch (coffeechat.getProgressStatus()){
+        switch (coffeechat.getProgressStatus()) {
             case CANCEL, COMPLETE -> throw new BusinessException(ErrorCode.INVALID_COFFEECHAT_STATUS_CANCEL);
         }
 
         // 4. 커피챗이 coffeechat_waiting 상태이면 환불 진행하기
-        if(coffeechat.getProgressStatus().equals(ProgressStatus.COFFEECHAT_WAITING)) {
+        if (coffeechat.getProgressStatus().equals(ProgressStatus.COFFEECHAT_WAITING)) {
             MentorDTO mentorDTO = mentorService.getMentorInfo(coffeechat.getMentorId());
             int totalQuantity = mentorDTO.getPrice() * coffeechat.getPurchaseQuantity();
             transactionCommandService.refundCoffeeChat(coffeechatCancelRequest.getCoffeechatId(), userId, totalQuantity);
