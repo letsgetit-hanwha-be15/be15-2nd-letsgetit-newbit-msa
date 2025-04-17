@@ -3,8 +3,6 @@ package com.newbit.newbituserservice.client;
 import com.newbit.newbituserservice.common.config.FeignClientConfig;
 import com.newbit.newbituserservice.common.dto.ApiResponse;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -12,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface PointTransactionClient {
     @PostMapping("/point/type")
     ApiResponse<Void> givePointByType(
-            @PathVariable Long userId,
-            @PathVariable String pointTypeName,
-            @PathVariable(required = false) Long serviceId
+            @RequestParam("userId") Long userId,
+            @RequestParam("pointTypeName") String pointTypeName,
+            @RequestParam(value = "serviceId", required = false) Long serviceId
     );
 }
