@@ -1,11 +1,10 @@
 package com.newbit.newbitfeatureservice.subscription.service;
 
+import com.newbit.newbitfeatureservice.subscription.dto.response.SubscriptionResponse;
+import com.newbit.newbitfeatureservice.subscription.entity.Subscription;
+import com.newbit.newbitfeatureservice.subscription.entity.SubscriptionId;
+import com.newbit.newbitfeatureservice.subscription.repository.SubscriptionRepository;
 import org.springframework.stereotype.Component;
-
-import com.newbit.subscription.dto.response.SubscriptionResponse;
-import com.newbit.subscription.entity.Subscription;
-import com.newbit.subscription.entity.SubscriptionId;
-import com.newbit.subscription.repository.SubscriptionRepository;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
