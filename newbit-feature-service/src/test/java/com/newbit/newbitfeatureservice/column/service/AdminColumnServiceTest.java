@@ -13,7 +13,6 @@ import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
 import com.newbit.newbitfeatureservice.subscription.service.SubscriptionService;
-import com.newbit.user.service.MentorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,9 +43,6 @@ class AdminColumnServiceTest {
     private AdminColumnMapper adminColumnMapper;
 
     @Mock
-    private MentorService mentorService;
-
-    @Mock
     private NotificationCommandService notificationCommandService;
 
     @Mock
@@ -54,7 +50,6 @@ class AdminColumnServiceTest {
 
     @BeforeEach
     void setUp() {
-        // MockitoAnnotations.openMocks(this); // MockitoExtension으로 대체
     }
 
     @Test

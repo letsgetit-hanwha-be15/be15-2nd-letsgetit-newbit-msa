@@ -1,5 +1,6 @@
 package com.newbit.newbitfeatureservice.column.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
 import com.newbit.newbitfeatureservice.column.domain.Column;
 import com.newbit.newbitfeatureservice.column.domain.Series;
 import com.newbit.newbitfeatureservice.column.dto.request.CreateSeriesRequestDto;
@@ -11,8 +12,6 @@ import com.newbit.newbitfeatureservice.column.dto.response.GetSeriesDetailRespon
 import com.newbit.newbitfeatureservice.column.mapper.SeriesMapper;
 import com.newbit.newbitfeatureservice.column.repository.ColumnRepository;
 import com.newbit.newbitfeatureservice.column.repository.SeriesRepository;
-import com.newbit.user.entity.Mentor;
-import com.newbit.user.service.MentorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,7 @@ class SeriesServiceTest {
     private ColumnRepository columnRepository;
 
     @Mock
-    private MentorService mentorService;
+    private MentorFeignClient mentorFeignClient;
 
     @Mock
     private SeriesMapper seriesMapper;
@@ -63,8 +62,6 @@ class SeriesServiceTest {
                 List.of(1L, 2L)
         );
 
-        Mentor mentor = Mentor.builder().mentorId(mentorId).build();
-
         Column column1 = Column.builder().columnId(1L).mentorId(mentorId).build();
         Column column2 = Column.builder().columnId(2L).mentorId(mentorId).build();
         List<Column> columns = List.of(column1, column2);
@@ -72,7 +69,7 @@ class SeriesServiceTest {
         Series series = Series.builder().seriesId(100L).title(dto.getTitle()).build();
         CreateSeriesResponseDto responseDto = CreateSeriesResponseDto.builder().seriesId(100L).build();
 
-        when(mentorService.getMentorIdByUserId(userId)).thenReturn(mentorId);
+        when(mentorFeignClient.getMentorIdByUserId(userId).getData()).thenReturn(mentorId);
         when(columnRepository.findAllById(dto.getColumnIds())).thenReturn(columns);
         when(seriesMapper.toSeries(dto)).thenReturn(series);
         when(seriesRepository.save(series)).thenReturn(series);
@@ -83,7 +80,7 @@ class SeriesServiceTest {
 
         // then
         assertThat(result.getSeriesId()).isEqualTo(100L);
-        verify(mentorService).getMentorIdByUserId(userId);
+        verify(mentorFeignClient).getMentorIdByUserId(userId);
         verify(columnRepository).findAllById(dto.getColumnIds());
         verify(seriesRepository).save(series);
         verify(columnRepository).saveAll(columns);
@@ -97,8 +94,6 @@ class SeriesServiceTest {
         Long userId = 1L;
         Long mentorId = 10L;
         Long seriesId = 100L;
-
-        Mentor mentor = Mentor.builder().mentorId(mentorId).build();
 
         Column oldColumn1 = Column.builder().columnId(1L).mentorId(mentorId).build();
         Column oldColumn2 = Column.builder().columnId(2L).mentorId(mentorId).build();
@@ -117,7 +112,7 @@ class SeriesServiceTest {
                 List.of(3L, 4L)
         );
 
-        when(mentorService.getMentorIdByUserId(userId)).thenReturn(mentorId);
+        when(mentorFeignClient.getMentorIdByUserId(userId).getData()).thenReturn(mentorId);
         when(seriesRepository.findById(seriesId)).thenReturn(Optional.of(series));
         when(columnRepository.findAllById(dto.getColumnIds())).thenReturn(newColumns);
         when(columnRepository.findAllBySeries_SeriesId(seriesId)).thenReturn(existingColumns);
@@ -126,7 +121,7 @@ class SeriesServiceTest {
         seriesService.updateSeries(seriesId, dto, userId);
 
         // then
-        verify(mentorService).getMentorIdByUserId(userId);
+        verify(mentorFeignClient).getMentorIdByUserId(userId);
         verify(seriesRepository).findById(seriesId);
         verify(columnRepository).findAllById(dto.getColumnIds());
         verify(columnRepository).findAllBySeries_SeriesId(seriesId);
@@ -146,14 +141,13 @@ class SeriesServiceTest {
         Long userId = 1L;
         Long mentorId = 10L;
 
-        Mentor mentor = Mentor.builder().mentorId(mentorId).build();
         Series series = Series.builder().seriesId(seriesId).build();
 
         Column column1 = Column.builder().columnId(1L).mentorId(mentorId).series(series).build();
         Column column2 = Column.builder().columnId(2L).mentorId(mentorId).series(series).build();
         List<Column> columns = List.of(column1, column2);
 
-        when(mentorService.getMentorIdByUserId(userId)).thenReturn(mentorId);
+        when(mentorFeignClient.getMentorIdByUserId(userId).getData()).thenReturn(mentorId);
         when(seriesRepository.findById(seriesId)).thenReturn(Optional.of(series));
         when(columnRepository.findAllBySeries_SeriesId(seriesId)).thenReturn(columns);
 
@@ -161,7 +155,7 @@ class SeriesServiceTest {
         seriesService.deleteSeries(seriesId, userId);
 
         // then
-        verify(mentorService).getMentorIdByUserId(userId);
+        verify(mentorFeignClient).getMentorIdByUserId(userId);
         verify(seriesRepository).findById(seriesId);
         verify(columnRepository).findAllBySeries_SeriesId(seriesId);
         verify(columnRepository).saveAll(anyList());
@@ -211,8 +205,6 @@ class SeriesServiceTest {
         Long userId = 1L;
         Long mentorId = 10L;
 
-        Mentor mentor = Mentor.builder().mentorId(mentorId).build();
-
         Series series1 = Series.builder()
                 .seriesId(1L)
                 .title("시리즈 A")
@@ -229,7 +221,7 @@ class SeriesServiceTest {
 
         List<Series> seriesList = List.of(series1, series2);
 
-        when(mentorService.getMentorIdByUserId(userId)).thenReturn(mentorId);
+        when(mentorFeignClient.getMentorIdByUserId(userId).getData()).thenReturn(mentorId);
         when(seriesRepository.findAllByMentorIdOrderByCreatedAtDesc(mentorId)).thenReturn(seriesList);
         when(seriesMapper.toMySeriesListDto(series1)).thenReturn(
                 GetMySeriesListResponseDto.builder()
@@ -258,7 +250,7 @@ class SeriesServiceTest {
         assertThat(result.get(1).getSeriesId()).isEqualTo(2L);
         assertThat(result.get(1).getTitle()).isEqualTo("시리즈 B");
 
-        verify(mentorService).getMentorIdByUserId(userId);
+        verify(mentorFeignClient).getMentorIdByUserId(userId);
         verify(seriesRepository).findAllByMentorIdOrderByCreatedAtDesc(mentorId);
         verify(seriesMapper).toMySeriesListDto(series1);
         verify(seriesMapper).toMySeriesListDto(series2);
