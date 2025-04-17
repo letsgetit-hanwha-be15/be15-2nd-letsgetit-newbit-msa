@@ -33,7 +33,7 @@ public class AuthService {
                 .orElseThrow(() -> new BadCredentialsException("올바르지 않은 아이디 혹은 비밀번호"));
 
         // 정지 조건 검사 추가 (신고 수 50의 배수 여부)
-//        suspensionService.checkAndSuspendUser(user.getUserId());
+        suspensionService.checkAndSuspendUser(user.getUserId());
 
         // 정지 상태라면 차단 또는 해제
         if (user.getIsSuspended() != null && user.getIsSuspended()) {
