@@ -5,6 +5,6 @@ spring:
     config:
       server:
         git:
-          uri: file:C:/config
+          uri: https://github.com/letsgetit-hanwha-be15/newbit-config
 server:
   port: 8888
