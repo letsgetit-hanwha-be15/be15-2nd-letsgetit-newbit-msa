@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.post.service;
 
-import com.newbit.auth.model.CustomUser;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.post.dto.request.PostCreateRequest;
@@ -12,11 +12,12 @@ import com.newbit.newbitfeatureservice.post.entity.PostCategory;
 import com.newbit.newbitfeatureservice.post.repository.CommentRepository;
 import com.newbit.newbitfeatureservice.post.repository.PostRepository;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.PointTransactionCommandService;
-import com.newbit.user.entity.User;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,14 +33,16 @@ class PostServiceTest {
     private PointTransactionCommandService pointTransactionCommandService;
     private PostCreateRequest request;
     private CommentRepository commentRepository;
+    private UserFeignClient userFeignClient;
 
     @BeforeEach
     void setUp() {
         postRepository = mock(PostRepository.class);
         commentRepository = mock(CommentRepository.class);
         pointTransactionCommandService = mock(PointTransactionCommandService.class);
+        userFeignClient = mock(UserFeignClient.class);
 
-        postService = new PostService(postRepository, commentRepository, pointTransactionCommandService);
+        postService = new PostService(postRepository, commentRepository, pointTransactionCommandService, userFeignClient);
 
         request = new PostCreateRequest();
         request.setTitle("단위 테스트 제목");
@@ -143,17 +146,11 @@ class PostServiceTest {
                 .postCategoryId(2L)
                 .build();
 
-        User mockUser = User.builder()
-                .userId(1L)
-                .userName("작성자이름")
-                .build();
-
         PostCategory mockCategory = PostCategory.builder()
                 .id(2L)
                 .name("카테고리이름")
                 .build();
 
-        post.setUser(mockUser);
         post.setPostCategory(mockCategory);
 
         Comment comment = Comment.builder()
@@ -169,7 +166,7 @@ class PostServiceTest {
 
         // PostService를 다시 생성해서 의존성 주입
         PointTransactionCommandService pointTransactionCommandService = mock(PointTransactionCommandService.class);
-        PostService postServiceWithMocks = new PostService(postRepository, commentRepository, pointTransactionCommandService);
+        PostService postServiceWithMocks = new PostService(postRepository, commentRepository, pointTransactionCommandService, userFeignClient);
 
 
         // when

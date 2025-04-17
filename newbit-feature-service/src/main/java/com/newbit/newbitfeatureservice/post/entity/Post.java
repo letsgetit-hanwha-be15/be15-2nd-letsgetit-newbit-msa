@@ -1,6 +1,5 @@
 package com.newbit.newbitfeatureservice.post.entity;
 
-import com.newbit.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -87,10 +86,6 @@ public class Post {
     public void increaseReportCount() {
         this.reportCount++;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_category_id", insertable = false, updatable = false)
