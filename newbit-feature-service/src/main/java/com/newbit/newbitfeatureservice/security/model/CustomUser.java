@@ -1,4 +1,4 @@
-package com.newbit.newbitfeatureservice.common.jwt.model;
+package com.newbit.newbitfeatureservice.security.model;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.newbit.newbitfeatureservice.post.controller;
 
 
-import com.newbit.newbitfeatureservice.common.jwt.model.CustomUser;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.post.dto.request.CommentCreateRequest;
 import com.newbit.newbitfeatureservice.post.dto.response.CommentResponse;
 import com.newbit.newbitfeatureservice.post.service.CommentService;

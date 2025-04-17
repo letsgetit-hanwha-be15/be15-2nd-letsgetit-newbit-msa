@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.post.controller;
 
-import com.newbit.newbitfeatureservice.common.jwt.model.CustomUser;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.post.dto.request.PostCreateRequest;
 import com.newbit.newbitfeatureservice.post.dto.request.PostUpdateRequest;
 import com.newbit.newbitfeatureservice.post.dto.response.PostDetailResponse;

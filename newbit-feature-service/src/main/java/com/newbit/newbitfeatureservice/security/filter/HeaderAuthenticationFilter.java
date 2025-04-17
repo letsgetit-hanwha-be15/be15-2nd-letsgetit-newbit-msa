@@ -1,6 +1,6 @@
-package com.newbit.newbitfeatureservice.common.jwt.Filter;
+package com.newbit.newbitfeatureservice.security.filter;
 
-import com.newbit.newbitfeatureservice.common.jwt.model.CustomUser;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -7,7 +7,7 @@ import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.CoffeechatL
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.RequestTimeListResponse;
 import com.newbit.newbitfeatureservice.coffeechat.query.service.CoffeechatQueryService;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
-import com.newbit.newbitfeatureservice.common.jwt.model.CustomUser;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

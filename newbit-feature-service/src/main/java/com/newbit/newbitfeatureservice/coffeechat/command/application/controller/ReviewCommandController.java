@@ -5,7 +5,7 @@ import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.reques
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.response.ReviewCommandResponse;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.service.ReviewCommandService;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
-import com.newbit.newbitfeatureservice.common.jwt.model.CustomUser;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

@@ -2,7 +2,7 @@ package com.newbit.newbitfeatureservice.purchase.command.application.controller;
 
 
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
-import com.newbit.newbitfeatureservice.common.jwt.model.CustomUser;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.purchase.command.application.dto.ColumnPurchaseRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

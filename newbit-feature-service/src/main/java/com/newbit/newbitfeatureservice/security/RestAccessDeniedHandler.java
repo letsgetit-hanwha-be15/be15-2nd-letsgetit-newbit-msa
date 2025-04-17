@@ -1,4 +1,4 @@
-package com.newbit.newbitfeatureservice.common.jwt;
+package com.newbit.newbitfeatureservice.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

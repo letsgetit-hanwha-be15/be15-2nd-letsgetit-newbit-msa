@@ -1,4 +1,4 @@
-package com.newbit.newbitfeatureservice.common.config;
+package com.newbit.newbitfeatureservice.security.config;
 
 import com.newbit.auth.jwt.RestAccessDeniedHandler;
 import com.newbit.auth.jwt.RestAuthenticationEntryPoint;
