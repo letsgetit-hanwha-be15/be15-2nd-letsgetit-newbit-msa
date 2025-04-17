@@ -34,7 +34,7 @@ public class GetColumnDetailResponseDto {
     private String mentorNickname;
 
     public GetColumnDetailResponseDto(Long columnId, String title, String content, Integer price,
-                                      String thumbnailUrl, int likeCount, Long mentorId, String mentorNickname) {
+                                      String thumbnailUrl, int likeCount, Long mentorId) {
         this.columnId = columnId;
         this.title = title;
         this.content = content;
@@ -42,6 +42,9 @@ public class GetColumnDetailResponseDto {
         this.thumbnailUrl = thumbnailUrl;
         this.likeCount = likeCount;
         this.mentorId = mentorId;
+    }
+
+    public void setMentorNickname(String mentorNickname) {
         this.mentorNickname = mentorNickname;
     }
 }

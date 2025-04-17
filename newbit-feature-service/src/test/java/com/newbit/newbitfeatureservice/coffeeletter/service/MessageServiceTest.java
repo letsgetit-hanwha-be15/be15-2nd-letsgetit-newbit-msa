@@ -1,5 +1,6 @@
 package com.newbit.newbitfeatureservice.coffeeletter.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
 import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.ChatMessage;
 import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.CoffeeLetterRoom;
 import com.newbit.newbitfeatureservice.coffeeletter.domain.chat.MessageType;
@@ -8,7 +9,6 @@ import com.newbit.newbitfeatureservice.coffeeletter.repository.ChatMessageReposi
 import com.newbit.newbitfeatureservice.coffeeletter.repository.CoffeeLetterRoomRepository;
 import com.newbit.newbitfeatureservice.coffeeletter.util.RoomUtils;
 import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
-import com.newbit.user.service.MentorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,7 +52,7 @@ class MessageServiceTest {
     private ModelMapper modelMapper;
 
     @Mock
-    private MentorService mentorService;
+    private MentorFeignClient mentorFeignClient;
 
     @Mock
     private NotificationCommandService notificationCommandService;
