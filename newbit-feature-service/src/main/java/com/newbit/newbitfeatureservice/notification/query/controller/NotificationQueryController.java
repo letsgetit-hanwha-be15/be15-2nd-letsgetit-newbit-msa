@@ -1,9 +1,9 @@
 package com.newbit.newbitfeatureservice.notification.query.controller;
 
-import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import com.newbit.newbitfeatureservice.notification.query.dto.NotificationResponse;
 import com.newbit.newbitfeatureservice.notification.query.service.NotificationQueryService;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

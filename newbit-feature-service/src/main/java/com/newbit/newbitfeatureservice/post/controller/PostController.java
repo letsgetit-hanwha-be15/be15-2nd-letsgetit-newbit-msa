@@ -1,11 +1,12 @@
 package com.newbit.newbitfeatureservice.post.controller;
 
-import com.newbit.auth.model.CustomUser;
+
 import com.newbit.newbitfeatureservice.post.dto.request.PostCreateRequest;
 import com.newbit.newbitfeatureservice.post.dto.request.PostUpdateRequest;
 import com.newbit.newbitfeatureservice.post.dto.response.PostDetailResponse;
 import com.newbit.newbitfeatureservice.post.dto.response.PostResponse;
 import com.newbit.newbitfeatureservice.post.service.PostService;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
