@@ -1,7 +1,7 @@
 package com.newbit.newbituserservice.user.controller;
 
 import com.newbit.newbituserservice.common.dto.ApiResponse;
-import com.newbit.newbituserservice.jwt.model.CustomUser;
+import com.newbit.newbituserservice.security.model.CustomUser;
 import com.newbit.newbituserservice.user.dto.request.ChangePasswordRequestDTO;
 import com.newbit.newbituserservice.user.dto.request.DeleteUserRequestDTO;
 import com.newbit.newbituserservice.user.dto.request.MentorListRequestDTO;
