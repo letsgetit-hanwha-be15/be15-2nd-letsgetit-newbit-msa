@@ -69,10 +69,11 @@ public class ColumnService {
                 Long userId = mentorResponse.getData();
 
                 // 2. 유저 -> 닉네임
-                var userResponse = userFeignClient.getUserByUserId(userId);
-                if (userResponse.getData() == null) continue;
+                var userNickname = userFeignClient.getNicknameByUserId(userId).getData();
+                if (userNickname == null) continue;
+                log.debug("userResponse: {}", userNickname);
 
-                dto.setMentorNickname(userResponse.getData().getNickname());
+                dto.setMentorNickname(userNickname);
 
             } catch (Exception e) {
                 log.warn("Failed to fetch mentor nickname for mentorId={}", dto.getMentorId(), e);
