@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/mentors")
+@RequestMapping("/mentor")
 @RequiredArgsConstructor
 public class MentorController {
 

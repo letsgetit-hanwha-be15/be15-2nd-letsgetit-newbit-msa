@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name = "newbit-user-service", configuration = FeignClientConfig.class, path = "/api/v1/mentors")
+@FeignClient(name = "newbit-user-service", configuration = FeignClientConfig.class)
 public interface MentorFeignClient {
 
-    @GetMapping("/{mentorId}")
+    @GetMapping("/mentor/{mentorId}")
     ApiResponse<MentorDTO> getMentorInfo(@PathVariable("mentorId") Long mentorId);
 
-    @PostMapping("/{userId}")
+    @PostMapping("/mentor/{userId}")
     ApiResponse<Void> createMentor(@PathVariable("userId") Long userId);
 
-    @GetMapping("/{mentorId}/user-id")
+    @GetMapping("/mentor/{mentorId}/user-id")
     ApiResponse<Long> getUserIdByMentorId(@PathVariable("mentorId") Long mentorId);
 }
