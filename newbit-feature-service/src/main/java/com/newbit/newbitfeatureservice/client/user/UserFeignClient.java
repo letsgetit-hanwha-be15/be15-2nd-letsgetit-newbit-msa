@@ -12,9 +12,9 @@ public interface UserFeignClient {
     @GetMapping("/user/{userId}")
     ApiResponse<UserDTO> getUserByUserId(@PathVariable("userId") Long userId);
 
-    @GetMapping("/user/{userId}/email")
+    @GetMapping("/{userId}/email")
     ApiResponse<String> getEmailByUserId(@PathVariable("userId") Long userId);
 
-    @GetMapping("/user/{userId}/nickname")
+    @GetMapping("/{userId}/nickname")
     ApiResponse<String> getNicknameByUserId(@PathVariable("userId") Long userId);
 }
