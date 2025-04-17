@@ -1,6 +1,9 @@
 package com.newbit.newbitfeatureservice.post.service;
 
-import com.newbit.auth.model.CustomUser;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
+import com.newbit.newbitfeatureservice.client.user.dto.UserDTO;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.post.dto.request.PostCreateRequest;
@@ -29,6 +32,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final PointTransactionCommandService pointTransactionCommandService;
+    private final UserFeignClient userFeignClient;
 
     @Transactional
     public PostResponse createPost(PostCreateRequest request, CustomUser user) {
@@ -105,7 +109,9 @@ public class PostService {
                 .map(CommentResponse::new)
                 .toList();
 
-        String writerName = post.getUser().getUserName();
+        Long userId = post.getUserId();
+        ApiResponse<UserDTO> userByUserId = userFeignClient.getUserByUserId(userId);
+        String writerName = userByUserId.getData().getNickname();
         String categoryName = post.getPostCategory().getName();
 
         return new PostDetailResponse(post, commentResponses, writerName, categoryName);
