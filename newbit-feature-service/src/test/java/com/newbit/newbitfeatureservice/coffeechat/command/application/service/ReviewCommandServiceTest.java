@@ -1,5 +1,6 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.ReviewCreateRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.Review;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.repository.ReviewRepository;
@@ -11,7 +12,6 @@ import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.PointTransactionCommandService;
 import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
-import com.newbit.user.service.MentorService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +38,7 @@ class ReviewCommandServiceTest {
     @Mock
     private CoffeechatQueryService coffeechatQueryService;
     @Mock
-    private MentorService mentorService;
+    private MentorFeignClient mentorClient;
     @Mock
     private PointTransactionCommandService pointTransactionCommandService;
 
@@ -81,7 +81,7 @@ class ReviewCommandServiceTest {
                         .build());
         when(reviewRepository.findByCoffeechatId(coffeechatId)).thenReturn(Optional.empty());
         when(reviewRepository.save(any(Review.class))).thenReturn(review);
-        when(mentorService.getUserIdByMentorId(mentorId)).thenReturn(5L);
+        when(mentorClient.getUserIdByMentorId(mentorId).getData()).thenReturn(5L);
         doNothing().when(pointTransactionCommandService).giveTipPoint(coffeechatId, userId, 5L, tip);
         doNothing().when(pointTransactionCommandService).givePointByType(userId, PointTypeConstants.REVIEW, review.getReviewId());
 
@@ -133,7 +133,7 @@ class ReviewCommandServiceTest {
         when(reviewRepository.findByCoffeechatId(coffeechatId)).thenReturn(Optional.empty());
         when(reviewRepository.save(any(Review.class))).thenReturn(review);
         // tip이 존재하므로 멘토의 유저 아이디 조회 및 팁 지급이 발생
-        when(mentorService.getUserIdByMentorId(mentorId)).thenReturn(5L);
+        when(mentorClient.getUserIdByMentorId(mentorId).getData()).thenReturn(5L);
         doNothing().when(pointTransactionCommandService).giveTipPoint(coffeechatId, userId, 5L, tip);
 
         // 내용이 없으므로 리뷰 작성 포인트 지급은 발생하지 않아야 함
