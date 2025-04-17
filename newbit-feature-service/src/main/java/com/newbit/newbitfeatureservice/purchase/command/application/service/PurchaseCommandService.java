@@ -1,6 +1,12 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserInternalFeignClient;
+import com.newbit.newbitfeatureservice.client.user.dto.MentorDTO;
+import com.newbit.newbitfeatureservice.client.user.dto.UserDTO;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.service.CoffeechatCommandService;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.Authority;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.CoffeechatDto;
 import com.newbit.newbitfeatureservice.coffeechat.query.service.CoffeechatQueryService;
 import com.newbit.newbitfeatureservice.column.service.ColumnRequestService;
@@ -14,13 +20,7 @@ import com.newbit.newbitfeatureservice.purchase.command.application.dto.MentorAu
 import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
 import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.*;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.*;
-import com.newbit.purchase.command.domain.aggregate.*;
-import com.newbit.purchase.command.domain.repository.*;
-import com.newbit.user.dto.response.MentorDTO;
-import com.newbit.user.dto.response.UserDTO;
-import com.newbit.user.entity.Authority;
-import com.newbit.user.service.MentorService;
-import com.newbit.user.service.UserService;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,9 +36,10 @@ public class PurchaseCommandService {
     private final PointHistoryRepository pointHistoryRepository;
     private final PointTypeRepository pointTypeRepository;
     private final ColumnRequestService columnService;
-    private final UserService userService;
+    private final UserInternalFeignClient userInternalFeignClient;
     private final CoffeechatQueryService coffeechatQueryService;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorFeignClient;
+    private final UserFeignClient userFeignClient;
     private final NotificationCommandService notificationCommandService;
 
 
@@ -68,7 +69,7 @@ public class PurchaseCommandService {
         }
 
         // 4. 다이아 충분한지 확인 및 차감 (내부에서 다이아 부족 시 예외 발생)
-        Integer diamondBalance = userService.useDiamond(userId, columnPrice);
+        Integer diamondBalance = userInternalFeignClient.useDiamond(userId, columnPrice);
 
         // 5. 구매 내역 저장
         ColumnPurchaseHistory purchaseHistory = ColumnPurchaseHistory.of(userId, columnId, columnPrice);
@@ -106,7 +107,7 @@ public class PurchaseCommandService {
         Long menteeId = coffeeChat.getMenteeId();
         Long mentorId = coffeeChat.getMentorId();
 
-        MentorDTO mentorInfo = mentorService.getMentorInfo(mentorId);
+        MentorDTO mentorInfo = mentorFeignClient.getMentorInfo(mentorId).getData();
 
         Integer price = mentorInfo.getPrice();
 
@@ -121,7 +122,7 @@ public class PurchaseCommandService {
         coffeechatCommandService.markAsPurchased(coffeechatId);
 
         // 2. 멘티 다이아 차감
-        Integer balance = userService.useDiamond(menteeId, totalPrice);
+        Integer balance = userInternalFeignClient.useDiamond(menteeId, totalPrice);
 
         // 3. 다이아 내역 저장
         diamondHistoryRepository.save(DiamondHistory.forCoffeechatPurchase(menteeId, coffeechatId, totalPrice, balance));
@@ -142,7 +143,7 @@ public class PurchaseCommandService {
         PurchaseAssetType assetType = request.getAssetType();
 
         // 1. 유저 조회
-        UserDTO userDto = userService.getUserByUserId(userId);
+        UserDTO userDto = userFeignClient.getUserByUserId(userId).getData();
 
         PointType mentorAuthorityType = pointTypeRepository.findByPointTypeName(PointTypeConstants.MENTOR_AUTHORITY_PURCHASE)
                 .orElseThrow(() -> new BusinessException(ErrorCode.POINT_TYPE_NOT_FOUND));
@@ -155,10 +156,10 @@ public class PurchaseCommandService {
 
         // 3. 다이아 혹은 포인트 내역 생성
         if (assetType == PurchaseAssetType.DIAMOND) {
-            Integer diamondBalance = userService.useDiamond(userId, MENTOR_AUTHORITY_DIAMOND_COST);
+            Integer diamondBalance = userInternalFeignClient.useDiamond(userId, MENTOR_AUTHORITY_DIAMOND_COST);
             diamondHistoryRepository.save(DiamondHistory.forMentorAuthority(userId, diamondBalance, MENTOR_AUTHORITY_DIAMOND_COST));
         } else if (assetType == PurchaseAssetType.POINT) {
-            Integer pointBalance = userService.usePoint(userId, MENTOR_AUTHORITY_POINT_COST);
+            Integer pointBalance = userInternalFeignClient.usePoint(userId, MENTOR_AUTHORITY_POINT_COST);
             pointHistoryRepository.save(PointHistory.forMentorAuthority(userId, mentorAuthorityType, pointBalance, MENTOR_AUTHORITY_POINT_COST));
         } else {
             throw new BusinessException(ErrorCode.INVALID_PURCHASE_TYPE);
@@ -166,7 +167,7 @@ public class PurchaseCommandService {
 
 
         // 4. 멘토 등록
-        mentorService.createMentor(userId);
+        mentorFeignClient.createMentor(userId);
 
         if(assetType == PurchaseAssetType.DIAMOND){
             notificationCommandService.sendNotification(

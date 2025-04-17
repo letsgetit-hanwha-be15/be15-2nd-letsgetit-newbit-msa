@@ -1,5 +1,6 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.service;
 
+import com.newbit.newbitfeatureservice.client.user.UserInternalFeignClient;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
@@ -7,7 +8,6 @@ import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.PointHi
 import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.PointType;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.PointHistoryRepository;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.PointTypeRepository;
-import com.newbit.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +16,9 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class PointTransactionCommandService {
-    private final UserService userService;
     private final PointTypeRepository pointTypeRepository;
     private final PointHistoryRepository pointHistoryRepository;
+    private final UserInternalFeignClient userInternalFeignClient;
 
     private static final Set<Integer> ALLOWED_TIP_AMOUNTS = Set.of(20, 40, 60, 80, 100);
 
@@ -36,8 +36,8 @@ public class PointTransactionCommandService {
             throw new BusinessException(ErrorCode.INVALID_TIP_AMOUNT);
         }
 
-        Integer menteeBalance = userService.addPoint(menteeId, amount);
-        Integer mentorBalance = userService.addPoint(mentorId, amount);
+        Integer menteeBalance = userInternalFeignClient.addPoint(menteeId, amount);
+        Integer mentorBalance = userInternalFeignClient.addPoint(mentorId, amount);
 
         savePointHistory(
                 menteeId,
@@ -60,9 +60,9 @@ public class PointTransactionCommandService {
 
     private Integer applyPoint(Long userId, PointType pointType) {
         if (pointType.getIncreaseAmount() != null) {
-            return userService.addPoint(userId, pointType.getIncreaseAmount());
+            return userInternalFeignClient.addPoint(userId, pointType.getIncreaseAmount());
         } else {
-            return userService.usePoint(userId, pointType.getDecreaseAmount());
+            return userInternalFeignClient.usePoint(userId, pointType.getDecreaseAmount());
         }
     }
 
