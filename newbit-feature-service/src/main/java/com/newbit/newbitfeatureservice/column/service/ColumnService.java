@@ -3,6 +3,7 @@ package com.newbit.newbitfeatureservice.column.service;
 import java.util.List;
 
 import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,7 @@ public class ColumnService {
     private final ColumnRepository columnRepository;
     private final ColumnPurchaseHistoryQueryService columnPurchaseHistoryQueryService;
     private final MentorFeignClient mentorFeignClient;
+    private final UserFeignClient userFeignClient;
     private final ColumnMapper columnMapper;
 
     @Transactional(readOnly = true)
@@ -39,6 +41,10 @@ public class ColumnService {
         if (!isPurchased) {
             throw new BusinessException(ErrorCode.COLUMN_NOT_PURCHASED);
         }
+        Long mentorId = dto.getMentorId();
+        Long authorUserId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
+        String nickname = userFeignClient.getUserByUserId(authorUserId).getData().getNickname();
+        dto.setMentorNickname(nickname);
 
         return dto;
     }
@@ -46,8 +52,16 @@ public class ColumnService {
     @Transactional(readOnly = true)
     public Page<GetColumnListResponseDto> getPublicColumnList(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
+        Page<GetColumnListResponseDto> resultPage = columnRepository.findAllByIsPublicTrueOrderByCreatedAtDesc(pageable);
+        List<GetColumnListResponseDto> content = resultPage.getContent();
+        for (GetColumnListResponseDto dto : content) {
+            Long mentorId = dto.getMentorId();
+            Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
+            String nickname = userFeignClient.getUserByUserId(userId).getData().getNickname();
+            dto.setMentorNickname(nickname);
+        }
 
-        return columnRepository.findAllByIsPublicTrueOrderByCreatedAtDesc(pageable);
+        return resultPage;
     }
 
     public List<GetMyColumnListResponseDto> getMyColumnList(Long userId) {
