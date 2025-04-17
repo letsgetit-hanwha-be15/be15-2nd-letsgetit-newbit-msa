@@ -84,5 +84,17 @@ public class UserInfoController {
     }
 
 
+    @GetMapping("/{userId}/email")
+    public ResponseEntity<ApiResponse<String>> getEmailByUserId(@PathVariable Long userId) {
+        String email = userQueryService.getEmailByUserId(userId);
+        return ResponseEntity.ok(ApiResponse.success(email));
+    }
+
+    @GetMapping("/{userId}/nickname")
+    public ResponseEntity<ApiResponse<String>> getNicknameByUserId(@PathVariable Long userId) {
+        String nickname = userQueryService.getNicknameByUserId(userId);
+        return ResponseEntity.ok(ApiResponse.success(nickname));
+    }
+
 }
 

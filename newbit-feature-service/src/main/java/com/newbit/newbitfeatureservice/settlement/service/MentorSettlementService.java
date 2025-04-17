@@ -1,5 +1,6 @@
 package com.newbit.newbitfeatureservice.settlement.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
 import com.newbit.newbitfeatureservice.common.dto.Pagination;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
@@ -36,7 +37,7 @@ public class MentorSettlementService {
 
     private final SaleHistoryRepository saleHistoryRepository;
     private final MonthlySettlementHistoryRepository monthlySettlementHistoryRepository;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorFeignClient;
     private final MailServiceSupport mailServiceSupport;
     private final UserQueryService userQueryService;
 
@@ -109,7 +110,7 @@ public class MentorSettlementService {
             throw new BusinessException(ErrorCode.SETTLEMENT_NOT_FOUND);
         }
 
-        Long userId = mentorService.getUserIdByMentorId(mentorId);
+        Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
         String email = userQueryService.getEmailByUserId(userId);
         String nickname = userQueryService.getNicknameByUserId(userId);
 

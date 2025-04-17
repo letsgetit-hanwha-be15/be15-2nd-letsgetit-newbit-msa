@@ -1,11 +1,11 @@
 package com.newbit.newbitfeatureservice.settlement.controller;
 
-import com.newbit.auth.model.CustomUser;
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.settlement.dto.response.MentorSettlementDetailResponseDto;
 import com.newbit.newbitfeatureservice.settlement.dto.response.MentorSettlementListResponseDto;
 import com.newbit.newbitfeatureservice.settlement.service.MentorSettlementService;
-import com.newbit.user.service.MentorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class MentorSettlementController {
 
     private final MentorSettlementService mentorSettlementService;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorFeignClient;
 
     @PostMapping("/generate")
     @Operation(
@@ -43,7 +43,7 @@ public class MentorSettlementController {
             @RequestParam(defaultValue = "10") int size
     ) {
         Long userId = customUser.getUserId();
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();
         MentorSettlementListResponseDto response = mentorSettlementService.getMySettlements(mentorId, page, size);
         return ApiResponse.success(response);
     }
@@ -65,7 +65,7 @@ public class MentorSettlementController {
             @PathVariable Long settlementId
     ) {
         Long userId = customUser.getUserId();
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();
         mentorSettlementService.sendSettlementEmail(mentorId, settlementId);
         return ApiResponse.success(null);
     }
