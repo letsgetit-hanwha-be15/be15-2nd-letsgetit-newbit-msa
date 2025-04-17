@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/internal/mail")
+@RequestMapping("/internal/mail")
 public class MailSupportController {
 
     private final MailServiceSupport mailServiceSupport;

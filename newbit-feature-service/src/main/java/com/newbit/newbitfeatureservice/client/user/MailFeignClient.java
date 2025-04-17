@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "newbit-user-service", contextId = "mailFeignClient", configuration = UserFeignClientConfig.class)
 public interface MailFeignClient {
 
-    @PostMapping("/send")
+    @PostMapping("/internal/mail/send")
     ApiResponse<Void> sendMail(
             @RequestParam("to") String to,
             @RequestParam("subject") String subject,
