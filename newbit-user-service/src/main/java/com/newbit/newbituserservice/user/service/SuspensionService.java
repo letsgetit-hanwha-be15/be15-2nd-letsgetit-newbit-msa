@@ -1,7 +1,7 @@
 package com.newbit.newbituserservice.user.service;
 
 
-import com.newbit.newbituserservice.port.ReportCountPort;
+import com.newbit.newbituserservice.client.ReportServiceClient;
 import com.newbit.newbituserservice.user.entity.User;
 import com.newbit.newbituserservice.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class SuspensionService {
     private final UserRepository userRepository;
-    private final ReportCountPort reportCountPort;
+    private final ReportServiceClient reportServiceClient;
 
     public void checkAndSuspendUser(Long userId) {
-        int totalReports = reportCountPort.getTotalReportCountByUserId(userId);
+        int totalReports = reportServiceClient.getTotalReportCountByUserId(userId);
 
         if (totalReports >= 50 && totalReports % 50 == 0) {
             User user = userRepository.findById(userId)
