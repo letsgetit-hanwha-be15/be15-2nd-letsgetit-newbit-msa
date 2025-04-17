@@ -1,7 +1,6 @@
 package com.newbit.newbitfeatureservice.coffeechat.query.service;
 
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.request.CoffeechatSearchServiceRequest;
-import com.newbit.coffeechat.query.dto.response.*;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.*;
 import com.newbit.newbitfeatureservice.coffeechat.query.mapper.CoffeechatMapper;
 import com.newbit.newbitfeatureservice.common.dto.Pagination;
