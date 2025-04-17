@@ -3,5 +3,5 @@
 ## before develop
 
 - application.yaml 추가
-  - user service의 application.yaml은 민감한 정보가 담겨있으므로 git에 안올렸습니다.
-  - 추가 위치 : notion 문서/msa-user-service-application.yaml
+  - user. feature service의 application.yaml은 민감한 정보가 담겨있으므로 git에 안올렸습니다. 따로 추가해주세요
+  - 문서 위치 : notion 문서/application.yaml
