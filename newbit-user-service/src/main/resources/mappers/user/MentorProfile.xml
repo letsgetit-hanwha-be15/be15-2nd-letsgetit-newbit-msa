@@ -6,7 +6,7 @@
 <mapper namespace="com.newbit.newbituserservice.user.mapper.UserMapper">
 
     <!-- 멘토 프로필 기본 정보 -->
-    <select id="findMentorProfile" resultType="com.newbit.user.dto.response.MentorProfileDTO">
+    <select id="findMentorProfile" resultType="com.newbit.newbituserservice.user.dto.response.MentorProfileDTO">
         SELECT u.user_name       AS userName,
                u.nickname        AS nickname,
                u.profile_image_url AS profileImageUrl,
@@ -27,7 +27,7 @@
     </select>
 
     <!-- 최근 게시글 3개 -->
-    <select id="findMentorPosts" resultType="com.newbit.user.dto.response.PostDTO">
+    <select id="findMentorPosts" resultType="com.newbit.newbituserservice.user.dto.response.PostDTO">
         SELECT p.post_id AS postId,
                p.title,
                u.nickname AS author,
@@ -41,7 +41,7 @@
     </select>
 
     <!-- 최근 컬럼 3개 -->
-    <select id="findMentorColumns" resultType="com.newbit.user.dto.response.ColumnDTO">
+    <select id="findMentorColumns" resultType="com.newbit.newbituserservice.user.dto.response.ColumnDTO">
         SELECT c.column_id AS columnId,
                c.title,
                u.nickname AS author,
@@ -55,7 +55,7 @@
     </select>
 
     <!-- 최근 시리즈 3개 -->
-    <select id="findMentorSeries" resultType="com.newbit.user.dto.response.SeriesDTO">
+    <select id="findMentorSeries" resultType="com.newbit.newbituserservice.user.dto.response.SeriesDTO">
         SELECT s.series_id AS seriesId,
                s.title,
                u.nickname AS author,
@@ -71,7 +71,7 @@
     </select>
 
     <!-- 멘토 리뷰 목록 -->
-    <select id="findReviewsByMentorId" resultType="com.newbit.user.dto.response.ReviewDTO">
+    <select id="findReviewsByMentorId" resultType="com.newbit.newbituserservice.user.dto.response.ReviewDTO">
         SELECT r.user_id AS userId,
                r.rating,
                r.comment
