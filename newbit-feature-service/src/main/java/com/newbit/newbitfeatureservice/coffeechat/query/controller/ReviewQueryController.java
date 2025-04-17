@@ -1,11 +1,11 @@
 package com.newbit.newbitfeatureservice.coffeechat.query.controller;
 
-import com.newbit.auth.model.CustomUser;
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.request.ReviewSearchServiceRequest;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.ReviewListResponse;
 import com.newbit.newbitfeatureservice.coffeechat.query.service.ReviewQueryService;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
-import com.newbit.user.service.MentorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ReviewQueryController {
     private final ReviewQueryService reviewQueryService;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorClient;
 
     @Operation(
             summary = "멘토의 리뷰 목록 조회", description = "멘토에게 달린 리뷰 목록을 조회한다."
@@ -76,7 +76,7 @@ public class ReviewQueryController {
 
         // 유저 아이디로 멘토 아이디를 찾아오기
         Long userId = customUser.getUserId();
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorClient.getMentorIdByUserId(userId).getData();
 
         ReviewSearchServiceRequest reviewSearchServiceRequest = new ReviewSearchServiceRequest();
         reviewSearchServiceRequest.setMentorId(mentorId);

@@ -1,10 +1,10 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.controller;
 
-import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.ReviewCreateRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.response.ReviewCommandResponse;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.service.ReviewCommandService;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

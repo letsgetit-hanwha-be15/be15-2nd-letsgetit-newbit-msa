@@ -1,6 +1,7 @@
 package com.newbit.newbitfeatureservice.coffeechat.query.controller;
 
-import com.newbit.auth.model.CustomUser;
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.ProgressStatus;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.request.CoffeechatSearchServiceRequest;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.CoffeechatDetailResponse;
@@ -8,7 +9,6 @@ import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.CoffeechatL
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.RequestTimeListResponse;
 import com.newbit.newbitfeatureservice.coffeechat.query.service.CoffeechatQueryService;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
-import com.newbit.user.service.MentorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CoffeechatQueryController {
     private final CoffeechatQueryService coffeechatQueryService;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorClient;
 
     @Operation(
             summary = "커피챗 상세 조회", description = "커피챗 상세 정보를 조회한다."
@@ -49,7 +49,7 @@ public class CoffeechatQueryController {
 
         // 유저 아이디로 멘토 아이디를 찾아오기
         Long userId = customUser.getUserId();
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorClient.getMentorIdByUserId(userId).getData();
 
         // 서비스 레이어에 보낼 request 생성
         CoffeechatSearchServiceRequest coffeechatSearchServiceRequest = new CoffeechatSearchServiceRequest();
@@ -72,7 +72,7 @@ public class CoffeechatQueryController {
     ) {
         // 유저 아이디로 멘토 아이디를 찾아오기
         Long userId = customUser.getUserId();
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorClient.getMentorIdByUserId(userId).getData();
 
         // 서비스 레이어에 보낼 request 생성
         CoffeechatSearchServiceRequest coffeechatSearchServiceRequest = new CoffeechatSearchServiceRequest();
