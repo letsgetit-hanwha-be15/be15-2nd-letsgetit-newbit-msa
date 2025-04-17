@@ -1,5 +1,6 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.ReviewCreateRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.Review;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.repository.ReviewRepository;
@@ -10,7 +11,6 @@ import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.PointTransactionCommandService;
 import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
-import com.newbit.user.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ public class ReviewCommandService {
     private final ReviewRepository reviewRepository;
     private final CoffeechatQueryService coffeechatQueryService;
     private final PointTransactionCommandService pointTransactionCommandService;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorClient;
 
     @Transactional
     public Long createReview(Long userId, ReviewCreateRequest request) {
@@ -58,7 +58,7 @@ public class ReviewCommandService {
         // 4. 팁이 존재하면 팁 등록
         if(request.getTip() != null) {
             // 멘토 아이디로 멘토의 유저 아이디를 찾아오기
-            Long mentorId = mentorService.getUserIdByMentorId(coffeechatDto.getMentorId());
+            Long mentorId = mentorClient.getUserIdByMentorId(coffeechatDto.getMentorId()).getData();
             pointTransactionCommandService.giveTipPoint(
                     request.getCoffeechatId(), coffeechatDto.getMenteeId(), mentorId, request.getTip()
             );

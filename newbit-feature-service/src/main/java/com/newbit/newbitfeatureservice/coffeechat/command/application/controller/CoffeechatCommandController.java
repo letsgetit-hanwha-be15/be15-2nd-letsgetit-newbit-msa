@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.controller;
 
-import com.newbit.auth.model.CustomUser;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCancelRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCreateRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.response.CoffeechatCommandResponse;
