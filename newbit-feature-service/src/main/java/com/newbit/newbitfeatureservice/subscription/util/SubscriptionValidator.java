@@ -1,11 +1,11 @@
 package com.newbit.newbitfeatureservice.subscription.util;
 
+import com.newbit.newbitfeatureservice.column.domain.Series;
+import com.newbit.newbitfeatureservice.column.repository.SeriesRepository;
+import com.newbit.newbitfeatureservice.common.exception.BusinessException;
+import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import org.springframework.stereotype.Component;
 
-import com.newbit.column.domain.Series;
-import com.newbit.column.repository.SeriesRepository;
-import com.newbit.common.exception.BusinessException;
-import com.newbit.common.exception.ErrorCode;
 
 import lombok.extern.slf4j.Slf4j;
 
