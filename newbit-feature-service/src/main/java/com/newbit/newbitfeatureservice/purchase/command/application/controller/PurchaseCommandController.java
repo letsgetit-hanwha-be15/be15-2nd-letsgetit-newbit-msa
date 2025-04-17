@@ -1,11 +1,11 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.controller;
 
-import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import com.newbit.newbitfeatureservice.purchase.command.application.dto.CoffeeChatPurchaseRequest;
 import com.newbit.newbitfeatureservice.purchase.command.application.dto.ColumnPurchaseRequest;
 import com.newbit.newbitfeatureservice.purchase.command.application.dto.MentorAuthorityPurchaseRequest;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.PurchaseCommandService;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
