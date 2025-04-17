@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/coffeechats")
+@RequestMapping("/coffeechats")
 @Tag(name = "커피챗 API", description = "커피챗 등록, 수정, 삭제 API")
 public class CoffeechatCommandController {
 
