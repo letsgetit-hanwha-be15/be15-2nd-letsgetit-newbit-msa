@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.column.controller;
 
-import com.newbit.auth.model.CustomUser;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.column.dto.request.ApproveColumnRequestDto;
 import com.newbit.newbitfeatureservice.column.dto.request.RejectColumnRequestDto;
 import com.newbit.newbitfeatureservice.column.dto.response.AdminColumnResponseDto;

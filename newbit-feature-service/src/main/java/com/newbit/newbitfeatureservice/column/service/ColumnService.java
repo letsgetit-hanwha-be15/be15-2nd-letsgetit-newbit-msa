@@ -2,6 +2,7 @@ package com.newbit.newbitfeatureservice.column.service;
 
 import java.util.List;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,6 @@ import com.newbit.newbitfeatureservice.column.repository.ColumnRepository;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.purchase.query.service.ColumnPurchaseHistoryQueryService;
-import com.newbit.user.service.MentorService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,9 +27,10 @@ public class ColumnService {
 
     private final ColumnRepository columnRepository;
     private final ColumnPurchaseHistoryQueryService columnPurchaseHistoryQueryService;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorFeignClient;
     private final ColumnMapper columnMapper;
 
+    @Transactional(readOnly = true)
     public GetColumnDetailResponseDto getColumnDetail(Long userId, Long columnId) {
         GetColumnDetailResponseDto dto = columnRepository.findPublicColumnDetailById(columnId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.COLUMN_NOT_FOUND));
@@ -42,6 +43,7 @@ public class ColumnService {
         return dto;
     }
 
+    @Transactional(readOnly = true)
     public Page<GetColumnListResponseDto> getPublicColumnList(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
@@ -49,7 +51,7 @@ public class ColumnService {
     }
 
     public List<GetMyColumnListResponseDto> getMyColumnList(Long userId) {
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();
 
         List<Column> columns = columnRepository
                 .findAllByMentorIdAndIsPublicTrueOrderByCreatedAtDesc(mentorId);
@@ -100,7 +102,7 @@ public class ColumnService {
     
     @Transactional(readOnly = true)
     public Long getUserIdByMentorId(Long mentorId) {
-        return mentorService.getUserIdByMentorId(mentorId);
+        return mentorFeignClient.getUserIdByMentorId(mentorId).getData();
     }
     
     @Transactional(readOnly = true)

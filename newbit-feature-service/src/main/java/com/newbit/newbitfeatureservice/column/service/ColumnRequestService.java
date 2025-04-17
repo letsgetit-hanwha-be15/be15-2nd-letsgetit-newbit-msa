@@ -1,5 +1,6 @@
 package com.newbit.newbitfeatureservice.column.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
 import com.newbit.newbitfeatureservice.column.domain.Series;
 import com.newbit.newbitfeatureservice.column.dto.request.CreateColumnRequestDto;
 import com.newbit.newbitfeatureservice.column.dto.request.DeleteColumnRequestDto;
@@ -17,7 +18,6 @@ import com.newbit.newbitfeatureservice.column.repository.ColumnRequestRepository
 import com.newbit.newbitfeatureservice.column.repository.SeriesRepository;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
-import com.newbit.user.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +30,12 @@ public class ColumnRequestService {
     private final ColumnRepository columnRepository;
     private final ColumnRequestRepository columnRequestRepository;
     private final SeriesRepository seriesRepository;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorFeignClient;
     private final ColumnMapper columnMapper;
 
     public CreateColumnResponseDto createColumnRequest(CreateColumnRequestDto dto, Long userId) {
         // 1. Mentor 조회
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();
 
         // 2. 시리즈 조회
         Series series = seriesRepository.findById(dto.getSeriesId())
@@ -97,7 +97,7 @@ public class ColumnRequestService {
     }
 
     public List<GetMyColumnRequestResponseDto> getMyColumnRequests(Long userId) {
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();
 
         List<ColumnRequest> requests = columnRequestRepository.findAllByColumn_MentorIdOrderByCreatedAtDesc(mentorId);
 

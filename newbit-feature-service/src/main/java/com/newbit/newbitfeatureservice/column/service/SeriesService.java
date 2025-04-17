@@ -2,6 +2,7 @@ package com.newbit.newbitfeatureservice.column.service;
 
 import java.util.List;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,6 @@ import com.newbit.newbitfeatureservice.column.repository.ColumnRepository;
 import com.newbit.newbitfeatureservice.column.repository.SeriesRepository;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
-import com.newbit.user.service.MentorService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,13 +29,13 @@ public class SeriesService {
 
     private final SeriesRepository seriesRepository;
     private final ColumnRepository columnRepository;
-    private final MentorService mentorService;
+    private final MentorFeignClient mentorFeignClient;
     private final SeriesMapper seriesMapper;
 
     @Transactional
     public CreateSeriesResponseDto createSeries(CreateSeriesRequestDto dto, Long userId) {
         // 1. 유저 → 멘토 엔티티 조회
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();
 
         // 2. 빈 칼럼 리스트 방지
         if (dto.getColumnIds() == null || dto.getColumnIds().isEmpty()) {
@@ -76,7 +76,7 @@ public class SeriesService {
     @Transactional
     public UpdateSeriesResponseDto updateSeries(Long seriesId, UpdateSeriesRequestDto dto, Long userId) {
         // 1. 멘토 조회
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();
 
         // 2. 시리즈 조회
         Series series = seriesRepository.findById(seriesId)
@@ -126,7 +126,7 @@ public class SeriesService {
 
     @Transactional
     public void deleteSeries(Long seriesId, Long userId) {
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();
 
         Series series = seriesRepository.findById(seriesId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.SERIES_NOT_FOUND));
@@ -165,7 +165,7 @@ public class SeriesService {
 
     @Transactional(readOnly = true)
     public List<GetMySeriesListResponseDto> getMySeriesList(Long userId) {
-        Long mentorId = mentorService.getMentorIdByUserId(userId);
+        Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();
         List<Series> seriesList = seriesRepository.findAllByMentorIdOrderByCreatedAtDesc(mentorId);
         return seriesList.stream()
                 .map(seriesMapper::toMySeriesListDto)
