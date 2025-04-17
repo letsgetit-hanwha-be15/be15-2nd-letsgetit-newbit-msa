@@ -1,6 +1,7 @@
 package com.newbit.newbitfeatureservice.like.service;
 
 import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +11,7 @@ import com.newbit.newbitfeatureservice.purchase.command.application.service.Poin
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PointRewardService {
@@ -32,9 +34,11 @@ public class PointRewardService {
         try {
             pointTransactionCommandService.givePointByType(authorId, PointTypeConstants.LIKES, postId);
         } catch (BusinessException e) {
-            // 비즈니스 예외 처리
+            log.error("비즈니스 예외 발생: userId={}, errorCode={}, message={}",
+                    authorId, e.getErrorCode(), e.getMessage());
         } catch (Exception e) {
-            // 예기치 않은 오류 처리
+            log.error("비즈니스 범용 예외 발생: userId={}, errorClass={}, message={}",
+                    authorId, e.getClass(), e.getMessage());
         }
     }
 } 
