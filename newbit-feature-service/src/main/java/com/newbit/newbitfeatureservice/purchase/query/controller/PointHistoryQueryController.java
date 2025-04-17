@@ -1,11 +1,11 @@
 
 package com.newbit.newbitfeatureservice.purchase.query.controller;
 
-import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import com.newbit.newbitfeatureservice.purchase.query.dto.request.HistoryRequest;
 import com.newbit.newbitfeatureservice.purchase.query.dto.response.AssetHistoryListResponse;
 import com.newbit.newbitfeatureservice.purchase.query.service.PointHistoryQueryService;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

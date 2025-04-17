@@ -1,5 +1,7 @@
 package com.newbit.newbitfeatureservice.coffeechat.command.application.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCancelRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.dto.request.CoffeechatCreateRequest;
 import com.newbit.newbitfeatureservice.coffeechat.command.domain.aggregate.Coffeechat;
@@ -17,10 +19,8 @@ import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.DiamondCoffeechatTransactionCommandService;
-import com.newbit.user.dto.response.MentorDTO;
-import com.newbit.user.dto.response.UserDTO;
-import com.newbit.user.service.MentorService;
-import com.newbit.user.service.UserService;
+import com.newbit.newbitfeatureservice.client.user.dto.MentorDTO;
+import com.newbit.newbitfeatureservice.client.user.dto.UserDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,13 +53,13 @@ class CoffeechatCommandServiceTest {
     @Mock
     private RequestTimeRepository requestTimeRepository;
     @Mock
-    private MentorService mentorService;
+    private MentorFeignClient mentorClient;
     @Mock
     private DiamondCoffeechatTransactionCommandService transactionCommandService;
     @Mock
     private NotificationCommandService notificationCommandService;
     @Mock
-    private UserService userService;
+    private UserFeignClient userClient;
     @Mock
     private RoomService roomService;
 
@@ -202,9 +202,9 @@ class CoffeechatCommandServiceTest {
         // repo setting
         when(requestTimeRepository.findById(requestTimeId)).thenReturn(Optional.of(requestTime));
         when(coffeechatRepository.findById(coffeechatId)).thenReturn(Optional.of(mockCoffeechat));
-        when(mentorService.getUserIdByMentorId(mentorId)).thenReturn(mentorUserId);
-        when(userService.getUserByUserId(mentorUserId)).thenReturn(UserDTO.builder().userId(mentorUserId).userName("멘토닉네임").build());
-        when(userService.getUserByUserId(userId)).thenReturn(UserDTO.builder().userId(userId).userName("멘티닉네임").build());
+        when(mentorClient.getUserIdByMentorId(mentorId).getData()).thenReturn(mentorUserId);
+        when(userClient.getUserByUserId(mentorUserId).getData()).thenReturn(UserDTO.builder().userId(mentorUserId).userName("멘토닉네임").build());
+        when(userClient.getUserByUserId(userId).getData()).thenReturn(UserDTO.builder().userId(userId).userName("멘티닉네임").build());
         when(roomService.createRoom(any(CoffeeLetterRoomDTO.class))).thenReturn(CoffeeLetterRoomDTO.builder().build());
         // when & then: 예외가 발생하지 않으면 테스트 통과
         assertDoesNotThrow(() -> coffeechatCommandService.acceptCoffeechatTime(requestTimeId));
@@ -342,12 +342,12 @@ class CoffeechatCommandServiceTest {
                 purchaseQuantity);
         when(coffeechatRepository.findById(coffeechatId)).thenReturn(Optional.of(mockCoffeechat));
 
-        // mentorService.getMentorInfo 설정
+        // mentorClient.getMentorInfo 설정
         MentorDTO mentorDTO = MentorDTO.builder()
                 .price(pricePerUnit)
                 .isActive(true)
                 .build();
-        when(mentorService.getMentorInfo(mentorId)).thenReturn(mentorDTO);
+        when(mentorClient.getMentorInfo(mentorId).getData()).thenReturn(mentorDTO);
 
         // transactionCommandService 호출 mock
         doNothing().when(transactionCommandService)
@@ -419,13 +419,13 @@ class CoffeechatCommandServiceTest {
                 .price(price)
                 .isActive(true)
                 .build();
-        when(mentorService.getMentorInfo(mentorId)).thenReturn(mentorDTO);
+        when(mentorClient.getMentorInfo(mentorId).getData()).thenReturn(mentorDTO);
 
         // when & then: 예외가 발생하지 않으면 테스트 통과
         // 실행
         assertDoesNotThrow(() -> coffeechatCommandService.cancelCoffeechat(userId, request));
         // 검증
-        verify(mentorService).getMentorInfo(mentorId);
+        verify(mentorClient).getMentorInfo(mentorId);
         verify(transactionCommandService).refundCoffeeChat(coffeechatId, userId, purchaseQuantity * price);
     }
 
