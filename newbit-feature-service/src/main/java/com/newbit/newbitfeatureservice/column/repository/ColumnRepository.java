@@ -14,17 +14,16 @@ import java.util.Optional;
 
 public interface ColumnRepository extends JpaRepository<Column, Long> {
 
-    // 공개 칼럼 리스트 조회
-    @Query("""
-        SELECT new com.newbit.newbitfeatureservice.column.dto.response.GetColumnListResponseDto(
-            c.columnId, c.title, c.thumbnailUrl, c.price, c.likeCount, c.mentorId
-        )
-        FROM Column c
-        WHERE c.isPublic = true
-        ORDER BY c.createdAt DESC
-    """)
-
-    Page<GetColumnListResponseDto> findAllByIsPublicTrueOrderByCreatedAtDesc(Pageable pageable);
+//    // 공개 칼럼 리스트 조회
+//    @Query("""
+//        SELECT new com.newbit.newbitfeatureservice.column.dto.response.GetColumnListResponseDto(
+//            c.columnId, c.title, c.thumbnailUrl, c.price, c.likeCount, c.mentorId
+//        )
+//        FROM Column c
+//        WHERE c.isPublic = true
+//        ORDER BY c.createdAt DESC
+//    """)
+//    Page<GetColumnListResponseDto> findAllByIsPublicTrueOrderByCreatedAtDesc(Pageable pageable);
 
     @Query("""
     SELECT new com.newbit.newbitfeatureservice.column.dto.response.GetColumnDetailResponseDto(

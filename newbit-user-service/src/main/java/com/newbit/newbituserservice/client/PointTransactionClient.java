@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "newbit-feature-service", configuration = FeignClientConfig.class)
+@FeignClient(name = "newbit-feature-service", contextId = "PointTransactionClient", configuration = FeignClientConfig.class)
 public interface PointTransactionClient {
     @PostMapping("/type")
     ApiResponse<Void> givePointByType(

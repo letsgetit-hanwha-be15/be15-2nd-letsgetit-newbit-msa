@@ -49,20 +49,20 @@ public class ColumnService {
         return dto;
     }
 
-    @Transactional(readOnly = true)
-    public Page<GetColumnListResponseDto> getPublicColumnList(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<GetColumnListResponseDto> resultPage = columnRepository.findAllByIsPublicTrueOrderByCreatedAtDesc(pageable);
-        List<GetColumnListResponseDto> content = resultPage.getContent();
-        for (GetColumnListResponseDto dto : content) {
-            Long mentorId = dto.getMentorId();
-            Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
-            String nickname = userFeignClient.getUserByUserId(userId).getData().getNickname();
-            dto.setMentorNickname(nickname);
-        }
-
-        return resultPage;
-    }
+//    @Transactional(readOnly = true)
+//    public Page<GetColumnListResponseDto> getPublicColumnList(int page, int size) {
+//        Pageable pageable = PageRequest.of(page, size);
+//        Page<GetColumnListResponseDto> resultPage = columnRepository.findAllByIsPublicTrueOrderByCreatedAtDesc(pageable);
+//        List<GetColumnListResponseDto> content = resultPage.getContent();
+//        for (GetColumnListResponseDto dto : content) {
+//            Long mentorId = dto.getMentorId();
+//            Long userId = mentorFeignClient.getUserIdByMentorId(mentorId).getData();
+//            String nickname = userFeignClient.getUserByUserId(userId).getData().getNickname();
+//            dto.setMentorNickname(nickname);
+//        }
+//
+//        return resultPage;
+//    }
 
     public List<GetMyColumnListResponseDto> getMyColumnList(Long userId) {
         Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();

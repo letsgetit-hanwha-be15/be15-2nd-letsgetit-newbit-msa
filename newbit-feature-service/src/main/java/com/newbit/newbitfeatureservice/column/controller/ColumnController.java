@@ -33,14 +33,14 @@ public class ColumnController {
         return columnService.getColumnDetail(userId, columnId);
     }
 
-    @GetMapping("/public-list")
-    @Operation(summary = "공개된 칼럼 목록 조회 (페이징)", description = "공개된 모든 칼럼을 페이지별로 조회합니다.")
-    public Page<GetColumnListResponseDto> getPublicColumnList(
-            @Parameter(description = "페이지 번호 (0부터 시작)", example = "0") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "페이지 크기", example = "10") @RequestParam(defaultValue = "10") int size
-    ) {
-        return columnService.getPublicColumnList(page, size);
-    }
+//    @GetMapping("/public-list")
+//    @Operation(summary = "공개된 칼럼 목록 조회 (페이징)", description = "공개된 모든 칼럼을 페이지별로 조회합니다.")
+//    public Page<GetColumnListResponseDto> getPublicColumnList(
+//            @Parameter(description = "페이지 번호 (0부터 시작)", example = "0") @RequestParam(defaultValue = "0") int page,
+//            @Parameter(description = "페이지 크기", example = "10") @RequestParam(defaultValue = "10") int size
+//    ) {
+//        return columnService.getPublicColumnList(page, size);
+//    }
 
     @Operation(summary = "멘토 본인 칼럼 목록 조회", description = "멘토가 승인된 본인의 칼럼 목록을 조회합니다.")
     @GetMapping("/my")
