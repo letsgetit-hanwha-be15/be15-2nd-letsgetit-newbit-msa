@@ -1,4 +1,4 @@
-package com.newbit.newbituserservice.common.jwt.model;
+package com.newbit.newbituserservice.jwt.model;
 
 import lombok.Builder;
 import lombok.Getter;

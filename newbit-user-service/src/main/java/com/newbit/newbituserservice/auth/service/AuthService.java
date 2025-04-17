@@ -4,7 +4,7 @@ package com.newbit.newbituserservice.auth.service;
 import com.newbit.newbituserservice.auth.dto.request.LoginRequestDTO;
 import com.newbit.newbituserservice.auth.dto.response.TokenResponseDTO;
 import com.newbit.newbituserservice.auth.entity.RefreshToken;
-import com.newbit.newbituserservice.common.jwt.JwtTokenProvider;
+import com.newbit.newbituserservice.jwt.JwtTokenProvider;
 import com.newbit.newbituserservice.auth.repository.RefreshTokenRepository;
 import com.newbit.newbituserservice.user.entity.User;
 import com.newbit.newbituserservice.user.repository.UserRepository;

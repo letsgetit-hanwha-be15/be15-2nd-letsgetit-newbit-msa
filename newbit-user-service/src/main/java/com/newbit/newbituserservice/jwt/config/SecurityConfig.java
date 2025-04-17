@@ -1,8 +1,8 @@
-package com.newbit.newbituserservice.common.config;
+package com.newbit.newbituserservice.jwt.config;
 
-import com.newbit.newbituserservice.common.jwt.Filter.HeaderAuthenticationFilter;
-import com.newbit.newbituserservice.common.jwt.RestAccessDeniedHandler;
-import com.newbit.newbituserservice.common.jwt.RestAuthenticationEntryPoint;
+import com.newbit.newbituserservice.jwt.filter.HeaderAuthenticationFilter;
+import com.newbit.newbituserservice.jwt.RestAccessDeniedHandler;
+import com.newbit.newbituserservice.jwt.RestAuthenticationEntryPoint;
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

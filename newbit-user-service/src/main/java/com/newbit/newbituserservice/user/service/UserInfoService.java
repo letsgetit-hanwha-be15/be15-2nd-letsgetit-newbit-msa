@@ -1,7 +1,7 @@
 package com.newbit.newbituserservice.user.service;
 
 
-import com.newbit.newbituserservice.common.jwt.model.CustomUser;
+import com.newbit.newbituserservice.jwt.model.CustomUser;
 import com.newbit.newbituserservice.common.exception.BusinessException;
 import com.newbit.newbituserservice.common.exception.ErrorCode;
 import com.newbit.newbituserservice.user.dto.request.DeleteUserRequestDTO;

@@ -1,4 +1,4 @@
-package com.newbit.newbituserservice.common.jwt;
+package com.newbit.newbituserservice.jwt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

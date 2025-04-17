@@ -1,4 +1,4 @@
-package com.newbit.newbituserservice.common.jwt;
+package com.newbit.newbituserservice.jwt;
 
 import com.newbit.newbituserservice.common.exception.BusinessException;
 import com.newbit.newbituserservice.common.exception.ErrorCode;
