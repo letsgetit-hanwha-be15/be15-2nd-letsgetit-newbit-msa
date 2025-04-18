@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/series")
+@RequestMapping("/series")
 @Tag(name = "시리즈 API", description = "시리즈 관련 API")
 public class SeriesController {
 

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "칼럼 승인 API", description = "공개된 컬럼 조회 관련 API")
-@RequestMapping("/api/v1/admin/columns")
+@RequestMapping("/columns")
 public class AdminColumnController {
 
     private final AdminColumnService adminColumnService;
