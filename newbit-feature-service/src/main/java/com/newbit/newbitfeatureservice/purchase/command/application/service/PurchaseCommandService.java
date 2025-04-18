@@ -23,6 +23,7 @@ import com.newbit.newbitfeatureservice.purchase.command.domain.repository.*;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -50,7 +51,6 @@ public class PurchaseCommandService {
     private final CoffeechatCommandService coffeechatCommandService;
 
 
-    @Transactional
     public void purchaseColumn(Long userId, ColumnPurchaseRequest request) {
         Long columnId = request.getColumnId();
 
@@ -72,8 +72,12 @@ public class PurchaseCommandService {
         Integer diamondBalance = userInternalFeignClient.useDiamond(userId, columnPrice);
 
         // 5. 구매 내역 저장
-        ColumnPurchaseHistory purchaseHistory = ColumnPurchaseHistory.of(userId, columnId, columnPrice);
-        columnPurchaseHistoryRepository.save(purchaseHistory);
+        try {
+            ColumnPurchaseHistory purchaseHistory = ColumnPurchaseHistory.of(userId, columnId, columnPrice);
+            columnPurchaseHistoryRepository.save(purchaseHistory);
+        } catch (DataIntegrityViolationException e) {
+            throw new BusinessException(ErrorCode.COLUMN_ALREADY_PURCHASED);
+        }
 
         // 6. 다이아몬드 사용 내역 저장
         DiamondHistory diamondHistory = DiamondHistory.forColumnPurchase(userId, columnId, columnPrice, diamondBalance);
@@ -100,7 +104,6 @@ public class PurchaseCommandService {
 
 
 
-    @Transactional
     public void purchaseCoffeeChat(Long userId, CoffeeChatPurchaseRequest request) {
         Long coffeechatId = request.getCoffeechatId();
         CoffeechatDto coffeeChat = coffeechatQueryService.getCoffeechat(coffeechatId).getCoffeechat();
@@ -138,7 +141,6 @@ public class PurchaseCommandService {
     }
 
 
-    @Transactional
     public void purchaseMentorAuthority(Long userId, MentorAuthorityPurchaseRequest request) {
         PurchaseAssetType assetType = request.getAssetType();
 
