@@ -24,8 +24,7 @@ public class UserInfoService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserDTO getMyInfo(String userIdStr) {
-        Long userId = Long.parseLong(userIdStr);
+    public UserDTO getMyInfo(Long userId) {
         return userRepository.findById(userId)
                 .map(UserDTO::fromEntity)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_INFO_NOT_FOUND));

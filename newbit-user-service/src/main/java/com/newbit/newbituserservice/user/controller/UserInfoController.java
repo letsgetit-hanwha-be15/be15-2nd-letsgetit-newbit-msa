@@ -34,9 +34,8 @@ public class UserInfoController {
 
     @Operation(summary = "회원 정보 조회", description = "내 프로필 조회")
     @GetMapping("/myprofile")
-    public ResponseEntity<ApiResponse<UserDTO>> getMyInfo(@AuthenticationPrincipal String userId) {// 현재 로그인한 사용자의 이메일
-        log.info("userId = {}", userId);
-        UserDTO myInfo = userInfoService.getMyInfo(userId); // 서비스로 위임
+    public ResponseEntity<ApiResponse<UserDTO>> getMyInfo(@AuthenticationPrincipal CustomUser user) {// 현재 로그인한 사용자의 이메일
+        UserDTO myInfo = userInfoService.getMyInfo(user.getUserId()); // 서비스로 위임
         return ResponseEntity.ok(ApiResponse.success(myInfo));
     }
 
