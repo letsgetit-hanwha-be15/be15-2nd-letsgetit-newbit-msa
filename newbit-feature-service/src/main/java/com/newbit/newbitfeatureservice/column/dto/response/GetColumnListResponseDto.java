@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 @Schema(description = "공개 칼럼 리스트 조회 응답")
 public class GetColumnListResponseDto {
 

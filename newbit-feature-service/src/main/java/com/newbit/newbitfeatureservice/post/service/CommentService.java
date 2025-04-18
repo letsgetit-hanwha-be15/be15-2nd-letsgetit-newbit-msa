@@ -1,6 +1,5 @@
 package com.newbit.newbitfeatureservice.post.service;
 
-import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.notification.command.application.dto.request.NotificationSendRequest;
@@ -13,6 +12,7 @@ import com.newbit.newbitfeatureservice.post.repository.CommentRepository;
 import com.newbit.newbitfeatureservice.post.repository.PostRepository;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.PointTransactionCommandService;
 import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -42,4 +42,8 @@ public class MentorService {
                 .getUser().getUserId();
     }
 
+    public Long getMentorIdByUserId(Long userId) {
+        return mentorRepository.findByUser_UserId(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND)).getMentorId();
+    }
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/columns")
+@RequestMapping("/columns")
 @RequiredArgsConstructor
 @Tag(name = "칼럼 조회 API", description = "공개된 컬럼 조회 관련 API")
 public class ColumnController {

@@ -1,14 +1,15 @@
 package com.newbit.newbitfeatureservice.settlement.service;
 
+import com.newbit.newbitfeatureservice.client.user.MailFeignClient;
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.SaleHistory;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.SaleHistoryRepository;
 import com.newbit.newbitfeatureservice.settlement.dto.response.MentorSettlementDetailResponseDto;
 import com.newbit.newbitfeatureservice.settlement.dto.response.MentorSettlementListResponseDto;
 import com.newbit.newbitfeatureservice.settlement.entity.MonthlySettlementHistory;
 import com.newbit.newbitfeatureservice.settlement.repository.MonthlySettlementHistoryRepository;
-import com.newbit.user.service.MentorService;
-import com.newbit.user.service.UserQueryService;
-import com.newbit.user.support.MailServiceSupport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,13 +36,13 @@ class MentorSettlementServiceTest {
     private MonthlySettlementHistoryRepository monthlySettlementHistoryRepository;
 
     @Mock
-    private MentorService mentorService;
+    private MentorFeignClient mentorFeignClient;
 
     @Mock
-    private UserQueryService userQueryService;
+    private UserFeignClient userFeignClient;
 
     @Mock
-    private MailServiceSupport mailServiceSupport;
+    private MailFeignClient mailFeignClient;
 
     @InjectMocks
     private MentorSettlementService mentorSettlementService;
@@ -126,6 +127,7 @@ class MentorSettlementServiceTest {
     void sendSettlementEmail_success() {
         Long mentorId = 1L;
         Long settlementId = 100L;
+        Long userId = 10L;
 
         MonthlySettlementHistory history = MonthlySettlementHistory.builder()
                 .monthlySettlementHistoryId(settlementId)
@@ -137,15 +139,15 @@ class MentorSettlementServiceTest {
                 .build();
 
         when(monthlySettlementHistoryRepository.findById(settlementId)).thenReturn(Optional.of(history));
-        when(mentorService.getUserIdByMentorId(mentorId)).thenReturn(10L);
-        when(userQueryService.getEmailByUserId(10L)).thenReturn("test@newbit.com");
-        when(userQueryService.getNicknameByUserId(10L)).thenReturn("홍길동");
+        when(mentorFeignClient.getUserIdByMentorId(mentorId)).thenReturn(ApiResponse.success(userId));
+        when(userFeignClient.getEmailByUserId(userId)).thenReturn(ApiResponse.success("test@newbit.com"));
+        when(userFeignClient.getNicknameByUserId(userId)).thenReturn(ApiResponse.success("홍길동"));
 
         // when
         mentorSettlementService.sendSettlementEmail(mentorId, settlementId);
 
         // then
-        verify(mailServiceSupport).sendMailSupport(
+        verify(mailFeignClient).sendMail(
                 eq("test@newbit.com"),
                 contains("정산 내역"),
                 contains("150000")

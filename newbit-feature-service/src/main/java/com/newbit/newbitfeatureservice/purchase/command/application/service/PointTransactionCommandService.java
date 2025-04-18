@@ -9,11 +9,13 @@ import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.PointTy
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.PointHistoryRepository;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.PointTypeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class PointTransactionCommandService {
     private final PointTypeRepository pointTypeRepository;

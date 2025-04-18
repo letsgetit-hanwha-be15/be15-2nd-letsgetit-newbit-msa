@@ -1,6 +1,5 @@
 package com.newbit.newbitfeatureservice.post.service;
 
-
 import com.newbit.newbitfeatureservice.post.repository.CommentRepository;
 import com.newbit.newbitfeatureservice.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;

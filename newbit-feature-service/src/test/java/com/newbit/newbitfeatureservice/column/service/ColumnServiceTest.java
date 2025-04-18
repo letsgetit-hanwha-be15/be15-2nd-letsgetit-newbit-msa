@@ -1,15 +1,17 @@
 package com.newbit.newbitfeatureservice.column.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
 import com.newbit.newbitfeatureservice.column.domain.Column;
 import com.newbit.newbitfeatureservice.column.dto.response.GetColumnDetailResponseDto;
 import com.newbit.newbitfeatureservice.column.dto.response.GetColumnListResponseDto;
 import com.newbit.newbitfeatureservice.column.dto.response.GetMyColumnListResponseDto;
 import com.newbit.newbitfeatureservice.column.mapper.ColumnMapper;
 import com.newbit.newbitfeatureservice.column.repository.ColumnRepository;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.purchase.query.service.ColumnPurchaseHistoryQueryService;
-import com.newbit.user.service.MentorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +40,7 @@ class ColumnServiceTest {
     private ColumnPurchaseHistoryQueryService columnPurchaseHistoryQueryService;
 
     @Mock
-    private MentorService mentorService;
+    private MentorFeignClient mentorFeignClient;
 
     @Mock
     private ColumnMapper columnMapper;
@@ -58,6 +60,9 @@ class ColumnServiceTest {
         // given
         Long userId = 1L;
         Long columnId = 1L;
+        Long mentorId = 10L;
+        String nickname = "개발자도토리";
+
         GetColumnDetailResponseDto responseDto = new GetColumnDetailResponseDto(
                 columnId,
                 "테스트 제목",
@@ -65,9 +70,9 @@ class ColumnServiceTest {
                 1000,
                 "https://example.com/image.jpg",
                 5,
-                10L,
-                "개발자도토리"
+                mentorId
         );
+        responseDto.setMentorNickname(nickname);
 
         when(columnRepository.findPublicColumnDetailById(columnId)).thenReturn(Optional.of(responseDto));
         when(columnPurchaseHistoryQueryService.hasUserPurchasedColumn(userId, columnId)).thenReturn(true);
@@ -125,6 +130,9 @@ class ColumnServiceTest {
         // given
         Long userId = 1L;
         Long columnId = 4L;
+        Long mentorId = 10L;
+        String nickname = "개발자도토리";
+
         GetColumnDetailResponseDto responseDto = new GetColumnDetailResponseDto(
                 columnId,
                 "테스트 제목",
@@ -132,9 +140,9 @@ class ColumnServiceTest {
                 1000,
                 "https://example.com/image.jpg",
                 5,
-                10L,
-                "개발자도토리"
+                 mentorId
         );
+        responseDto.setMentorNickname(nickname);
 
         when(columnRepository.findPublicColumnDetailById(columnId)).thenReturn(Optional.of(responseDto));
         when(columnPurchaseHistoryQueryService.hasUserPurchasedColumn(userId, columnId)).thenReturn(false);
@@ -153,25 +161,16 @@ class ColumnServiceTest {
         int size = 2;
         Pageable pageable = PageRequest.of(page, size);
 
-        GetColumnListResponseDto dto1 = GetColumnListResponseDto.builder()
-                .columnId(1L)
-                .title("이직을 위한 포트폴리오 전략")
-                .thumbnailUrl("https://example.com/img1.jpg")
-                .price(1000)
-                .likeCount(12)
-                .mentorId(101L)
-                .mentorNickname("개발자도토리")
-                .build();
+        GetColumnListResponseDto dto1 = new GetColumnListResponseDto(
+                1L, "이직을 위한 포트폴리오 전략", "https://example.com/img1.jpg", 1000, 12, 101L
+        );
+        dto1.setMentorNickname("개발자도토리");
 
-        GetColumnListResponseDto dto2 = GetColumnListResponseDto.builder()
-                .columnId(2L)
-                .title("개발자 연봉 협상법")
-                .thumbnailUrl("https://example.com/img2.jpg")
-                .price(2000)
-                .likeCount(20)
-                .mentorId(102L)
-                .mentorNickname("연봉왕")
-                .build();
+        GetColumnListResponseDto dto2 = new GetColumnListResponseDto(
+                2L, "개발자 연봉 협상법", "https://example.com/img2.jpg", 2000, 20, 102L
+        );
+        dto2.setMentorNickname("연봉왕");
+
 
         List<GetColumnListResponseDto> dtoList = List.of(dto1, dto2);
         Page<GetColumnListResponseDto> columnPage = new PageImpl<>(dtoList, pageable, dtoList.size());
@@ -228,7 +227,7 @@ class ColumnServiceTest {
 
         List<Column> columns = List.of(column1, column2);
 
-        when(mentorService.getMentorIdByUserId(userId)).thenReturn(mentorId);
+        when(mentorFeignClient.getMentorIdByUserId(userId)).thenReturn(ApiResponse.success(mentorId));
         when(columnRepository.findAllByMentorIdAndIsPublicTrueOrderByCreatedAtDesc(mentorId)).thenReturn(columns);
         when(columnMapper.toMyColumnListDto(column1)).thenReturn(
                 GetMyColumnListResponseDto.builder()
@@ -258,7 +257,7 @@ class ColumnServiceTest {
         assertThat(result.get(0).getTitle()).isEqualTo("멘토 칼럼 1");
         assertThat(result.get(1).getTitle()).isEqualTo("멘토 칼럼 2");
 
-        verify(mentorService).getMentorIdByUserId(userId);
+        verify(mentorFeignClient).getMentorIdByUserId(userId);
         verify(columnRepository).findAllByMentorIdAndIsPublicTrueOrderByCreatedAtDesc(mentorId);
         verify(columnMapper).toMyColumnListDto(column1);
         verify(columnMapper).toMyColumnListDto(column2);

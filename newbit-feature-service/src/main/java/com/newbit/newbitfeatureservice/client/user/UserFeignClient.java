@@ -1,12 +1,12 @@
 package com.newbit.newbitfeatureservice.client.user;
 
 import com.newbit.newbitfeatureservice.client.user.dto.UserDTO;
-import com.newbit.newbitfeatureservice.common.config.FeignClientConfig;
+import com.newbit.newbitfeatureservice.common.config.feign.UserFeignClientConfig;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "newbit-user-service", configuration = FeignClientConfig.class)
+@FeignClient(name = "newbit-user-service", contextId = "userFeignClient", configuration = UserFeignClientConfig.class)
 public interface UserFeignClient {
 
     @GetMapping("/user/{userId}")

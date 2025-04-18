@@ -1,13 +1,11 @@
-package com.newbit.newbitfeatureservice.common.config;
+package com.newbit.newbitfeatureservice.common.config.feign;
 
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-@Configuration
-public class FeignClientConfig {
+public class UserFeignClientConfig {
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {

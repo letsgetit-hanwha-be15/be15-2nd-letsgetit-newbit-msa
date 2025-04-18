@@ -23,7 +23,6 @@ public interface ColumnRepository extends JpaRepository<Column, Long> {
         WHERE c.isPublic = true
         ORDER BY c.createdAt DESC
     """)
-
     Page<GetColumnListResponseDto> findAllByIsPublicTrueOrderByCreatedAtDesc(Pageable pageable);
 
     @Query("""
@@ -32,7 +31,7 @@ public interface ColumnRepository extends JpaRepository<Column, Long> {
     )
     FROM Column c
     WHERE c.columnId = :columnId AND c.isPublic = true
-""")
+    """)
     Optional<GetColumnDetailResponseDto> findPublicColumnDetailById(@Param("columnId") Long columnId);
 
     List<Column> findAllByMentorIdAndIsPublicTrueOrderByCreatedAtDesc(Long mentorId);

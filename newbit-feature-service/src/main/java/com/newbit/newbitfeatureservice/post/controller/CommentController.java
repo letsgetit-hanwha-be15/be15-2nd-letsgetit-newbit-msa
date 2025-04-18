@@ -1,9 +1,9 @@
 package com.newbit.newbitfeatureservice.post.controller;
 
-import com.newbit.auth.model.CustomUser;
 import com.newbit.newbitfeatureservice.post.dto.request.CommentCreateRequest;
 import com.newbit.newbitfeatureservice.post.dto.response.CommentResponse;
 import com.newbit.newbitfeatureservice.post.service.CommentService;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

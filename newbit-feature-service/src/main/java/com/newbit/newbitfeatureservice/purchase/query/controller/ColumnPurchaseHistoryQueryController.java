@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "구매관련 API", description = "칼럼 구매 이력 조회 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/purchase/column/history")
+@RequestMapping("/purchase/column/history")
 public class ColumnPurchaseHistoryQueryController {
 
     private final ColumnPurchaseHistoryQueryService columnPurchaseHistoryQueryService;

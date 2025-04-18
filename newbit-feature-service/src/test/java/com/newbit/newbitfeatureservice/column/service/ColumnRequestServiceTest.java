@@ -1,5 +1,7 @@
 package com.newbit.newbitfeatureservice.column.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
 import com.newbit.newbitfeatureservice.column.domain.Column;
 import com.newbit.newbitfeatureservice.column.domain.ColumnRequest;
 import com.newbit.newbitfeatureservice.column.domain.Series;
@@ -15,9 +17,7 @@ import com.newbit.newbitfeatureservice.column.mapper.ColumnMapper;
 import com.newbit.newbitfeatureservice.column.repository.ColumnRepository;
 import com.newbit.newbitfeatureservice.column.repository.ColumnRequestRepository;
 import com.newbit.newbitfeatureservice.column.repository.SeriesRepository;
-import com.newbit.user.entity.Mentor;
-import com.newbit.user.service.MentorService;
-import com.newbit.user.service.UserService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,10 +47,7 @@ class ColumnRequestServiceTest {
     private ColumnMapper columnMapper;
 
     @Mock
-    private MentorService mentorService;
-
-    @Mock
-    private UserService userService;
+    private MentorFeignClient mentorFeignClient;
 
     @InjectMocks
     private ColumnRequestService columnRequestService;
@@ -75,7 +72,7 @@ class ColumnRequestServiceTest {
         ColumnRequest columnRequest = ColumnRequest.builder().columnRequestId(100L).build();
 
         when(seriesRepository.findById(1L)).thenReturn(Optional.of(series));
-        when(mentorService.getMentorIdByUserId(userId)).thenReturn(mentorId);
+        when(mentorFeignClient.getMentorIdByUserId(userId)).thenReturn(ApiResponse.success(mentorId));
         when(columnMapper.toColumn(dto, mentorId, series)).thenReturn(column);
         when(columnRepository.save(column)).thenReturn(column);
         when(columnMapper.toColumnRequest(dto, column)).thenReturn(columnRequest);
@@ -167,8 +164,6 @@ class ColumnRequestServiceTest {
         Long userId = 10L;
         Long mentorId = 1L;
 
-        Mentor mentor = Mentor.builder().mentorId(mentorId).build();
-
         Column column = Column.builder()
                 .columnId(100L)
                 .mentorId(mentorId)
@@ -194,7 +189,7 @@ class ColumnRequestServiceTest {
                 .createdAt(columnRequest.getCreatedAt())
                 .build();
 
-        when(mentorService.getMentorIdByUserId(userId)).thenReturn(mentorId);
+        when(mentorFeignClient.getMentorIdByUserId(userId)).thenReturn(ApiResponse.success(mentorId));
         when(columnRequestRepository.findAllByColumn_MentorIdOrderByCreatedAtDesc(mentorId))
                 .thenReturn(columnRequests);
         when(columnMapper.toMyColumnRequestResponseDto(columnRequest)).thenReturn(dto);
@@ -208,7 +203,7 @@ class ColumnRequestServiceTest {
         assertThat(result.get(0).getRequestType()).isEqualTo(RequestType.CREATE);
         assertThat(result.get(0).getTitle()).isEqualTo("요청 제목");
 
-        verify(mentorService).getMentorIdByUserId(userId);
+        verify(mentorFeignClient).getMentorIdByUserId(userId);
         verify(columnRequestRepository).findAllByColumn_MentorIdOrderByCreatedAtDesc(mentorId);
         verify(columnMapper).toMyColumnRequestResponseDto(columnRequest);
     }

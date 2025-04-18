@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "구매관련 API", description = "사용자 다이아 내역 조회 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/purchase/diamond/history")
+@RequestMapping("/purchase/diamond/history")
 public class DiamondHistoryQueryController {
 
     private final DiamondHistoryQueryService diamondHistoryQueryService;

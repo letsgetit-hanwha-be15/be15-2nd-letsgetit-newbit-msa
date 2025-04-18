@@ -1,6 +1,6 @@
 package com.newbit.newbitfeatureservice.post.service;
 
-import com.newbit.auth.model.CustomUser;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.post.dto.request.PostCreateRequest;
@@ -10,6 +10,7 @@ import com.newbit.newbitfeatureservice.post.entity.Post;
 import com.newbit.newbitfeatureservice.post.repository.CommentRepository;
 import com.newbit.newbitfeatureservice.post.repository.PostRepository;
 import com.newbit.newbitfeatureservice.purchase.command.application.service.PointTransactionCommandService;
+import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +27,7 @@ class PostServiceNoticeTest {
     private CommentRepository commentRepository;
     private PointTransactionCommandService pointTransactionCommandService;
     private PostService postService;
+    private UserFeignClient userFeignClient;
 
     @BeforeEach
     void setUp() {
@@ -33,7 +35,7 @@ class PostServiceNoticeTest {
         commentRepository = mock(CommentRepository.class);
         pointTransactionCommandService = mock(PointTransactionCommandService.class);
 
-        postService = new PostService(postRepository, commentRepository, pointTransactionCommandService);
+        postService = new PostService(postRepository, commentRepository, pointTransactionCommandService, userFeignClient);
     }
 
     @Test
