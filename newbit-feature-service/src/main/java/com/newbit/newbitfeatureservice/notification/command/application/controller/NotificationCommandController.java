@@ -22,7 +22,7 @@ import java.util.UUID;
 
 @Tag(name = "알림 API", description = "알림 연결, 발송 API")
 @RestController
-@RequestMapping("/api/v1/notification")
+@RequestMapping("/notification")
 @RequiredArgsConstructor
 public class NotificationCommandController {
 

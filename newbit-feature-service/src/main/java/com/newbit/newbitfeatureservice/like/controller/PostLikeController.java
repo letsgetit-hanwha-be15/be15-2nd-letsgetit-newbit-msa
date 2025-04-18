@@ -26,7 +26,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @RestController
-@RequestMapping("/api/v1/likes/posts")
+@RequestMapping("/likes/posts")
 @RequiredArgsConstructor
 @Tag(name = "좋아요(게시글) API", description = "게시글 좋아요 관련 API")
 public class PostLikeController {
