@@ -14,13 +14,12 @@ public class LoginService {
     private final LoginHistoryRepository loginHistoryRepository;
     private final PointTransactionClient pointTransactionClient;
 
-    @Transactional
     public void handleLoginSuccess(Long userId) {
         boolean isFirstLoginToday = loginHistoryRepository.countByUserIdAndToday(userId) == 0;
 
-//        if (isFirstLoginToday) {
-//            pointTransactionClient.givePointByType(userId, "첫 로그인 적립", null); // 로그인 포인트 지급
-//        }
+        if (isFirstLoginToday) {
+            pointTransactionClient.givePointByType(userId, "첫 로그인 적립", null); // 로그인 포인트 지급
+        }
 
         loginHistoryRepository.save(LoginHistory.of(userId)); // 로그인 이력 저장
     }
