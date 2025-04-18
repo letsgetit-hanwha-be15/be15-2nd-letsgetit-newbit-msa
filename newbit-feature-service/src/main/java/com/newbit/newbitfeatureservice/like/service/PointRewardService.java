@@ -19,7 +19,6 @@ public class PointRewardService {
     private final LikeRepository likeRepository;
     private final PointTransactionCommandService pointTransactionCommandService;
 
-    @Transactional
     public void givePointIfFirstLike(Long postId, Long userId, Long authorId) {
         if (isFirstLike(postId, userId)) {
             givePointToAuthor(authorId, postId);
