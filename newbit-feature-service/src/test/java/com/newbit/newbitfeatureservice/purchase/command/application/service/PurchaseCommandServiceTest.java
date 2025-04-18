@@ -1,10 +1,17 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.service;
 
+import com.newbit.newbitfeatureservice.client.user.MentorFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserInternalFeignClient;
+import com.newbit.newbitfeatureservice.client.user.dto.MentorDTO;
+import com.newbit.newbitfeatureservice.client.user.dto.UserDTO;
 import com.newbit.newbitfeatureservice.coffeechat.command.application.service.CoffeechatCommandService;
+import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.Authority;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.CoffeechatDetailResponse;
 import com.newbit.newbitfeatureservice.coffeechat.query.dto.response.CoffeechatDto;
 import com.newbit.newbitfeatureservice.coffeechat.query.service.CoffeechatQueryService;
 import com.newbit.newbitfeatureservice.column.service.ColumnRequestService;
+import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.notification.command.application.service.NotificationCommandService;
@@ -14,11 +21,6 @@ import com.newbit.newbitfeatureservice.purchase.command.application.dto.MentorAu
 import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
 import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.*;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.*;
-import com.newbit.user.dto.response.MentorDTO;
-import com.newbit.user.dto.response.UserDTO;
-import com.newbit.user.entity.Authority;
-import com.newbit.user.service.MentorService;
-import com.newbit.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -52,9 +54,11 @@ class PurchaseCommandServiceTest {
     @Mock
     private ColumnRequestService columnService;
     @Mock
-    private UserService userService;
+    private UserInternalFeignClient userService;
     @Mock
-    private MentorService mentorService;
+    private UserFeignClient userFeignClient;
+    @Mock
+    private MentorFeignClient mentorService;
     private final Long userId = 1L;
     @Mock
     private CoffeechatQueryService coffeechatQueryService;
@@ -174,7 +178,7 @@ class PurchaseCommandServiceTest {
         when(coffeechatQueryService.getCoffeechat(coffeechatId)).thenReturn(response);
         MentorDTO mentorDTO = new MentorDTO();
         mentorDTO.setPrice(price);
-        when(mentorService.getMentorInfo(mentorId)).thenReturn(mentorDTO);
+        when(mentorService.getMentorInfo(mentorId)).thenReturn(ApiResponse.success(mentorDTO));
 
         // when
         purchaseCommandService.purchaseCoffeeChat(userId, request);
@@ -198,7 +202,8 @@ class PurchaseCommandServiceTest {
                 .diamond(1000)
                 .build();
 
-        when(userService.getUserByUserId(userId)).thenReturn(userDto);
+        when(userFeignClient.getUserByUserId(userId))
+                .thenReturn(ApiResponse.success(userDto));
         when(userService.useDiamond(eq(userId), anyInt())).thenReturn(300);
 
         assertDoesNotThrow(() -> purchaseCommandService.purchaseMentorAuthority(userId, request));
@@ -217,7 +222,8 @@ class PurchaseCommandServiceTest {
                 .point(5000)
                 .build();
 
-        when(userService.getUserByUserId(userId)).thenReturn(userDto);
+        when(userFeignClient.getUserByUserId(userId))
+                .thenReturn(ApiResponse.success(userDto));
         when(userService.usePoint(eq(userId), anyInt())).thenReturn(2000);
 
         assertDoesNotThrow(() -> purchaseCommandService.purchaseMentorAuthority(userId, request));
@@ -235,7 +241,8 @@ class PurchaseCommandServiceTest {
                 .authority(Authority.MENTOR)
                 .build();
 
-        when(userService.getUserByUserId(userId)).thenReturn(userDto);
+        when(userFeignClient.getUserByUserId(userId))
+                .thenReturn(ApiResponse.success(userDto));
 
         BusinessException ex = assertThrows(BusinessException.class, () ->
                 purchaseCommandService.purchaseMentorAuthority(userId, request));
@@ -253,7 +260,8 @@ class PurchaseCommandServiceTest {
                 .authority(Authority.USER)
                 .build();
 
-        when(userService.getUserByUserId(userId)).thenReturn(userDto);
+        when(userFeignClient.getUserByUserId(userId))
+                .thenReturn(ApiResponse.success(userDto));
         BusinessException ex = assertThrows(BusinessException.class, () ->
                 purchaseCommandService.purchaseMentorAuthority(userId, request));
 
@@ -269,7 +277,8 @@ class PurchaseCommandServiceTest {
                 .authority(Authority.USER)
                 .build();
 
-        when(userService.getUserByUserId(userId)).thenReturn(userDto);
+        when(userFeignClient.getUserByUserId(userId))
+                .thenReturn(ApiResponse.success(userDto));
         when(userService.useDiamond(userId, 700)).thenThrow(new BusinessException(ErrorCode.INSUFFICIENT_DIAMOND));
 
         BusinessException ex = assertThrows(BusinessException.class, () ->
@@ -287,7 +296,8 @@ class PurchaseCommandServiceTest {
                 .authority(Authority.USER)
                 .build();
 
-        when(userService.getUserByUserId(userId)).thenReturn(userDto);
+        when(userFeignClient.getUserByUserId(userId))
+                .thenReturn(ApiResponse.success(userDto));
         when(userService.usePoint(userId, 2000)).thenThrow(new BusinessException(ErrorCode.INSUFFICIENT_POINT));
 
         BusinessException ex = assertThrows(BusinessException.class, () ->

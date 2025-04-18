@@ -1,9 +1,11 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.service;
 
+import com.newbit.newbitfeatureservice.client.user.UserFeignClient;
+import com.newbit.newbitfeatureservice.client.user.UserInternalFeignClient;
 import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.DiamondHistory;
 import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.DiamondTransactionType;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.DiamondHistoryRepository;
-import com.newbit.user.service.UserService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -15,12 +17,12 @@ class DiamondTransactionCommandServiceTest {
 
     private DiamondTransactionCommandService service;
     private DiamondHistoryRepository diamondHistoryRepository;
-    private UserService userService;
+    private UserInternalFeignClient userService;
 
     @BeforeEach
     void setUp() {
         diamondHistoryRepository = mock(DiamondHistoryRepository.class);
-        userService = mock(UserService.class);
+        userService = mock(UserInternalFeignClient.class);
         service = new DiamondTransactionCommandService(diamondHistoryRepository, userService);
     }
 

@@ -1,5 +1,6 @@
 package com.newbit.newbitfeatureservice.purchase.command.application.service;
 
+import com.newbit.newbitfeatureservice.client.user.UserInternalFeignClient;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import com.newbit.newbitfeatureservice.purchase.command.domain.PointTypeConstants;
@@ -7,7 +8,6 @@ import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.PointHi
 import com.newbit.newbitfeatureservice.purchase.command.domain.aggregate.PointType;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.PointHistoryRepository;
 import com.newbit.newbitfeatureservice.purchase.command.domain.repository.PointTypeRepository;
-import com.newbit.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -29,7 +29,7 @@ class PointTransactionCommandServiceTest {
     private PointTransactionCommandService pointTransactionCommandService;
 
     @Mock
-    private UserService userService;
+    private UserInternalFeignClient userService;
 
     @Mock
     private PointTypeRepository pointTypeRepository;
