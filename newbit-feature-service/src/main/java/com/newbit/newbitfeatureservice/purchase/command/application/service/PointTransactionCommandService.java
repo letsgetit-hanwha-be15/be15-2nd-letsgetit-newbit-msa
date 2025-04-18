@@ -31,7 +31,7 @@ public class PointTransactionCommandService {
         savePointHistory(userId, pointType, serviceId, updatedBalance);
     }
 
-    @Transactional
+
     public void giveTipPoint(Long coffeechatId, Long menteeId, Long mentorId, Integer amount) {
         if (!ALLOWED_TIP_AMOUNTS.contains(amount)) {
             throw new BusinessException(ErrorCode.INVALID_TIP_AMOUNT);

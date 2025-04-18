@@ -23,7 +23,7 @@ public class DiamondCoffeechatTransactionCommandService {
     }
 
     // 커피챗 다이아 환불
-    @Transactional
+
     public void refundCoffeeChat(Long coffeechatId, Long menteeId, Integer totalPrice) {
 
         // 1. 멘티 다이아 추가 후 현재 다이아값 반환
