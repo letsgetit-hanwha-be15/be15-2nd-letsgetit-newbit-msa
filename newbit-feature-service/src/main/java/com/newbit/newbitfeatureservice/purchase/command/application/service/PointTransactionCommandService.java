@@ -24,7 +24,6 @@ public class PointTransactionCommandService {
 
     private static final Set<Integer> ALLOWED_TIP_AMOUNTS = Set.of(20, 40, 60, 80, 100);
 
-    @Transactional
     public void givePointByType(Long userId, String pointTypeName, Long serviceId) {
         PointType pointType = findPointType(pointTypeName);
         Integer updatedBalance = applyPoint(userId, pointType);
@@ -68,7 +67,8 @@ public class PointTransactionCommandService {
         }
     }
 
-    private void savePointHistory(Long userId, PointType pointType, Long serviceId, Integer balance) {
+    @Transactional
+    protected void savePointHistory(Long userId, PointType pointType, Long serviceId, Integer balance) {
         PointHistory history = PointHistory.builder()
                 .userId(userId)
                 .pointType(pointType)

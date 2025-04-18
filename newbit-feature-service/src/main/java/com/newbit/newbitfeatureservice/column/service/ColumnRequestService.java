@@ -19,11 +19,13 @@ import com.newbit.newbitfeatureservice.column.repository.SeriesRepository;
 import com.newbit.newbitfeatureservice.common.exception.BusinessException;
 import com.newbit.newbitfeatureservice.common.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ColumnRequestService {
 
@@ -35,6 +37,7 @@ public class ColumnRequestService {
 
     public CreateColumnResponseDto createColumnRequest(CreateColumnRequestDto dto, Long userId) {
         // 1. Mentor 조회
+        log.info("userId 테슽 {}", userId);
         Long mentorId = mentorFeignClient.getMentorIdByUserId(userId).getData();
 
         // 2. 시리즈 조회
