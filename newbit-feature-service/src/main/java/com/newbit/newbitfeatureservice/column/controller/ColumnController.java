@@ -1,8 +1,8 @@
 package com.newbit.newbitfeatureservice.column.controller;
 
+import com.newbit.newbitfeatureservice.column.dto.response.GetColumnListResponseDto;
 import com.newbit.newbitfeatureservice.security.model.CustomUser;
 import com.newbit.newbitfeatureservice.column.dto.response.GetColumnDetailResponseDto;
-import com.newbit.newbitfeatureservice.column.dto.response.GetColumnListResponseDto;
 import com.newbit.newbitfeatureservice.column.dto.response.GetMyColumnListResponseDto;
 import com.newbit.newbitfeatureservice.column.service.ColumnService;
 import com.newbit.newbitfeatureservice.common.dto.ApiResponse;
