@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "커피챗 API", description = "커피챗 조회 API")
 @RestController
-@RequestMapping("/api/v1/coffeechats")
+@RequestMapping("/coffeechats")
 @RequiredArgsConstructor
 public class CoffeechatQueryController {
     private final CoffeechatQueryService coffeechatQueryService;
