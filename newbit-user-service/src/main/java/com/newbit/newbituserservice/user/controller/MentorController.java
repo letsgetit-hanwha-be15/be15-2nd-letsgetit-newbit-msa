@@ -39,6 +39,6 @@ public class MentorController {
     @GetMapping("user/{userId}/mentor-id")
     public ResponseEntity<ApiResponse<Long>> getMentorIdByUserId(@PathVariable("userId") Long userId) {
         Long mentorId = mentorService.getMentorIdByUserId(userId);
-        return ResponseEntity.ok(ApiResponse.success(userId));
+        return ResponseEntity.ok(ApiResponse.success(mentorId));
     }
 }
